@@ -136,11 +136,11 @@ rowMeans(b)
 
 ```{r, eval=FALSE}
 library(leaflet)
-popup = c("Robin", "Jakub", "Jannes")
+popup = c("Robin", "Jakub", "Jannes", "Mireia")
 leaflet() %>%
   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012") %>%
-  addMarkers(lng = c(-3, 23, 11),
-             lat = c(52, 53, 49), 
+  addMarkers(lng = c(-3, 23, 11, 2),
+             lat = c(52, 53, 49, 42), 
              popup = popup)
 ```
 
