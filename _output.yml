@@ -24,7 +24,7 @@ bookdown::gitbook:
     toc:
       collapse: section
       before: |
-        <li><a href="./">Geocomputation with R</a></li>
+        <li><a href="./">Geocomputación con R</a></li>
       after: |
         <li><a href="https://robinlovelace.net/">Robin Lovelace</a></li>
         <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
