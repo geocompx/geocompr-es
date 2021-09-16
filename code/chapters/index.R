@@ -7,7 +7,7 @@ is_html = knitr::is_html_output()
 ## # Welcome {-}
 
 ## 
-## This is the online home of *Geocomputation with R*, a book on geographic data analysis, visualization and modeling.
+## This is the online home of *Geocomputación con R*, a book on geographic data analysis, visualization and modeling.
 
 ## 
 ## 

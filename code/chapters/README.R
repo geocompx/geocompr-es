@@ -11,7 +11,7 @@ contributors = source("code/list-contributors.R")[[1]]
 # save for future reference:
 readr::write_csv(contributors, "extdata/contributors.csv")
 # table view:
-# knitr::kable(contributors, caption = "Contributors to Geocomputation with R")
+# knitr::kable(contributors, caption = "Contributors to Geocomputación con R")
 # text view
 c_txt = contributors$name
 c_url = contributors$link
