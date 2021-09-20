@@ -6,27 +6,28 @@
 
 This is the first practical chapter of the book, and therefore it comes with some software requirements.
 We assume that you have an up-to-date version of R installed and that you are comfortable using software with a command-line interface such as the integrated development environment (IDE) RStudio.
+<!--or VSCode?-->
 
 If you are new to R, we recommend reading Chapter 2 of the online book *Efficient R Programming* by @gillespie_efficient_2016 and learning the basics of the language with reference to resources such as @grolemund_r_2016.
-Organize your work (e.g., with RStudio projects) and give scripts sensible names such as `chapter-02.R` to document the code you write as you learn.
+Organize your work (e.g., with RStudio projects) and give scripts sensible names such as `02-chapter.R` to document the code you write as you learn.
 \index{R!pre-requisites}
 
 The packages used in this chapter can be installed with the following commands:^[
-**spDataLarge** is not on CRAN\index{CRAN}, meaning it must be installed via **remotes** or with the following command: `install.packages("spDataLarge", repos = "https://nowosad.github.io/drat/", type = "source")`.
+**spDataLarge** is not on CRAN\index{CRAN}, meaning it must be installed via *r-universe*  or with the following command: `remotes::install_github("Nowosad/spDataLarge")`.
 ]
 
 ```{r 02-spatial-data-1, eval=FALSE}
 install.packages("sf")
-install.packages("raster")
+install.packages("terra")
 install.packages("spData")
-remotes::install_github("Nowosad/spDataLarge")
+install.packages("spDataLarge", repos = "https://nowosad.r-universe.dev")
 ```
 
 \index{R!installation}
 ```{block2 02-spatial-data-2, type='rmdnote'}
 If you're running Mac or Linux, the previous command to install **sf** may not work first time.
 These operating systems (OSs) have 'systems requirements' that are described in the package's [README](https://github.com/r-spatial/sf).
-Various OS-specific instructions can be found online, such as the article *Installation of R 3.5 on Ubuntu 18.04* on the blog [rtask.thinkr.fr](https://rtask.thinkr.fr/blog/installation-of-r-3-5-on-ubuntu-18-04-lts-and-tips-for-spatial-packages/).
+Various OS-specific instructions can be found online, such as the article *Installation of R 4.0 on Ubuntu 20.04* on the blog [rtask.thinkr.fr](https://rtask.thinkr.fr/installation-of-r-4-0-on-ubuntu-20-04-lts-and-tips-for-spatial-packages/).
 ```
 
 All the packages needed to reproduce the contents of the book can be installed with the following command: `remotes::install_github("geocompr/geocompkg")`.
@@ -36,12 +37,12 @@ The necessary packages can be 'loaded' (technically they are attached) with the 
 library(sf)          # classes and functions for vector data
 ```
 
+The output from `library(sf)` reports which versions of key geographic libraries such as GEOS the package is using, as outlined in Section \@ref(intro-sf).
 
 ```{r 02-spatial-data-3-2, message=FALSE}
-library(raster)      # classes and functions for raster data
+library(terra)      # classes and functions for raster data
 ```
 
-The output from `library(sf)` reports which versions of key geographic libraries such as GEOS the package is using, as outlined in Section \@ref(intro-sf).
 The other packages that were installed contain data that will be used in the book:
 
 ```{r 02-spatial-data-4, results='hide'}
@@ -649,22 +650,27 @@ sf_points = st_sf(our_attributes, geometry = our_geometry)
 
 ## Raster data
 
-The geographic raster data model usually consists of a raster header\index{raster!header}
+The spatial raster data model represents the world with the continuous grid of cells (often also called pixels; Figure \@ref(fig:raster-intro-plot):A).
+This data model often refers to so-called regular grids, in which each cell has the same, constant size -- and we will focus on the regular grids in this book only.
+However, several other types of grids exist, including rotated, sheared, rectilinear, and curvilinear grids (see Chapter 1 of @pebesma_spatial_2022 or Chapter 2 of @tennekes_elegant_2022).
+
+The raster data model usually consists of a raster header\index{raster!header}
 and a matrix (with rows and columns) representing equally spaced cells (often also called pixels; Figure \@ref(fig:raster-intro-plot):A).^[
-Depending on the file format the header is part of the actual image data file, e.g., GeoTIFF, or stored in an extra header or world file, e.g., ASCII grid formats. There is also the headerless (flat) binary raster format which should facilitate the import into various software programs.]
+Depending on the file format the header is part of the actual image data file, e.g., GeoTIFF, or stored in an extra header or world file, e.g., ASCII grid formats. 
+There is also the headerless (flat) binary raster format which should facilitate the import into various software programs.]
 The raster header\index{raster!header} defines the coordinate reference system, the extent and the origin.
 \index{raster}
 \index{raster data model}
-The origin (or starting point) is frequently the coordinate of the lower-left corner of the matrix (the **raster** package, however, uses the upper left corner, by default (Figure  \@ref(fig:raster-intro-plot):B)).
+The origin (or starting point) is frequently the coordinate of the lower-left corner of the matrix (the **terra** package, however, uses the upper left corner, by default (Figure  \@ref(fig:raster-intro-plot):B)).
 The header defines the extent via the number of columns, the number of rows and the cell size resolution.
-Hence, starting from the origin, we can easily access and modify each single cell by either using the ID of a cell  (Figure  \@ref(fig:raster-intro-plot):B) or by explicitly specifying the rows and columns.
+Hence, starting from the origin, we can easily access and modify each single cell by either using the ID of a cell (Figure  \@ref(fig:raster-intro-plot):B) or by explicitly specifying the rows and columns.
 This matrix representation avoids storing explicitly the coordinates for the four corner points (in fact it only stores one coordinate, namely the origin) of each cell corner as would be the case for rectangular vector polygons.
-This and map algebra makes raster processing much more efficient and faster than vector data processing.
+This and map algebra (Section \ref(map-algebra)) makes raster processing much more efficient and faster than vector data processing.
 However, in contrast to vector data, the cell of one raster layer can only hold a single value.
 The value might be numeric or categorical (Figure  \@ref(fig:raster-intro-plot):C).
 
-```{r raster-intro-plot, echo = FALSE, fig.cap = "Raster data types: (A) cell IDs, (B) cell values, (C) a colored raster map.", fig.scap="Raster data types."}
-source("https://github.com/Robinlovelace/geocompr/raw/main/code/02-raster-intro-plot.R")
+```{r raster-intro-plot, echo = FALSE, fig.cap = "Raster data types: (A) cell IDs, (B) cell values, (C) a colored raster map.", fig.scap="Raster data types.", fig.asp=0.5}
+source("https://github.com/Robinlovelace/geocompr/raw/main/code/02-raster-intro-plot.R", print.eval = TRUE)
 ```
 
 Raster maps usually represent continuous phenomena such as elevation, temperature, population density or spectral data (Figure \@ref(fig:raster-intro-plot2)).
@@ -675,151 +681,116 @@ Consequently, the discrete borders of these features become blurred, and dependi
 source("code/02-raster-intro-plot2.R", print.eval = TRUE)
 ```
 
-### An introduction to raster
+### R packages for raster data handling
 
-The **raster** package supports raster objects in R. 
+<!--jn:toDo - update:-->
+<!-- one intro paragraph about terra + stars -->
+<!-- maybe also add comparison table -->
+
+```{r, echo=FALSE}
+rast_table = tibble::tribble(
+  ~Feature, ~terra, ~stars,
+  "Data types", "", "",
+  "Raster operations", "", "",
+  "Performance", "", ""
+)
+```
+
+### An introduction to terra
+
+The **terra** package supports raster objects in R. 
 It provides an extensive set of functions to create, read, export, manipulate and process raster datasets.
-Aside from general raster data manipulation, **raster** provides many low-level functions that can form the basis to develop more advanced raster functionality.
-\index{raster (package)|see {raster}}
-**raster** also lets you work on large raster datasets that are too large to fit into the main memory. 
-In this case, **raster** provides the possibility to divide the raster into smaller chunks (rows or blocks), and processes these iteratively instead of loading the whole raster file into RAM (for more information, please refer to `vignette("functions", package = "raster")`.
+Aside from general raster data manipulation, **terra** provides many low-level functions that can form the basis to develop more advanced raster functionality.
+\index{terra (package)|see {terra}}
+**terra** also lets you work on large raster datasets that are too large to fit into the main memory. 
+In this case, **terra** provides the possibility to divide the raster into smaller chunks, and processes these iteratively instead of loading the whole raster file into RAM.
 
-For the illustration of **raster** concepts, we will use datasets from the **spDataLarge** (note these packages were loaded at the beginning of the chapter).
+For the illustration of **terra** concepts, we will use datasets from the **spDataLarge**.
 It consists of a few raster objects and one vector object covering an area of the Zion National Park (Utah, USA).
 For example, `srtm.tif` is a digital elevation model of this area (for more details, see its documentation `?srtm`).
-First, let's create a `RasterLayer` object named `new_raster`:
+First, let's create a `SpatRaster` object named `my_rast`:
 
 ```{r 02-spatial-data-37, message=FALSE}
 raster_filepath = system.file("raster/srtm.tif", package = "spDataLarge")
-new_raster = raster(raster_filepath)
+my_rast = rast(raster_filepath)
 ```
 
-Typing the name of the raster into the console, will print out the raster header (extent, dimensions, resolution, CRS) and some additional information (class, data source name, summary of the raster values): 
+Typing the name of the raster into the console, will print out the raster header (dimensions, resolution, extent, CRS) and some additional information (class, data source, summary of the raster values): 
 
-```{r 02-spatial-data-38, eval=FALSE}
-new_raster
-#> class       : RasterLayer 
-#> dimensions  : 457, 465, 212505  (nrow, ncol, ncell)
-#> resolution  : 0.000833, 0.000833  (x, y)
-#> extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> data source : /home/robin/R/x86_64-pc-linux../3.5/spDataLarge/raster/srtm.tif 
-#> names       : srtm 
-#> values      : 1024, 2892  (min, max)
+```{r 02-spatial-data-38}
+my_rast
 ```
 
-Dedicated functions report each component: `dim(new_raster)` returns the number of rows, columns and layers; the `ncell()` function the number of cells (pixels); `res()` the raster's spatial resolution; `extent()` its spatial extent; and `crs()` its coordinate reference system (raster reprojection is covered in Section \@ref(reprojecting-raster-geometries)).
-`inMemory()` reports whether the raster data is stored in memory (the default) or on disk.
+Dedicated functions report each component: `dim(my_rast)` returns the number of rows, columns and layers; `ncell()` the number of cells (pixels); `res()` the spatial resolution; `ext()` its spatial extent; and `crs()` its coordinate reference system (raster reprojection is covered in Section \@ref(reprojecting-raster-geometries)).
+`inMemory()` reports whether the raster data is stored in memory or on disk.
 
-`help("raster-package")` returns a full list of all available **raster** functions.
+`help("terra-package")` returns a full list of all available **terra** functions.
 
 ### Basic map making {#basic-map-raster}
 
-Similar to the **sf** package, **raster** also provides `plot()` methods for its own classes.
+Similar to the **sf** package, **terra** also provides `plot()` methods for its own classes.
 \index{map making!basic raster}
 
 ```{r basic-new-raster-plot, fig.cap="Basic raster plot."}
-plot(new_raster)
+plot(my_rast)
 ```
 
 There are several other approaches for plotting raster data in R that are outside the scope of this section, including:
 
-- functions such as `spplot()` and `levelplot()` (from the **sp** and **rasterVis** packages, respectively) to create facets, a common technique for visualizing change over time; and
-- packages such as **tmap**, **mapview** and **leaflet** to create interactive maps of raster and vector objects (see Chapter \@ref(adv-map)). 
+- packages such as **tmap** to create static and interactive maps of raster and vector objects (see Chapter \@ref(adv-map)) 
+- functions, for example `levelplot()` from the **rasterVis** package, to create facets, a common technique for visualizing change over time
 
 ### Raster classes {#raster-classes}
 
-The `RasterLayer` class represents the simplest form of a raster object, and consists of only one layer.
-The easiest way to create a raster object in R is to read-in a raster file from disk or from a server.
+The `SpatRaster` class represents rasters object in **terra**.
+The easiest way to create a raster object in R is to read-in a raster file from disk or from a server (Section \@ref(raster-data-1).
 \index{raster!class}
 
 ```{r 02-spatial-data-41}
-raster_filepath = system.file("raster/srtm.tif", package = "spDataLarge")
-new_raster = raster(raster_filepath)
+single_raster_file = system.file("raster/srtm.tif", package = "spDataLarge")
+single_rast = rast(raster_filepath)
 ```
 
-The **raster** package supports numerous drivers with the help of **rgdal**.
-To find out which drivers are available on your system, run `raster::writeFormats()` and `rgdal::gdalDrivers()`.
+The **terra** package supports numerous drivers with the help of the GDAL library.
+Rasters from files are usually not read entirely into RAM, with an exception of their header and a pointer to the file itself.
 
-Rasters can also be created from scratch using the `raster()` function.
-This is illustrated in the subsequent code chunk, which results in a new `RasterLayer` object.
-The resulting raster consists of 36 cells (6 columns and 6 rows specified by `nrows` and `ncols`) centered around the Prime Meridian and the Equator (see `xmn`, `xmx`, `ymn` and `ymx` parameters).
-The CRS is the default of raster objects: WGS84.
-This means the unit of the resolution is in degrees which we set to 0.5 (`res`). 
+Rasters can also be created from scratch using the same `rast()` function.
+This is illustrated in the subsequent code chunk, which results in a new `SpatRaster` object.
+The resulting raster consists of 36 cells (6 columns and 6 rows specified by `nrows` and `ncols`) centered around the Prime Meridian and the Equator (see `xmin`, `xmax`, `ymin` and `ymax` parameters).
+The default CRS of raster objects is WGS84, but can be changed with the `crs` argument.
+This means the unit of the resolution is in degrees which we set to 0.5 (`resolution`). 
 Values (`vals`) are assigned to each cell: 1 to cell 1, 2 to cell 2, and so on.
-Remember: `raster()` fills cells row-wise (unlike `matrix()`) starting at the upper left corner, meaning the top row contains the values 1 to 6, the second 7 to 12, etc.
+Remember: `rast()` fills cells row-wise (unlike `matrix()`) starting at the upper left corner, meaning the top row contains the values 1 to 6, the second 7 to 12, etc.
 
 ```{r 02-spatial-data-42}
-new_raster2 = raster(nrows = 6, ncols = 6, res = 0.5, 
-                     xmn = -1.5, xmx = 1.5, ymn = -1.5, ymx = 1.5,
-                     vals = 1:36)
+new_raster = rast(nrows = 6, ncols = 6, resolution = 0.5, 
+                  xmin = -1.5, xmax = 1.5, ymin = -1.5, ymax = 1.5,
+                  vals = 1:36)
 ```
 
-For other ways of creating raster objects, see `?raster`.
+For other ways of creating raster objects, see `?rast`.
 
-Aside from `RasterLayer`, there are two additional classes: `RasterBrick` and `RasterStack`.
-Both can handle multiple layers, but differ regarding the number of supported file formats, type of internal representation and processing speed.
-
-A `RasterBrick` consists of multiple layers, which typically correspond to a single multispectral satellite file or a single multilayer object in memory. 
-The `brick()` function creates a `RasterBrick` object.
-Usually, you provide it with a filename to a multilayer raster file but might also use another raster object and other spatial objects (see `?brick` for all supported formats).
+The `SpatRaster` class also handles multiple layers, which typically correspond to a single multispectral satellite file or a time-series of rasters.
 
 ```{r 02-spatial-data-45}
 multi_raster_file = system.file("raster/landsat.tif", package = "spDataLarge")
-r_brick = brick(multi_raster_file)
+multi_rast = rast(multi_raster_file)
 ```
 
-```{r 02-spatial-data-46, eval=FALSE}
-r_brick
-#> class       : RasterBrick 
-#> resolution  : 30, 30  (x, y)
-#> ...
-#> names       : landsat.1, landsat.2, landsat.3, landsat.4 
-#> min values  :      7550,      6404,      5678,      5252 
-#> max values  :     19071,     22051,     25780,     31961
+```{r 02-spatial-data-46}
+multi_rast
 ```
 
-`nlayers()` retrieves the number of layers stored in a `Raster*` object:
+`nlyr()` retrieves the number of layers stored in a `SpatRaster` object:
 
 ```{r 02-spatial-data-47}
-nlayers(r_brick)
+nlyr(multi_rast)
 ```
 
-A `RasterStack` is similar to a `RasterBrick` in the sense that it consists also of multiple layers.
-However, in contrast to `RasterBrick`, `RasterStack` allows you to connect several raster objects stored in different files or multiple objects in memory.
-More specifically, a `RasterStack` is a list of `RasterLayer` objects with the same extent and resolution. 
-Hence, one way to create it is with the help of spatial objects already existing in R's global environment. 
-And again, one can simply specify a path to a file stored on disk.
-
-```{r 02-spatial-data-48}
-raster_on_disk = raster(r_brick, layer = 1)
-raster_in_memory = raster(xmn = 301905, xmx = 335745,
-                          ymn = 4111245, ymx = 4154085, 
-                          res = 30)
-values(raster_in_memory) = sample(seq_len(ncell(raster_in_memory)))
-crs(raster_in_memory) = crs(raster_on_disk)
-```
-
-```{r 02-spatial-data-49, eval=FALSE}
-r_stack = stack(raster_in_memory, raster_on_disk)
-r_stack
-#> class : RasterStack
-#> dimensions : 1428, 1128, 1610784, 2
-#> resolution : 30, 30
-#> ...
-#> names       :   layer, landsat.1 
-#> min values  :       1,      7550 
-#> max values  : 1610784,     19071
-```
-
-Another difference is that the processing time for `RasterBrick` objects is usually shorter than for `RasterStack` objects.
-
-Decision on which `Raster*` class should be used depends mostly on the character of input data. 
-Processing of a single mulitilayer file or object is the most effective with `RasterBrick`, while `RasterStack` allows calculations based on many files, many `Raster*` objects, or both.
-
-```{block2 02-spatial-data-50, type='rmdnote'}
-Operations on `RasterBrick` and `RasterStack` objects will typically return a `RasterBrick`.
-```
+<!--jn:toDo-->
+<!-- what else can be add here? -->
+<!-- pointers? reading from urls? -->
+<!-- combining or subseting layers? -->
 
 ## Coordinate Reference Systems {#crs-intro}
 
@@ -840,7 +811,7 @@ This has important consequences, as demonstrated in Section \@ref(reproj-geo-dat
 
 The surface of the Earth in geographic coordinate systems is represented by a spherical or ellipsoidal surface.
 Spherical models assume that the Earth is a perfect sphere of a given radius.
-Spherical models have the advantage of simplicity but are rarely used because they are inaccurate: the Earth is not a sphere!
+Spherical models have the advantage of simplicity but, at the same time, they are inaccurate: the Earth is not a sphere!
 Ellipsoidal models are defined by two parameters: the equatorial radius and the polar radius.
 These are suitable because the Earth is compressed: the equatorial radius is around 11.5 km longer than the polar radius [@maling_coordinate_1992].^[
 The degree of compression is often referred to as *flattening*, defined in terms of the equatorial radius ($a$) and polar radius ($b$) as follows: $f = (a - b) / a$. The terms *ellipticity* and *compression* can also be used.
@@ -848,25 +819,39 @@ Because $f$ is a rather small value, digital ellipsoid models use the 'inverse f
 Values of $a$ and $rf$ in various ellipsoidal models can be seen by executing `sf_proj_info(type = "ellps")`.
 ]
 
+<!--jn:toDo-->
+<!-- consider adding a new graphic with ellipsoid (left panel) -->
+<!-- and two datums on an ellipsoid (right panel) -->
+
 Ellipsoids are part of a wider component of CRSs: the *datum*.
-This contains information on what ellipsoid to use (with the `ellps` parameter in the PROJ CRS library) and the precise relationship between the Cartesian coordinates and location on the Earth's surface.
-These additional details are stored in the `towgs84` argument of [proj4string](https://proj.org/operations/conversions/latlon.html) notation (see [proj.org/usage/projections.html](https://proj.org/usage/projections.html) for details).
-These allow local variations in Earth's surface, for example due to large mountain ranges, to be accounted for in a local CRS.
-There are two types of datum --- local and geocentric.
-In a *local datum* such as `NAD83` the ellipsoidal surface is shifted to align with the surface at a particular location.
-In a *geocentric datum*  such as `WGS84` the center is the Earth's center of gravity and the accuracy of projections is not optimized for a specific location.
+This contains information on what ellipsoid to use and the precise relationship between the Cartesian coordinates and location on the Earth's surface.
+<!-- These additional details are stored in the `towgs84` argument of [proj4string](https://proj.org/operations/conversions/latlon.html) notation (see [proj.org/usage/projections.html](https://proj.org/usage/projections.html) for details). -->
+<!-- These allow local variations in Earth's surface, for example due to large mountain ranges, to be accounted for in a local CRS. -->
+There are two types of datum --- geocentric and local.
+In a *geocentric datum*,  such as `WGS84`, the center is the Earth's center of gravity and the accuracy of projections is not optimized for a specific location.
+In a *local datum*, such as `NAD83`, the ellipsoidal surface is shifted to align with the surface at a particular location.
+<!--jn:toDo-->
+<!--expand-->
 
 ### Projected coordinate reference systems 
+
+<!--jn:toDo-->
+<!--reorder the below par-->
 
 \index{CRS!projected}
 Projected CRSs are based on Cartesian coordinates on an implicitly flat surface (right panels of Figures \@ref(fig:vector-crs) and \@ref(fig:raster-crs)).
 They have an origin, x and y axes, and a linear unit of measurement such as meters.
 All projected CRSs are based on a geographic CRS, described in the previous section, and rely on map projections to convert the three-dimensional surface of the Earth into Easting and Northing (x and y) values in a projected CRS.
 
-This transition cannot be done without adding some distortion.
+This transition cannot be done without adding some deformations.
 Therefore, some properties of the Earth's surface are distorted in this process, such as area, direction, distance, and shape.
 A projected coordinate system can preserve only one or two of those properties.
 Projections are often named based on a property they preserve: equal-area preserves area, azimuthal preserve direction, equidistant preserve distance, and conformal preserve local shape.
+<!--jn:toDo-->
+<!--add info about projections trying to minimize all distortions-->
+
+<!--jn:toDo-->
+<!--consider adding new figure showing three main projection types-->
 
 There are three main groups of projection types - conic, cylindrical, and planar.
 In a conic projection, the Earth's surface is projected onto a cone along a single line of tangency or two lines of tangency. 
@@ -877,7 +862,7 @@ This projection could also be created by touching the Earth's surface along a si
 Cylindrical projections are used most often when mapping the entire world.
 A planar projection projects data onto a flat surface touching the globe at a point or along a line of tangency. 
 It is typically used in mapping polar regions.
-`st_proj_info(type = "proj")` gives a list of the available projections supported by the PROJ library.
+`sf_proj_info(type = "proj")` gives a list of the available projections supported by the PROJ library.
 
 ```{r vector-crs, echo=FALSE, fig.cap="Examples of geographic (WGS 84; left) and projected (NAD83 / UTM zone 12N; right) coordinate systems for a vector data type.", message=FALSE, fig.asp=0.56, fig.scap="Examples of geographic and projected CRSs (vector data)."}
 # source("https://github.com/Robinlovelace/geocompr/raw/main/code/02-vector-crs.R")
@@ -892,27 +877,41 @@ knitr::include_graphics("figures/02_raster_crs.png")
 ### CRSs in R {#crs-in-r}
 
 \index{CRS!EPSG}
+\index{CRS!WKT2}
 \index{CRS!proj4string}
-Two main ways to describe CRS in R are an `epsg` code or a `proj4string` definition.
+Two recommend ways to describe CRSs in R are (a) Spatial Reference System Identifier (SRID) or (b) a `WKT2` definition.
 Both of these approaches have advantages and disadvantages. 
+
+<!--jn:toDo-->
+<!-- rephrase the following paragraph from `epsg` into SRID -->
 An `epsg` code is usually shorter, and therefore easier to remember. 
 The code also refers to only one, well-defined coordinate reference system. 
-On the other hand, a `proj4string` definition allows you more flexibility when it comes to specifying different parameters such as the projection type, the datum and the ellipsoid.^[
-A complete list of the `proj4string` parameters can be found at https://proj.org.
-] 
-This way you can specify many different projections, and modify existing ones.
-This also makes the `proj4string` approach more complicated.
-`epsg` points to exactly one particular CRS.
+
+
+<!--jn:toDo-->
+<!--add WKT2 paragraph-->
+
+<!--jn:toDo-->
+<!--add proj4string paragraph-->
+
+<!-- On the other hand, a `proj4string` definition allows you more flexibility when it comes to specifying different parameters such as the projection type, the datum and the ellipsoid.^[ -->
+<!-- A complete list of the `proj4string` parameters can be found at https://proj.org. -->
+<!-- ]  -->
+<!-- This way you can specify many different projections, and modify existing ones. -->
+<!-- This also makes the `proj4string` approach more complicated. -->
+<!-- `epsg` points to exactly one particular CRS. -->
 
 Spatial R packages support a wide range of CRSs and they use the long-established [PROJ](https://proj.org) library.
-Other than searching for EPSG codes online, another quick way to find out about available CRSs is via the `rgdal::make_EPSG()` function, which outputs a data frame of available projections.
-Before going into more detail, it's worth learning how to view and filter them inside R, as this could save time trawling the internet.
-The following code will show available CRSs interactively, allowing you to filter ones of interest (try filtering for the OSGB CRSs for example):
+<!--jn:toDo-->
+<!--mention websites and the crssuggest package-->
+<!-- Other than searching for EPSG codes online, another quick way to find out about available CRSs is via the `rgdal::make_EPSG()` function, which outputs a data frame of available projections. -->
+<!-- Before going into more detail, it is worth learning how to view and filter them inside R, as this could save time trawling the internet. -->
+<!-- The following code will show available CRSs interactively, allowing you to filter ones of interest (try filtering for the OSGB CRSs for example): -->
 
-```{r 02-spatial-data-51, eval=FALSE}
-crs_data = rgdal::make_EPSG()
-View(crs_data)
-```
+<!-- ```{r 02-spatial-data-51, eval=FALSE} -->
+<!-- crs_data = rgdal::make_EPSG() -->
+<!-- View(crs_data) -->
+<!-- ``` -->
 
 In **sf** the CRS of an object can be retrieved using `st_crs()`.
 For this, we need to read-in a vector dataset:
@@ -924,37 +923,32 @@ new_vector = st_read(vector_filepath)
 
 Our new object, `new_vector`, is a polygon representing the borders of Zion National Park (`?zion`).
 
-```{r 02-spatial-data-53, eval=FALSE}
+```{r 02-spatial-data-53, eval=TRUE}
 st_crs(new_vector) # get CRS
-#> Coordinate Reference System:
-#> No EPSG code
-#> proj4string: "+proj=utm +zone=12 +ellps=GRS80 ... +units=m +no_defs"
 ```
 
 In cases when a coordinate reference system (CRS) is missing or the wrong CRS is set, the `st_set_crs()` function can be used:
 
 ```{r 02-spatial-data-54}
-new_vector = st_set_crs(new_vector, 4326) # set CRS
+new_vector = st_set_crs(new_vector, "EPSG:26912") # set CRS
 ```
 
 The warning message informs us that the `st_set_crs()` function does not transform data from one CRS to another.
 
-The `projection()` function can be used to access CRS information from a `Raster*` object: 
+The `crs()` function can be used to access CRS information from a `SpatRaster` object: 
 
 ```{r 02-spatial-data-55}
-projection(new_raster) # get CRS
+crs(my_rast) # get CRS
 ```
 
-The same function, `projection()`, is used to set a CRS for raster objects.
-The main difference, compared to vector data, is that raster objects only accept `proj4` definitions:
+The same function, `crs()`, is used to set a CRS for raster objects.
 
 ```{r 02-spatial-data-56}
-new_raster3 = new_raster
-projection(new_raster3) = "+proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 
-                            +units=m +no_defs" # set CRS
+my_rast2 = my_rast
+crs(my_rast2) = "EPSG:26912" # set CRS
 ```
 
-Importantly, the `st_crs()` and `projection()` functions do not alter coordinates' values or geometries.
+Importantly, the `st_crs()` and `crs()` functions do not alter coordinates' values or geometries.
 Their role is only to set a metadata information about the object CRS.
 We will expand on CRSs and explain how to project from one CRS to another in Chapter \@ref(reproj-geo-data).
 
@@ -963,8 +957,8 @@ We will expand on CRSs and explain how to project from one CRS to another in Cha
 <!-- https://cran.r-project.org/web/packages/units/vignettes/measurement_units_in_R.html -->
 An important feature of CRSs is that they contain information about spatial units.
 Clearly, it is vital to know whether a house's measurements are in feet or meters, and the same applies to maps.
-It is good cartographic practice to add a *scale bar* onto maps to demonstrate the relationship between distances on the page or screen and distances on the ground.
-Likewise, it is important to formally specify the units in which the geometry data or pixels are measured to provide context, and ensure that subsequent calculations are done in context.
+It is good cartographic practice to add a *scale bar* or some other distance indicator onto maps to demonstrate the relationship between distances on the page or screen and distances on the ground.
+Likewise, it is important to formally specify the units in which the geometry data or cells are measured to provide context, and ensure that subsequent calculations are done in context.
 
 A novel feature of geometry data in `sf` objects is that they have *native support* for units.
 This means that distance, area and other geometric calculations in **sf** return values that come with a `units` attribute, defined by the **units** package [@pebesma_measurement_2016].
@@ -1000,17 +994,19 @@ units::set_units(st_area(luxembourg), km^2)
 
 Units are of equal importance in the case of raster data.
 However, so far **sf** is the only spatial package that supports units, meaning that people working on raster data should approach changes in the units of analysis (for example, converting pixel widths from imperial to decimal units) with care.
-The `new_raster` object (see above) uses a WGS84 projection with decimal degrees as units.
+The `my_rast` object (see above) uses a WGS84 projection with decimal degrees as units.
 Consequently, its resolution is also given in decimal degrees but you have to know it, since the `res()` function simply returns a numeric vector.
 
 ```{r 02-spatial-data-61}
-res(new_raster)
+res(my_rast)
 ```
 
 If we used the UTM projection, the units would change.
 
-```{r 02-spatial-data-62, warning=FALSE, message=FALSE}
-repr = projectRaster(new_raster, crs = 26912)
+<!--jn:toDO-->
+<!--set eval=TRUE later-->
+```{r 02-spatial-data-62, warning=FALSE, message=FALSE, eval=FALSE}
+repr = project(my_rast, "EPSG:26912")
 res(repr)
 ```
 
@@ -1018,26 +1014,8 @@ Again, the `res()` command gives back a numeric vector without any unit, forcing
 
 ## Exercises {#ex2}
 
-<!-- vector exercises -->
-1. Use `summary()` on the geometry column of the `world` data object. What does the output tell us about:
-    - Its geometry type?
-    - The number of countries?
-    - Its coordinate reference system (CRS)?
-1. Run the code that 'generated' the map of the world in Figure \@ref(fig:contpop) at the end of Section \@ref(base-args).
-Find two similarities and two differences between the image on your computer and that in the book.
-    - What does the `cex` argument do (see `?plot`)?
-    - Why was `cex` set to the `sqrt(world$pop) / 10000`?
-    - Bonus: experiment with different ways to visualize the global population.
-    <!-- - Bonus: what equivalent arguments to `cex` exist in the dedicated visualization package **tmap**? -->
-1. Use `plot()` to create maps of Nigeria in context (see Section \@ref(base-args)).
-    - Adjust the `lwd`, `col` and `expandBB` arguments of `plot()`. 
-    - Challenge: read the documentation of `text()` and annotate the map.
-    <!-- - Bonus: make the country boundaries a dotted gray line. -->
-    <!-- - Hint: `border` is an additional argument of `plot()` for **sf**  objects. -->
-<!-- raster exercises -->
-1. Create an empty `RasterLayer` object called `my_raster` with 10 columns and 10 rows.
-Assign random values between 0 and 10 to the new raster and plot it.
-1. Read-in the `raster/nlcd2011.tif` file from the **spDataLarge** package. 
-What kind of information can you get about the properties of this file?
-
-Reminder: solutions can be found online at https://geocompr.github.io
+```{r, echo=FALSE, results='asis'}
+res = knitr::knit_child('_02-ex.Rmd', quiet = TRUE, 
+                        options = list(include = FALSE, eval = FALSE))
+cat(res, sep = '\n')
+```

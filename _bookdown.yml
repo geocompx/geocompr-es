@@ -2,6 +2,7 @@ book_filename: geocompr2
 rmd_files: 
     - "index.Rmd"
     - "01-intro.Rmd"
+    - "02-datos-espaciales.Rmd"
 new_session: yes
 before_chapter_script: ["code/before_script.R"]
 delete_merged_file: true
