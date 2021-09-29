@@ -58,8 +58,8 @@
 <li><a class="" href="foreword.html">Foreword</a></li>
 <li><a class="" href="preface.html">Preface</a></li>
 <li><a class="active" href="intro.html"><span class="header-section-number">1</span> Introducción</a></li>
-<li class="book-part">Foundations</li>
-<li><a class="" href="spatial-class.html"><span class="header-section-number">2</span> Geographic data in R</a></li>
+<li class="book-part">Fundamentos</li>
+<li><a class="" href="spatial-class.html"><span class="header-section-number">2</span> Datos geográficos en R</a></li>
 </ul>
 
         <div class="book-extra">
@@ -354,7 +354,7 @@ Muchas de estas capacidades adicionales fueron desarrolladas por Barry Rowlingso
 <!-- five years later) and the [R-sig-geo mailing list](https://stat.ethz.ch/mailman/listinfo/r-sig-geo) was started. -->
 Antes de 2005, las coordenadas geográficas se trataban generalmente como cualquier otro número.
 <strong>sp</strong> cambió esto con sus clases y métodos genéricos que soportan puntos, líneas, polígonos y cuadrículas, y datos de atributos.</p>
-<p><strong>sp</strong> almacena información como el cuadro delimitador, el sistema de referencia de coordenadas y los atributos en ranuras de objetos <code>espaciales</code> que utilizan el sistema de clases S4, lo que permite que las operaciones de datos funcionen con datos geográficos (véase la sección <a href="spatial-class.html#why-simple-features">2.2.2</a>).
+<p><strong>sp</strong> almacena información como el cuadro delimitador, el sistema de referencia de coordenadas y los atributos en ranuras de objetos <code>espaciales</code> que utilizan el sistema de clases S4, lo que permite que las operaciones de datos funcionen con datos geográficos (véase la sección <a href="#why-simple-features"><strong>??</strong></a>).
 Además, <strong>sp</strong> proporciona métodos genéricos como <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> y <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> para datos geográficos.
 En la década siguiente, las clases <strong>sp</strong> se popularizaron rápidamente para los datos geográficos en R y el número de paquetes que dependían de él se incrementó de unos 20 en 2008 a más de 100 en 2013 <span class="citation">(Bivand, Pebesma, and Gómez-Rubio <a href="spatial-class.html#ref-bivand_applied_2013" role="doc-biblioref">2013</a>)</span>.</p>
 <p>En 2018, casi 500 paquetes dependen de <strong>sp</strong>, lo que lo convierte en una parte importante del ecosistema de R.
@@ -363,7 +363,7 @@ Entre los paquetes R más destacados que utilizan <strong>sp</strong> se encuent
 Colin Rundel abordó este problema desarrollando <strong>rgeos</strong>, una interfaz de R para la librería de geometría en código abierto (GEOS) durante un proyecto de Google Summer of Code en 2010 <span class="citation">(Bivand and Rundel <a href="spatial-class.html#ref-R-rgeos" role="doc-biblioref">2018</a>)</span>.
 <strong>rgeos</strong> permitió a GEOS manipular objetos <strong>sp</strong>, con funciones como <code>gIntersection()</code>.</p>
 <p>Otra limitación de <strong>sp</strong> — su limitado apoyo a los datos raster — fue superada por <strong>raster</strong>, publicado por primera vez en 2010 <span class="citation">(Hijmans <a href="spatial-class.html#ref-R-raster" role="doc-biblioref">2017</a>)</span>.
-Su sistema de clases y sus funciones soportan una serie de operaciones de rasterización, como se indica en la sección <a href="spatial-class.html#raster-data">2.3</a>.
+Su sistema de clases y sus funciones soportan una serie de operaciones de rasterización, como se indica en la sección <a href="#raster-data"><strong>??</strong></a>.
 Una característica clave de <strong>raster</strong> es su capacidad para trabajar con conjuntos de datos que son demasiado grandes para caber en la memoria RAM (la interfaz de R con PostGIS admite operaciones fuera del disco sobre datos geográficos vectoriales).
 <strong>raster</strong> también admite el álgebra de mapas (véase la sección <a href="#map-algebra"><strong>??</strong></a>).</p>
 <p>Paralelamente a estos desarrollos de sistemas de clases y métodos, llegó el apoyo a R como interfaz para el software SIG dedicado.
@@ -394,7 +394,7 @@ A partir de 2018, la creación de mapas en R es un tema candente con paquetes de
 
   <div class="chapter-nav">
 <div class="prev"><a href="preface.html">Preface</a></div>
-<div class="next"><a href="spatial-class.html"><span class="header-section-number">2</span> Geographic data in R</a></div>
+<div class="next"><a href="spatial-class.html"><span class="header-section-number">2</span> Datos geográficos en R</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -422,7 +422,7 @@ A partir de 2018, la creación de mapas en R es un tema candente con paquetes de
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-09-20.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-09-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
