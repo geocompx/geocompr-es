@@ -339,9 +339,3 @@ A partir de 2018, la creación de mapas en R es un tema candente con paquetes de
 
 ## Ejercicios
 
-1. Piensa en los términos "SIG"\index{GIS} (Sistemas de Información Geográfica o GIS en inglés), "GDS" y "geocomputación" descritos anteriormente. ¿Cuál de ellos (si es que hay alguno) describe mejor el trabajo que te gustaría realizar utilizando métodos y software de geocomputación y por qué?
-
-1. Indica tres razones para utilizar un lenguaje de programación como R para la geocomputación en lugar de utilizar un programa SIG establecido como QGIS\index{QGIS}.
-
-1. Menciona dos ventajas y dos desventajas sobre utilizar paquetes maduros frente a los recientes para el análisis de datos geográficos\index{geographic data analysis} (por ejemplo, **sp** frente a **sf**\index{sf}).
-

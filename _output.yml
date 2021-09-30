@@ -29,6 +29,7 @@ bookdown::gitbook:
         <li><a href="https://robinlovelace.net/">Robin Lovelace</a></li>
         <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
         <li><a href="https://github.com/jannes-m/">Jannes Muenchow</a></li>
+        <li><a href="https://github.com/DataMirai">Traducción: Mireia Camacho</a></li>
     edit:
       link: https://github.com/geocompr/es/edit/main/%s
       text: "Edit"
