@@ -156,7 +156,7 @@ if(knitr::is_latex_output()){
     #   addMarkers(c(-3, 23, 11, 2), c(52, 53, 49, 42), popup = popup)
     # library(htmlwidgets)
     # saveWidget(interactive, file = "interactive.html")
-    # file.copy("interactive.html", "~/geocompr/geocompr.github.io/static/img/interactive-es.html")
+    # file.copy("interactive.html", "~/geocompr/geocompr.github.io/static/img/interactive-es.html", T)
     knitr::include_url("https://geocompr.github.io/img/interactive-es.html")
 }
 ```
