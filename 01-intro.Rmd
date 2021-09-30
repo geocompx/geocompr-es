@@ -142,9 +142,7 @@ library(leaflet)
 popup = c("Robin", "Jakub", "Jannes", "Mireia")
 leaflet() %>%
   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012") %>%
-  addMarkers(lng = c(-3, 23, 11, 2),
-             lat = c(52, 53, 49, 42), 
-             popup = popup)
+  addMarkers(c(-3, 23, 11, 2), c(52, 53, 49, 42), popup = popup)
 ```
 
 ```{r interactive, fig.cap="Los marcadores azules indican la procedencia de los autores. El mapa base es una imagen en mosaico de la Tierra de noche proporcionada por la NASA. Interactúa con la versión en línea en geocompr.robinlovelace.net, por ejemplo, ampliando la imagen y haciendo clic en las ventanas emergentes.", out.width="100%", fig.scap="¿De dónde son los autores?", echo=FALSE}
@@ -155,13 +153,11 @@ if(knitr::is_latex_output()){
     # popup = c("Robin", "Jakub", "Jannes")
     # interactive = leaflet() %>%
     #   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012") %>%
-    #   addMarkers(lng = c(-3, 23, 11),
-    #              lat = c(52, 53, 49), 
-    #              popup = popup)  
+    #   addMarkers(c(-3, 23, 11, 2), c(52, 53, 49, 42), popup = popup)
     # library(htmlwidgets)
     # saveWidget(interactive, file = "interactive.html")
-    # file.copy("interactive.html", "~/geocompr/geocompr.github.io/static/img/interactive.html")
-    knitr::include_url("https://geocompr.github.io/img/interactive.html")
+    # file.copy("interactive.html", "~/geocompr/geocompr.github.io/static/img/interactive-es.html")
+    knitr::include_url("https://geocompr.github.io/img/interactive-es.html")
 }
 ```
 \index{map making!interactive}
