@@ -29,12 +29,12 @@ is_html = knitr::is_html_output()
 ```{asis index-2, echo=is_html}
 # Welcome {-}
 
-This is the online home of *Geocomputación con R*, a book on geographic data analysis, visualization and modeling.
+This is the online home of *Geocomputation with R*, a book on geographic data analysis, visualization and modeling.
 
 <a href="https://www.routledge.com/9781138304512"><img src="images/cover.png" width="250" height="375" alt="The geocompr book cover" align="right" style="margin: 0 1em 0 1em" /></a>
   
 **Note**: The first edition of the book has been published by CRC Press in the [R Series](https://www.routledge.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER).
-You can buy the book from [CRC Press](https://www.routledge.com/9781138304512), or [Amazon](https://www.amazon.com/Geocomputation-R-Robin-Lovelace-dp-0367670577/dp/0367670577/).
+You can buy the book from [CRC Press](https://www.routledge.com/9781138304512), or [Amazon](https://www.amazon.com/Geocomputation-R-Robin-Lovelace-dp-0367670577/dp/0367670577/), and see the archived first edition on the open source book platform [bookdown.org](https://bookdown.org/robinlovelace/geocompr/spatial-class.html). 
 
 Inspired by [**bookdown**](https://github.com/rstudio/bookdown) and the Free and Open Source Software for Geospatial ([FOSS4G](https://foss4g.org/)) movement, this book is open source.
 This ensures its contents are reproducible and publicly accessible for people worldwide.
@@ -67,12 +67,44 @@ Maintainers and contributors must follow this repository’s [CODE OF CONDUCT](h
 
 ## Reproducibility {-}
 
-To reproduce the code in the book, you need a recent version of [R](https://cran.r-project.org/) and up-to-date packages.
-These can be installed with the following command (which requires [**remotes**](https://github.com/r-lib/remotes)):
+The quickest way to reproduce the contents of the book if you're new to geographic data in R may be in the web browser, thanks to [Binder](https://mybinder.org/).
+Clicking on the link below should open a new window containing RStudio Server in your web browser, enabling you to open chapter files and running code chunks to test that the code is reproducible.
+
+[![Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/robinlovelace/geocompr/main?urlpath=rstudio)
+
+If you see something like the image below, congratulations, it's worked and you can start exploring Geocomputation with R in a cloud-based environment (while being aware of [mybinder.org user guidelines](https://mybinder.readthedocs.io/en/latest/about/user-guidelines.html)):
+
+<!-- ![](https://user-images.githubusercontent.com/1825120/134802314-6dd368c7-f5eb-4cd7-b8ff-428dfa93954c.png) -->
+```
+
+
+```{r index-2-4, echo=FALSE, fig.cap="Screenshot of reproducible code contained in Geocomputation with R running in RStudio Server on a browser served by Binder"}
+knitr::include_graphics("https://user-images.githubusercontent.com/1825120/134802314-6dd368c7-f5eb-4cd7-b8ff-428dfa93954c.png")
+```
+
+
+```{asis index-2-5, echo=is_html}
+To reproduce the code in the book on your own computer, you need a recent version of [R](https://cran.r-project.org/) and up-to-date packages.
+These can be installed using the [**remotes**](https://github.com/r-lib/remotes) package.
 ```
 
 ```{r index-3, message=FALSE, eval=FALSE, echo=is_html, results='hide'}
+install.packages("remotes")
 remotes::install_github("geocompr/geocompkg")
+remotes::install_github("nowosad/spData")
+remotes::install_github("nowosad/spDataLarge")
+
+# During development work on the 2nd edition you may also need dev versions of
+# other packages to build the book, e.g.:
+remotes::install_github("rspatial/terra")
+remotes::install_github("mtennekes/tmap")
+```
+
+After installing the book's dependencies, you should be able to reproduce code chunks in each of the book's chapters.
+If you clone the book's repo and navigate into the `geocompr` folder, you should be able to reproduce the contents with the following command:
+
+```{r index-3-1, eval=FALSE}
+bookdown::serve_book()
 ```
 
 ```{r index-3-2, echo=FALSE}
@@ -86,15 +118,8 @@ if(!geocompkg_is_installed){
 ```
 
 ```{asis index-23, echo=is_html}
-To build the book locally, clone or [download](https://github.com/Robinlovelace/geocompr/archive/main.zip) the [geocompr repo](https://github.com/Robinlovelace/geocompr/), load R in root directory (e.g., by opening [geocompr.Rproj](https://github.com/Robinlovelace/geocompr/blob/main/geocompr.Rproj) in RStudio) and run the following lines:
+See the project's [GitHub repo](https://github.com/robinlovelace/geocompr#reproducing-the-book) for details on reproducing the book.
 ```
-
-```{r index-4, eval=FALSE, echo=is_html}
-bookdown::render_book("index.Rmd") # to build the book
-browseURL("_book/index.html") # to view it
-```
-
-<!-- suggested content on if you find the book useful but this intro is already quite long (RL)-->
 
 ```{asis index-22, echo=is_html}
 ## Supporting the project {-}
@@ -132,7 +157,7 @@ Further details can be found at [github.com/Robinlovelace/geocompr](https://gith
 \begin{center} \Large \emph{F{\"u}r meine Katharina und alle unsere Kinder  } \end{center}
 ```
 
-# Foreword {-}
+# Foreword (1st Edition) {-}
 
 Doing 'spatial' in R has always been about being broad, seeking to provide and integrate tools from geography, geoinformatics, geocomputation and spatial statistics for anyone interested in joining in: joining in asking interesting questions, contributing fruitful research questions, and writing and improving code.
 That is, doing 'spatial' in R has always included open source code, open data and reproducibility.
@@ -192,7 +217,7 @@ Completing these will develop your skills and equip you with the confidence need
 Solutions to the exercises, and a number of extended examples, are provided on the book's supporting website, at [geocompr.github.io](https://geocompr.github.io/).
 
 Impatient readers are welcome to dive straight into the practical examples, starting in Chapter \@ref(spatial-class).
-However, we recommend reading about the wider context of *Geocomputación con R* in Chapter \@ref(intro) first.
+However, we recommend reading about the wider context of *Geocomputation with R* in Chapter \@ref(intro) first.
 If you are new to R, we also recommend learning more about the language before attempting to run the code chunks provided in each chapter (unless you're reading the book for an understanding of the concepts).
 Fortunately for R beginners R has a supportive community that has developed a wealth of resources that can help.
 We particularly recommend three tutorials:  [R for Data Science](http://r4ds.had.co.nz/) [@grolemund_r_2016] and [Efficient R Programming](https://csgillespie.github.io/efficientR/) [@gillespie_efficient_2016], especially [Chapter 2](https://csgillespie.github.io/efficientR/set-up.html#r-version) (on installing and setting-up R/RStudio) and [Chapter 10](https://csgillespie.github.io/efficientR/learning.html) (on learning to learn), and  [An introduction to R](http://colinfay.me/intro-to-r/) [@venables_introduction_2017].
@@ -219,7 +244,7 @@ Furthermore, by teaching how to use one language (R) in depth, this book will eq
 
 ## Real-world impact {-}
 
-*Geocomputación con R* will equip you with knowledge and skills to tackle a wide range of issues, including those with scientific, societal and environmental implications, manifested in geographic data.
+*Geocomputation with R* will equip you with knowledge and skills to tackle a wide range of issues, including those with scientific, societal and environmental implications, manifested in geographic data.
 As described in Section \@ref(what-is-geocomputation), geocomputation is not only about using computers to process geographic data:
 it is also about real-world impact.
 If you are interested in the wider context and motivations behind this book, read on; these are covered in Chapter \@ref(intro).
@@ -249,5 +274,5 @@ Tim Appelhans and David Cooley for key contributions to the visualization chapte
 and Katy Gregg, who proofread every chapter and greatly improved the readability of the book.
 
 Countless others could be mentioned who contributed in myriad ways.
-The final thank you is for all the software developers who make Geocomputación con R possible.
+The final thank you is for all the software developers who make geocomputation with R possible.
 Edzer Pebesma (who created the **sf** package), Robert Hijmans (who created **raster**) and Roger Bivand (who laid the foundations for much R-spatial software) have made high performance geographic computing possible in R.
