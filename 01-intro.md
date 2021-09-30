@@ -132,13 +132,11 @@ library(leaflet)
 popup = c("Robin", "Jakub", "Jannes", "Mireia")
 leaflet() %>%
   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012") %>%
-  addMarkers(lng = c(-3, 23, 11, 2),
-             lat = c(52, 53, 49, 42), 
-             popup = popup)
+  addMarkers(c(-3, 23, 11, 2), c(52, 53, 49, 42), popup = popup)
 ```
 
 <div class="figure" style="text-align: center">
-<iframe src="https://geocompr.github.io/img/interactive.html" width="100%" height="400px" data-external="1"></iframe>
+<iframe src="https://geocompr.github.io/img/interactive-es.html" width="100%" height="400px" data-external="1"></iframe>
 <p class="caption">(\#fig:interactive)Los marcadores azules indican la procedencia de los autores. El mapa base es una imagen en mosaico de la Tierra de noche proporcionada por la NASA. Interactúa con la versión en línea en geocompr.robinlovelace.net, por ejemplo, ampliando la imagen y haciendo clic en las ventanas emergentes.</p>
 </div>
 \index{map making!interactive}

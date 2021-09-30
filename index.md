@@ -1,14 +1,14 @@
 --- 
 title: 'Geocomputación con R'
 author: 'Robin Lovelace, Jakub Nowosad, Jannes Muenchow'
-date: '2021-09-29'
+date: '2021-09-30'
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
 documentclass: krantz
 monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
 bibliography:
-  - refs.bib
+  - geocompr.bib
   - packages.bib
 biblio-style: apalike
 link-citations: yes
@@ -17,7 +17,7 @@ graphics: yes
 description: "Geocomputación con R is for people who want to analyze, visualize and model geographic data with open source software. It is based on R, a statistical programming language that has powerful data processing, visualization, and geospatial capabilities. The book equips you with the knowledge and skills to tackle a wide range of issues manifested in geographic data, including those with scientific, societal, and environmental implications. This book will interest people from many backgrounds, especially Geographic Information Systems (GIS) users interested in applying their domain-specific knowledge in a powerful open source language for data science, and R users interested in extending their skills to handle spatial data."
 github-repo: "Robinlovelace/geocompr"
 cover-image: "images/cover.png"
-url: https://geocompr.robinlovelace.net/
+url: https://geocompr.github.io/es/
 ---
 
 
@@ -29,7 +29,7 @@ This is the online home of *Geocomputación con R*, a book on geographic data an
 <a href="https://www.routledge.com/9781138304512"><img src="images/cover.png" width="250" height="375" alt="The geocompr book cover" align="right" style="margin: 0 1em 0 1em" /></a>
   
 **Note**: The first edition of the book has been published by CRC Press in the [R Series](https://www.routledge.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER).
-You can buy the book from [CRC Press](https://www.routledge.com/9781138304512), or [Amazon](https://www.amazon.com/Geocomputation-R-Robin-Lovelace-dp-0367670577/dp/0367670577/).
+You can buy the book from [CRC Press](https://www.routledge.com/9781138304512), or [Amazon](https://www.amazon.com/Geocomputation-R-Robin-Lovelace-dp-0367670577/dp/0367670577/), and see the archived first edition on the open source book platform [bookdown.org](https://bookdown.org/robinlovelace/geocompr/spatial-class.html). 
 
 Inspired by [**bookdown**](https://github.com/rstudio/bookdown) and the Free and Open Source Software for Geospatial ([FOSS4G](https://foss4g.org/)) movement, this book is open source.
 This ensures its contents are reproducible and publicly accessible for people worldwide.
@@ -38,7 +38,7 @@ The online version of the book is hosted at [geocompr.robinlovelace.net](https:/
 
 [![Actions](https://github.com/Robinlovelace/geocompr/workflows/Render/badge.svg)](https://github.com/Robinlovelace/geocompr/actions)
 
-This version of the book was built on GH Actions on 2021-09-29.
+This version of the book was built on GH Actions on 2021-09-30.
 
 ## How to contribute? {-}
 
@@ -54,25 +54,49 @@ Maintainers and contributors must follow this repository’s [CODE OF CONDUCT](h
 
 ## Reproducibility {-}
 
-To reproduce the code in the book, you need a recent version of [R](https://cran.r-project.org/) and up-to-date packages.
-These can be installed with the following command (which requires [**remotes**](https://github.com/r-lib/remotes)):
+The quickest way to reproduce the contents of the book if you're new to geographic data in R may be in the web browser, thanks to [Binder](https://mybinder.org/).
+Clicking on the link below should open a new window containing RStudio Server in your web browser, enabling you to open chapter files and running code chunks to test that the code is reproducible.
+
+[![Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/robinlovelace/geocompr/main?urlpath=rstudio)
+
+If you see something like the image below, congratulations, it's worked and you can start exploring Geocomputación con R in a cloud-based environment (while being aware of [mybinder.org user guidelines](https://mybinder.readthedocs.io/en/latest/about/user-guidelines.html)):
+
+<!-- ![](https://user-images.githubusercontent.com/1825120/134802314-6dd368c7-f5eb-4cd7-b8ff-428dfa93954c.png) -->
+
+
+<div class="figure" style="text-align: center">
+<img src="https://user-images.githubusercontent.com/1825120/134802314-6dd368c7-f5eb-4cd7-b8ff-428dfa93954c.png" alt="Screenshot of reproducible code contained in Geocomputación con R running in RStudio Server on a browser served by Binder" width="100%" />
+<p class="caption">(\#fig:index-2-4)Screenshot of reproducible code contained in Geocomputación con R running in RStudio Server on a browser served by Binder</p>
+</div>
+
+
+To reproduce the code in the book on your own computer, you need a recent version of [R](https://cran.r-project.org/) and up-to-date packages.
+These can be installed using the [**remotes**](https://github.com/r-lib/remotes) package.
 
 
 ```r
+install.packages("remotes")
 remotes::install_github("geocompr/geocompkg")
+remotes::install_github("nowosad/spData")
+remotes::install_github("nowosad/spDataLarge")
+
+# During development work on the 2nd edition you may also need dev versions of
+# other packages to build the book, e.g.:
+remotes::install_github("rspatial/terra")
+remotes::install_github("mtennekes/tmap")
 ```
 
-
-
-To build the book locally, clone or [download](https://github.com/Robinlovelace/geocompr/archive/main.zip) the [geocompr repo](https://github.com/Robinlovelace/geocompr/), load R in root directory (e.g., by opening [geocompr.Rproj](https://github.com/Robinlovelace/geocompr/blob/main/geocompr.Rproj) in RStudio) and run the following lines:
+After installing the book's dependencies, you should be able to reproduce code chunks in each of the book's chapters.
+If you clone the book's repo and navigate into the `geocompr` folder, you should be able to reproduce the contents with the following command:
 
 
 ```r
-bookdown::render_book("index.Rmd") # to build the book
-browseURL("_book/index.html") # to view it
+bookdown::serve_book()
 ```
 
-<!-- suggested content on if you find the book useful but this intro is already quite long (RL)-->
+
+
+See the project's [GitHub repo](https://github.com/robinlovelace/geocompr#reproducing-the-book) for details on reproducing the book.
 
 ## Supporting the project {-}
 
@@ -94,7 +118,7 @@ Further details can be found at [github.com/Robinlovelace/geocompr](https://gith
 
 
 
-# Foreword {-}
+# Foreword (1st Edition) {-}
 
 Doing 'spatial' in R has always been about being broad, seeking to provide and integrate tools from geography, geoinformatics, geocomputation and spatial statistics for anyone interested in joining in: joining in asking interesting questions, contributing fruitful research questions, and writing and improving code.
 That is, doing 'spatial' in R has always included open source code, open data and reproducibility.

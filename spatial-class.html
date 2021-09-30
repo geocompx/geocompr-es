@@ -10,13 +10,13 @@
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Chapter 2 Datos geográficos en R | Geocomputación con R">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://geocompr.robinlovelace.net/spatial-class.html">
-<meta property="og:image" content="https://geocompr.robinlovelace.net/images/cover.png">
+<meta property="og:url" content="https://geocompr.github.io/es/spatial-class.html">
+<meta property="og:image" content="https://geocompr.github.io/es/images/cover.png">
 <meta property="og:description" content="Prerrequisitos Este es el primer capítulo práctico del libro y, por lo tanto, conlleva algunos requisitos de software. Suponemos que ya tienes instalada una versión actualizada de R y que te...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 2 Datos geográficos en R | Geocomputación con R">
 <meta name="twitter:description" content="Prerrequisitos Este es el primer capítulo práctico del libro y, por lo tanto, conlleva algunos requisitos de software. Suponemos que ya tienes instalada una versión actualizada de R y que te...">
-<meta name="twitter:image" content="https://geocompr.robinlovelace.net/images/cover.png">
+<meta name="twitter:image" content="https://geocompr.github.io/es/images/cover.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Lato-0.4.0/font.css" rel="stylesheet">
@@ -55,7 +55,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome</a></li>
-<li><a class="" href="foreword.html">Foreword</a></li>
+<li><a class="" href="foreword-1st-edition.html">Foreword (1st Edition)</a></li>
 <li><a class="" href="preface.html">Preface</a></li>
 <li><a class="" href="intro.html"><span class="header-section-number">1</span> Introducción</a></li>
 <li class="book-part">Fundamentos</li>
@@ -63,7 +63,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/Robinlovelace/geocompr">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/geocompr/es">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -684,7 +684,7 @@ Simple features son, en esencia, marcos de datos con una extensión espacial.</p
 </h2>
 <p>El modelo de datos espaciales rasterizados representa el mundo con la cuadrícula continua de celdas (a menudo también llamadas píxeles; <a href="spatial-class.html#fig:raster-intro-plot">2.10</a>:A).
 Este modelo de datos suele referirse a las llamadas cuadrículas regulares, en las que cada celda tiene el mismo tamaño constante, y en este libro nos centraremos únicamente en las cuadrículas regulares.
-Sin embargo, existen otros tipos de cuadrículas, como las cuadrículas rotadas, cizalladas, rectilíneas y curvilíneas (véase el capítulo 1 de <span class="citation">(<span class="citeproc-not-found" data-reference-id="pebesma_spatial_2022"><strong>???</strong></span>)</span> o el capítulo 2 de <span class="citation">(<span class="citeproc-not-found" data-reference-id="tennekes_elegant_2022"><strong>???</strong></span>)</span>)).</p>
+Sin embargo, existen otros tipos de cuadrículas, como las cuadrículas rotadas, cizalladas, rectilíneas y curvilíneas (véase el capítulo 1 de <span class="citation">Pebesma and Bivand (<a href="spatial-class.html#ref-pebesma_spatial_2022" role="doc-biblioref">2022</a>)</span> o el capítulo 2 de <span class="citation">Tennekes and Nowosad (<a href="spatial-class.html#ref-tennekes_elegant_2022" role="doc-biblioref">2022</a>)</span>)).</p>
 <p>El modelo de datos ráster suele consistir en una cabecera ráster
 y una matriz (con filas y columnas) que representa celdas igualmente espaciadas (a menudo también llamadas píxeles; Figura <a href="spatial-class.html#fig:raster-intro-plot">2.10</a>:A).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;
 Dependiendo del formato de archivo, la cabecera forma parte del propio archivo de datos de la imagen, por ejemplo, GeoTIFF, o se almacena en una cabecera adicional o en un archivo mundial, por ejemplo, los formatos de cuadrícula ASCII.
@@ -745,7 +745,7 @@ En primer lugar, vamos a crear un objeto <code>SpatRaster</code> llamado <code>m
 <span class="co">#&gt; dimensions  : 457, 465, 1  (nrow, ncol, nlyr)</span>
 <span class="co">#&gt; resolution  : 0.000833, 0.000833  (x, y)</span>
 <span class="co">#&gt; extent      : -113, -113, 37.1, 37.5  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=longlat +datum=WGS84 +no_defs </span>
+<span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
 <span class="co">#&gt; source      : srtm.tif </span>
 <span class="co">#&gt; name        : srtm </span>
 <span class="co">#&gt; min value   : 1024 </span>
@@ -808,7 +808,7 @@ Recuerda: <code><a href="https://rdrr.io/pkg/terra/man/rast.html">rast()</a></co
 <span class="co">#&gt; dimensions  : 1428, 1128, 4  (nrow, ncol, nlyr)</span>
 <span class="co">#&gt; resolution  : 30, 30  (x, y)</span>
 <span class="co">#&gt; extent      : 301905, 335745, 4111245, 4154085  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=utm +zone=12 +datum=WGS84 +units=m +no_defs </span>
+<span class="co">#&gt; coord. ref. : WGS 84 / UTM zone 12N (EPSG:32612) </span>
 <span class="co">#&gt; source      : landsat.tif </span>
 <span class="co">#&gt; names       : lan_1, lan_2, lan_3, lan_4 </span>
 <span class="co">#&gt; min values  :  7550,  6404,  5678,  5252 </span>
@@ -1111,7 +1111,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>———. 2017. <em>Spdep: Spatial Dependence: Weighting Schemes, Statistics and Models</em>.</p>
 </div>
 <div id="ref-bivand_implementing_2000">
-<p>Bivand, Roger, and Albrecht Gebhardt. 2000. “Implementing Functions for Spatial Statistical Analysis Using the Language.” <em>Journal of Geographical Systems</em> 2 (3): 307–17.</p>
+<p>Bivand, Roger, and Albrecht Gebhardt. 2000. “Implementing Functions for Spatial Statistical Analysis Using the Language.” <em>Journal of Geographical Systems</em> 2 (3): 307–17. <a href="https://doi.org/10.1007/PL00011460">https://doi.org/10.1007/PL00011460</a>.</p>
 </div>
 <div id="ref-R-rgdal">
 <p>Bivand, Roger, Tim Keitt, and Barry Rowlingson. 2018. <em>Rgdal: Bindings for the ’Geospatial’ Data Abstraction Library</em>. <a href="https://CRAN.R-project.org/package=rgdal">https://CRAN.R-project.org/package=rgdal</a>.</p>
@@ -1129,7 +1129,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>Bivand, Roger, and Colin Rundel. 2018. <em>Rgeos: Interface to Geometry Engine - Open Source (’Geos’)</em>. <a href="https://CRAN.R-project.org/package=rgeos">https://CRAN.R-project.org/package=rgeos</a>.</p>
 </div>
 <div id="ref-bivand_using_2000">
-<p>Bivand, Roger S. 2000. “Using the R Statistical Data Analysis Language on GRASS 5.0 GIS Database Files.” <em>Computers &amp; Geosciences</em> 26 (9): 1043–52.</p>
+<p>Bivand, Roger S. 2000. “Using the R Statistical Data Analysis Language on GRASS 5.0 GIS Database Files.” <em>Computers &amp; Geosciences</em> 26 (9): 1043–52. <a href="https://doi.org/10.1016/S0098-3004(00)00057-1">https://doi.org/10.1016/S0098-3004(00)00057-1</a>.</p>
 </div>
 <div id="ref-brenning_arcgis_2012">
 <p>Brenning, Alexander. 2012. <em>ArcGIS Geoprocessing in R via Python</em>.</p>
@@ -1141,7 +1141,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>Brzustowicz, Michael R. 2017. <em>Data Science with Java: [Practical Methods for Scientists and Engineers]</em>. First. Beijing Boston Farnham: OReilly.</p>
 </div>
 <div id="ref-calenge_package_2006">
-<p>Calenge, C. 2006. “The Package Adehabitat for the R Software: Tool for the Analysis of Space and Habitat Use by Animals.” <em>Ecological Modelling</em> 197: 1035.</p>
+<p>Calenge, C. 2006. “The Package Adehabitat for the R Software: Tool for the Analysis of Space and Habitat Use by Animals.” <em>Ecological Modelling</em> 197: 1035. <a href="https://doi.org/10.1016/j.ecolmodel.2006.03.017">https://doi.org/10.1016/j.ecolmodel.2006.03.017</a>.</p>
 </div>
 <div id="ref-chambers_extending_2016">
 <p>Chambers, John M. 2016. <em>Extending R</em>. CRC Press.</p>
@@ -1150,7 +1150,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>Coppock, J Terry, and David W Rhind. 1991. “The History of GIS.” <em>Geographical Information Systems: Principles and Applications, Vol. 1.</em> 1 (1): 21–43.</p>
 </div>
 <div id="ref-eddelbuettel_extending_2018">
-<p>Eddelbuettel, Dirk, and James Joseph Balamuta. 2018. “Extending R with C++: A Brief Introduction to Rcpp.” <em>The American Statistician</em> 72 (1): 28–36. <a href="https://doi.org/10.1080/00031305.2017.1375990">https://doi.org/10.1080/00031305.2017.1375990</a>.</p>
+<p>Eddelbuettel, Dirk, and James Joseph Balamuta. 2018. “Extending R with C++: A Brief Introduction to Rcpp.” <em>The American Statistician</em> 72 (1): 28–36. <a href="https://doi.org/10/gdg3fb">https://doi.org/10/gdg3fb</a>.</p>
 </div>
 <div id="ref-garrard_geoprocessing_2016">
 <p>Garrard, Chris. 2016. <em>Geoprocessing with Python</em>. Shelter Island, NY: Manning Publications.</p>
@@ -1167,8 +1167,11 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <div id="ref-R-raster">
 <p>———. 2017. <em>Raster: Geographic Data Analysis and Modeling</em>. <a href="https://CRAN.R-project.org/package=raster">https://CRAN.R-project.org/package=raster</a>.</p>
 </div>
+<div id="ref-jr_geor_2016">
+<p>Jr, Paulo J. Ribeiro, and Peter J. Diggle. 2016. <em>geoR: Analysis of Geostatistical Data</em>.</p>
+</div>
 <div id="ref-kahle_ggmap_2013">
-<p>Kahle, D, and Hadley Wickham. 2013. “Ggmap: Spatial Visualization with Ggplot2.” <em>The R Journal</em> 5: 144–61.</p>
+<p>Kahle, D, and Hadley Wickham. 2013. “Ggmap: Spatial Visualization with Ggplot2.” <em>The R Journal</em> 5: 144–61. <a href="https://doi.org/10.32614/RJ-2013-014">https://doi.org/10.32614/RJ-2013-014</a>.</p>
 </div>
 <div id="ref-lamigueiro_displaying_2018">
 <p>Lamigueiro, Oscar Perpinan. 2018. <em>Displaying Time Series, Spatial, and Space-Time Data with R</em>. Second. Boca Raton: Chapman and Hall/CRC.</p>
@@ -1189,7 +1192,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>Maling, D. H. 1992. <em>Coordinate Systems and Map Projections</em>. Second. Oxford ; New York: Pergamon Press.</p>
 </div>
 <div id="ref-muenchow_rqgis:_2017">
-<p>Muenchow, Jannes, Patrick Schratz, and Alexander Brenning. 2017. “RQGIS: Integrating R with QGIS for Statistical Geocomputing.” <em>The R Journal</em> 9 (2): 409–28.</p>
+<p>Muenchow, Jannes, Patrick Schratz, and Alexander Brenning. 2017. “RQGIS: Integrating R with QGIS for Statistical Geocomputing.” <em>The R Journal</em> 9 (2): 409–28. <a href="https://doi.org/10/gf3d48">https://doi.org/10/gf3d48</a>.</p>
 </div>
 <div id="ref-neteler_open_2008">
 <p>Neteler, Markus, and Helena Mitasova. 2008. <em>Open Source GIS: A GRASS GIS Approach</em>. Third. New York, NY: Springer.</p>
@@ -1198,10 +1201,13 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>Openshaw, Stan, and Robert J. Abrahart, eds. 2000. <em>Geocomputation</em>. London ; New York: CRC Press.</p>
 </div>
 <div id="ref-pebesma_simple_2018">
-<p>Pebesma, Edzer. 2018. “Simple Features for R: Standardized Support for Spatial Vector Data.” <em>The R Journal</em>.</p>
+<p>Pebesma, Edzer. 2018. “Simple Features for R: Standardized Support for Spatial Vector Data.” <em>The R Journal</em>. <a href="https://doi.org/10/gf2ztt">https://doi.org/10/gf2ztt</a>.</p>
 </div>
 <div id="ref-R-sp">
 <p>Pebesma, Edzer, and Roger Bivand. 2018. <em>Sp: Classes and Methods for Spatial Data</em>. <a href="https://CRAN.R-project.org/package=sp">https://CRAN.R-project.org/package=sp</a>.</p>
+</div>
+<div id="ref-pebesma_spatial_2022">
+<p>———. 2022. <em>Spatial Data Science with Applications in R</em>.</p>
 </div>
 <div id="ref-R-gstat">
 <p>Pebesma, Edzer, and Benedikt Graeler. 2018. <em>Gstat: Spatial and Spatio-Temporal Geostatistical Modelling, Prediction and Simulation</em>. <a href="https://CRAN.R-project.org/package=gstat">https://CRAN.R-project.org/package=gstat</a>.</p>
@@ -1210,13 +1216,10 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>Pebesma, Edzer J, and Roger S Bivand. 2005. “Classes and Methods for Spatial Data in R.” <em>R News</em> 5 (2): 9–13.</p>
 </div>
 <div id="ref-pebesma_measurement_2016">
-<p>Pebesma, Edzer, Thomas Mailund, and James Hiebert. 2016. “Measurement Units in R.” <em>The R Journal</em> 8 (2): 486–94.</p>
+<p>Pebesma, Edzer, Thomas Mailund, and James Hiebert. 2016. “Measurement Units in R.” <em>The R Journal</em> 8 (2): 486–94. <a href="https://doi.org/10/gkb5pd">https://doi.org/10/gkb5pd</a>.</p>
 </div>
 <div id="ref-pebesma_r_2012">
-<p>Pebesma, Edzer, Daniel Nüst, and Roger Bivand. 2012. “The R Software Environment in Reproducible Geoscientific Research.” <em>Eos, Transactions American Geophysical Union</em> 93 (16): 163–63. <a href="https://doi.org/10.1029/2012EO160003">https://doi.org/10.1029/2012EO160003</a>.</p>
-</div>
-<div id="ref-jr_geor_2016">
-<p>Ribeiro Jr, Paulo J., and Peter J. Diggle. 2016. <em>geoR: Analysis of Geostatistical Data</em>.</p>
+<p>Pebesma, Edzer, Daniel Nüst, and Roger Bivand. 2012. “The R Software Environment in Reproducible Geoscientific Research.” <em>Eos, Transactions American Geophysical Union</em> 93 (16): 163–63. <a href="https://doi.org/10/gd8djc">https://doi.org/10/gd8djc</a>.</p>
 </div>
 <div id="ref-ripley_spatial_2001">
 <p>Ripley, Brian D. 2001. “Spatial Statistics in R.” <em>R News</em> 1 (2): 14–15.</p>
@@ -1228,13 +1231,16 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <p>Rowlingson, Barry, and Peter Diggle. 2017. <em>Splancs: Spatial and Space-Time Point Pattern Analysis</em>.</p>
 </div>
 <div id="ref-rowlingson_splancs_1993">
-<p>Rowlingson, B. S, and P. J Diggle. 1993. “Splancs: Spatial Point Pattern Analysis Code in S-Plus.” <em>Computers &amp; Geosciences</em> 19 (5): 627–55. <a href="https://doi.org/10.1016/0098-3004(93)90099-Q">https://doi.org/10.1016/0098-3004(93)90099-Q</a>.</p>
+<p>Rowlingson, B. S, and P. J Diggle. 1993. “Splancs: Spatial Point Pattern Analysis Code in S-Plus.” <em>Computers &amp; Geosciences</em> 19 (5): 627–55. <a href="https://doi.org/10/dvzffd">https://doi.org/10/dvzffd</a>.</p>
 </div>
 <div id="ref-sherman_desktop_2008">
 <p>Sherman, Gary. 2008. <em>Desktop GIS: Mapping the Planet with Open Source Tools</em>. Pragmatic Bookshelf.</p>
 </div>
 <div id="ref-talbert_ancient_2014">
 <p>Talbert, Richard J. A. 2014. <em>Ancient Perspectives: Maps and Their Place in Mesopotamia, Egypt, Greece, and Rome</em>. University of Chicago Press.</p>
+</div>
+<div id="ref-tennekes_elegant_2022">
+<p>Tennekes, Martijn, and Jakub Nowosad. 2022. <em>Elegant and Informative Maps with Tmap</em>.</p>
 </div>
 <div id="ref-theeconomist_autonomous_2016">
 <p>The Economist. 2016. “The Autonomous Car’s Reality Check.” <em>The Economist</em>.</p>
@@ -1329,8 +1335,8 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/Robinlovelace/geocompr/blob/main/02-datos-espaciales.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/Robinlovelace/geocompr/edit/main/02-datos-espaciales.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/geocompr/es/blob/main/02-datos-espaciales.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/geocompr/es/edit/main/02-datos-espaciales.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -1342,7 +1348,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-09-29.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-09-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
