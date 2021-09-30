@@ -150,7 +150,7 @@ if(knitr::is_latex_output()){
     knitr::include_graphics("figures/interactive.png")   
 } else if(knitr::is_html_output()){
     # library(leaflet)
-    # popup = c("Robin", "Jakub", "Jannes")
+    # popup = c("Robin", "Jakub", "Jannes", "Mireia")
     # interactive = leaflet() %>%
     #   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012") %>%
     #   addMarkers(c(-3, 23, 11, 2), c(52, 53, 49, 42), popup = popup)
