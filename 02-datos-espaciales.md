@@ -38,7 +38,7 @@ Los paquetes necesarios se pueden "cargar" (técnicamente se adjuntan) con la fu
 
 ```r
 library(sf)          # clases y funciones para datos vectoriales
-#> Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1
+#> Linking to GEOS 3.9.1, GDAL 3.3.2, PROJ 7.2.1
 ```
 
 La salida de `library(sf)` informa de las versiones de las bibliotecas geográficas clave (key geographic libraries), como GEOS, la cual ya está utilizando el paquete, como se indica en la Sección \@ref(intro-sf).
@@ -737,6 +737,14 @@ Por lo tanto, partiendo del origen, podemos acceder fácilmente a cada celda y m
 Esta representación matricial evita almacenar explícitamente las coordenadas de los cuatro puntos de las esquinas (de hecho, sólo almacena una coordenada, el origen) de cada celda, como ocurriría con los polígonos vectoriales rectangulares.
 Esto y el álgebra de mapas (apartado \ref(map-algebra)) hacen que el procesamiento de rásters sea mucho más eficiente y rápido que el de datos vectoriales. 
 Sin embargo, a diferencia de los datos vectoriales, la celda de una capa ráster sólo puede contener un único valor. El valor puede ser numérico o categórico (Figura \@ref(fig:raster-intro-plot):C).
+
+
+```
+#> Registered S3 methods overwritten by 'stars':
+#>   method             from
+#>   st_bbox.SpatRaster sf  
+#>   st_crs.SpatRaster  sf
+```
 
 <div class="figure" style="text-align: center">
 <img src="02-datos-espaciales_files/figure-html/raster-intro-plot-1.png" alt="Tipos de datos ráster: (A) IDs de celdas, (B) valores de celdas, (C) un mapa raster coloreado." width="100%" />
