@@ -17,6 +17,10 @@ fig:raster-intro-plot2
 fig:basic-new-raster-plot
 fig:vector-crs
 fig:raster-crs
+tab:operators
+tab:continents
+fig:coffeemap
+fig:cont-raster
 intro
 qué-es-la-geocomputación
 por-qué-usar-r-para-la-geocomputación
@@ -46,3 +50,15 @@ sistemas-de-referencia-de-coordenadas-proyectadas
 crs-in-r
 paquete-units
 ex2
+attr
+introduction
+vector-attribute-manipulation
+vector-attribute-subsetting
+chaining-commands-with-pipes
+vector-attribute-aggregation
+vector-attribute-joining
+vec-attr-creation
+manipulating-raster-objects
+raster-subsetting
+summarizing-raster-objects
+exercises

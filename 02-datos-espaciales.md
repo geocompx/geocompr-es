@@ -38,7 +38,7 @@ Los paquetes necesarios se pueden "cargar" (técnicamente se adjuntan) con la fu
 
 ```r
 library(sf)          # clases y funciones para datos vectoriales
-#> Linking to GEOS 3.9.1, GDAL 3.3.2, PROJ 7.2.1
+#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
 ```
 
 La salida de `library(sf)` informa de las versiones de las bibliotecas geográficas clave (key geographic libraries), como GEOS, la cual ya está utilizando el paquete, como se indica en la Sección \@ref(intro-sf).
@@ -646,8 +646,8 @@ st_crs(points_sfc_wgs)
 #>             ORDER[2],
 #>             ANGLEUNIT["degree",0.0174532925199433]],
 #>     USAGE[
-#>         SCOPE["Horizontal component of 3D system."],
-#>         AREA["World."],
+#>         SCOPE["unknown"],
+#>         AREA["World"],
 #>         BBOX[-90,-180,90,180]],
 #>     ID["EPSG",4326]]
 ```
