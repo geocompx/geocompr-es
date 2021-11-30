@@ -54,9 +54,9 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome</a></li>
-<li><a class="" href="foreword-1st-edition.html">Foreword (1st Edition)</a></li>
-<li><a class="" href="preface.html">Preface</a></li>
+<li><a class="" href="index.html">Bienvenido</a></li>
+<li><a class="" href="pr%C3%B3logo-1a-edici%C3%B3n.html">Prólogo (1a Edición)</a></li>
+<li><a class="" href="prefacio.html">Prefacio</a></li>
 <li><a class="" href="intro.html"><span class="header-section-number">1</span> Introducción</a></li>
 <li class="book-part">Fundamentos</li>
 <li><a class="active" href="spatial-class.html"><span class="header-section-number">2</span> Datos geográficos en R</a></li>
@@ -694,10 +694,6 @@ Por lo tanto, partiendo del origen, podemos acceder fácilmente a cada celda y m
 Esta representación matricial evita almacenar explícitamente las coordenadas de los cuatro puntos de las esquinas (de hecho, sólo almacena una coordenada, el origen) de cada celda, como ocurriría con los polígonos vectoriales rectangulares.
 Esto y el álgebra de mapas (apartado (map-algebra)) hacen que el procesamiento de rásters sea mucho más eficiente y rápido que el de datos vectoriales.
 Sin embargo, a diferencia de los datos vectoriales, la celda de una capa ráster sólo puede contener un único valor. El valor puede ser numérico o categórico (Figura <a href="spatial-class.html#fig:raster-intro-plot">2.10</a>:C).</p>
-<pre><code>#&gt; Registered S3 methods overwritten by 'stars':
-#&gt;   method             from
-#&gt;   st_bbox.SpatRaster sf  
-#&gt;   st_crs.SpatRaster  sf</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:raster-intro-plot"></span>
 <img src="02-datos-espaciales_files/figure-html/raster-intro-plot-1.png" alt="Tipos de datos ráster: (A) IDs de celdas, (B) valores de celdas, (C) un mapa raster coloreado." width="100%"><p class="caption">
@@ -735,11 +731,11 @@ En este caso, <strong>terra</strong> ofrece la posibilidad de dividir el raster 
 Se trata de unos cuantos objetos ráster y un objeto vectorial que cubren una zona del Parque Nacional de Zion (Utah, EE.UU.).
 Por ejemplo, <code>srtm.tif</code> es un modelo digital de elevación de esta zona (para más detalles, véase su documentación con <code><a href="https://rdrr.io/pkg/spDataLarge/man/srtm.html">?srtm</a></code>).
 En primer lugar, vamos a crear un objeto <code>SpatRaster</code> llamado <code>my_rast</code>:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raster_filepath</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"raster/srtm.tif"</span>, package <span class="op">=</span> <span class="st">"spDataLarge"</span><span class="op">)</span>
 <span class="va">my_rast</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">raster_filepath</span><span class="op">)</span></code></pre></div>
 <p>Al escribir el nombre del raster en la consola, el resultado será la cabecera del raster (dimensiones, resolución, extensión, SRC) y alguna información adicional (clase, fuente de datos, resumen de los valores del ráster):</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_rast</span>
 <span class="co">#&gt; class       : SpatRaster </span>
 <span class="co">#&gt; dimensions  : 457, 465, 1  (nrow, ncol, nlyr)</span>
@@ -760,7 +756,7 @@ En primer lugar, vamos a crear un objeto <code>SpatRaster</code> llamado <code>m
 </h3>
 <p>Al igual que el paquete <strong>sf</strong>, <strong>terra</strong> también proporciona métodos <code><a href="https://rdrr.io/pkg/terra/man/plot.html">plot()</a></code> para sus propias clases.
 </p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">my_rast</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:basic-new-raster-plot"></span>
@@ -781,7 +777,7 @@ FIGURE 2.12: Gráfico raster básico.
 <p>La clase <code>SpatRaster</code> representa un objeto raster en <strong>terra</strong>.
 La forma más fácil de crear un objeto raster en R es leer un archivo raster desde el disco o desde un servidor (Sección <a href="#raster-data-1"><strong>??</strong></a>).
 </p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">single_raster_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"raster/srtm.tif"</span>, package <span class="op">=</span> <span class="st">"spDataLarge"</span><span class="op">)</span>
 <span class="va">single_rast</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">raster_filepath</span><span class="op">)</span></code></pre></div>
 <p>El paquete <strong>terra</strong> soporta numerosos controles con la ayuda de la librería GDAL.
@@ -793,16 +789,16 @@ El SRC por defecto de los objetos ráster es WGS84, pero puede cambiarse con el 
 Esto significa que la unidad de la resolución está en grados, que fijamos en 0,5 (<code>resolución</code>).
 Los valores (<code>vals</code>) se asignan a cada celda: 1 a la celda 1, 2 a la celda 2, y así sucesivamente.
 Recuerda: <code><a href="https://rdrr.io/pkg/terra/man/rast.html">rast()</a></code> rellena las celdas por filas (a diferencia de <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code>) empezando por la esquina superior izquierda, lo que significa que la fila superior contiene los valores del 1 al 6, la segunda del 7 al 12, etc.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_raster</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span>nrows <span class="op">=</span> <span class="fl">6</span>, ncols <span class="op">=</span> <span class="fl">6</span>, resolution <span class="op">=</span> <span class="fl">0.5</span>, 
                   xmin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, xmax <span class="op">=</span> <span class="fl">1.5</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ymax <span class="op">=</span> <span class="fl">1.5</span>,
                   vals <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">36</span><span class="op">)</span></code></pre></div>
 <p>Para otras formas de crear objetos ráster, véase <code><a href="https://rdrr.io/pkg/terra/man/rast.html">?rast</a></code>.</p>
 <p>La clase <code>SpatRaster</code> también maneja múltiples capas, que suelen corresponder a un único archivo de satélite multiespectral o a una serie temporal de rásters.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">multi_raster_file</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"raster/landsat.tif"</span>, package <span class="op">=</span> <span class="st">"spDataLarge"</span><span class="op">)</span>
 <span class="va">multi_rast</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span><span class="va">multi_raster_file</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">multi_rast</span>
 <span class="co">#&gt; class       : SpatRaster </span>
 <span class="co">#&gt; dimensions  : 1428, 1128, 4  (nrow, ncol, nlyr)</span>
@@ -814,7 +810,7 @@ Recuerda: <code><a href="https://rdrr.io/pkg/terra/man/rast.html">rast()</a></co
 <span class="co">#&gt; min values  :  7550,  6404,  5678,  5252 </span>
 <span class="co">#&gt; max values  : 19071, 22051, 25780, 31961</span></code></pre></div>
 <p><code><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nlyr()</a></code> recupera el número de capas almacenadas en un objeto ‘SpatRaster’:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nlyr</a></span><span class="op">(</span><span class="va">multi_rast</span><span class="op">)</span>
 <span class="co">#&gt; [1] 4</span></code></pre></div>
 <!--jn:toDo-->
@@ -935,11 +931,11 @@ El código también se refiere a un solo sistema de referencia de coordenadas bi
 <!-- ``` -->
 <p>En <strong>sf</strong> el SRC de un objeto puede ser recuperado usando <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs()</a></code>.
 Para ello, necesitamos leer un conjunto de datos vectoriales:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">vector_filepath</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"vector/zion.gpkg"</span>, package <span class="op">=</span> <span class="st">"spDataLarge"</span><span class="op">)</span>
 <span class="va">new_vector</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html">st_read</a></span><span class="op">(</span><span class="va">vector_filepath</span><span class="op">)</span></code></pre></div>
 <p>Nuestro nuevo objeto, <code>new_vector</code>, es un polígono que representa los límites del Parque Nacional de Zion (<code><a href="https://rdrr.io/pkg/spDataLarge/man/zion.html">?zion</a></code>).</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">new_vector</span><span class="op">)</span> <span class="co"># get CRS</span>
 <span class="co">#&gt; Coordinate Reference System:</span>
 <span class="co">#&gt;   User input: UTM Zone 12, Northern Hemisphere </span>
@@ -1013,17 +1009,17 @@ Para ello, necesitamos leer un conjunto de datos vectoriales:</p>
 <span class="co">#&gt;         PARAMETER["Scale difference",1,</span>
 <span class="co">#&gt;             ID["EPSG",8611]]]]</span></code></pre></div>
 <p>En los casos en que falta un sistema de referencia de coordenadas (SRC) o se establece un SRC incorrecto, se puede utilizar la función <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_set_crs()</a></code>:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_vector</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_set_crs</a></span><span class="op">(</span><span class="va">new_vector</span>, <span class="st">"EPSG:26912"</span><span class="op">)</span> <span class="co"># set CRS</span>
 <span class="co">#&gt; Warning: st_crs&lt;- : replacing crs does not reproject data; use st_transform for</span>
 <span class="co">#&gt; that</span></code></pre></div>
 <p>El mensaje de advertencia nos informa de que la función <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_set_crs()</a></code> no transforma los datos de un SRC a otro.</p>
 <p>La función <code><a href="https://rdrr.io/pkg/terra/man/crs.html">crs()</a></code> se puede utilizar para acceder a la información del SRC desde un objeto <code>SpatRaster</code>:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/crs.html">crs</a></span><span class="op">(</span><span class="va">my_rast</span><span class="op">)</span> <span class="co"># get CRS</span>
 <span class="co">#&gt; [1] "GEOGCRS[\"WGS 84\",\n    DATUM[\"World Geodetic System 1984\",\n        ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n            LENGTHUNIT[\"metre\",1]]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    ID[\"EPSG\",4326]]"</span></code></pre></div>
 <p>La misma función, <code><a href="https://rdrr.io/pkg/terra/man/crs.html">crs()</a></code>, se utiliza para establecer un SRC para los objetos raster.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_rast2</span> <span class="op">=</span> <span class="va">my_rast</span>
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/crs.html">crs</a></span><span class="op">(</span><span class="va">my_rast2</span><span class="op">)</span> <span class="op">=</span> <span class="st">"EPSG:26912"</span> <span class="co"># set CRS</span></code></pre></div>
 <p>Es importante destacar que las funciones <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs()</a></code> y <code><a href="https://rdrr.io/pkg/terra/man/crs.html">crs()</a></code> no alteran los valores de las coordenadas ni las geometrías.
@@ -1046,9 +1042,9 @@ Esto es ventajoso, ya que evita la confusión causada por las diferentes unidade
 Esto se demuestra en el siguiente fragmento de código, que calcula la superficie de Luxemburgo:
 
 </p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">luxembourg</span> <span class="op">=</span> <span class="va">world</span><span class="op">[</span><span class="va">world</span><span class="op">$</span><span class="va">name_long</span> <span class="op">==</span> <span class="st">"Luxembourg"</span>, <span class="op">]</span></code></pre></div>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_area</a></span><span class="op">(</span><span class="va">luxembourg</span><span class="op">)</span> <span class="co"># requiere del paquete s2 en versiones recientes de sf</span>
 <span class="co">#&gt; 2.41e+09 [m^2]</span></code></pre></div>
 <p>El resultado está en unidades de metros cuadrados (m<sup>2</sup>), lo que demuestra que el resultado representa un espacio bidimensional.
@@ -1056,25 +1052,25 @@ Esta información, almacenada como un atributo (que los lectores interesados pue
 Informar de las unidades evita confusiones.
 Por ejemplo, en el caso de Luxemburgo, si no se especificaran las unidades, se podría suponer erróneamente que se trata de hectáreas.
 Para traducir la enorme cifra a un tamaño más digerible, resulta tentador dividir los resultados por un millón (el número de metros cuadrados en un kilómetro cuadrado):</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_area</a></span><span class="op">(</span><span class="va">luxembourg</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1000000</span>
 <span class="co">#&gt; 2409 [m^2]</span></code></pre></div>
 <p>Sin embargo, el resultado se vuelve a dar incorrectamente como metros cuadrados.
 La solución es establecer las unidades correctas con el paquete <strong>Units</strong>:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_area</a></span><span class="op">(</span><span class="va">luxembourg</span><span class="op">)</span>, <span class="va">km</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; 2409 [km^2]</span></code></pre></div>
 <p>Las unidades tienen la misma importancia en el caso de los datos ráster.
 Sin embargo, hasta ahora <strong>sf</strong> es el único paquete espacial que soporta unidades, lo que significa que las personas que trabajan con datos ráster deben abordar los cambios en las unidades de análisis (por ejemplo, la conversión de la anchura de los píxeles de unidades imperiales a decimales) con cuidado.
 El objeto <code>my_rast</code> (véase más arriba) utiliza una proyección WGS84 con grados decimales como unidades.
 En consecuencia, su resolución también se da en grados decimales, pero hay que conocerla, ya que la función <code><a href="https://rdrr.io/pkg/terra/man/dimensions.html">res()</a></code> simplemente devuelve un vector numérico.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">res</a></span><span class="op">(</span><span class="va">my_rast</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.000833 0.000833</span></code></pre></div>
 <p>Si utilizáramos la proyección UTM, las unidades cambiarían.</p>
 <!--jn:toDO-->
 <!--set eval=TRUE later-->
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">repr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/project.html">project</a></span><span class="op">(</span><span class="va">my_rast</span>, <span class="st">"EPSG:26912"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">res</a></span><span class="op">(</span><span class="va">repr</span><span class="op">)</span></code></pre></div>
 <p>De nuevo, el comando <code><a href="https://rdrr.io/pkg/terra/man/dimensions.html">res()</a></code> devuelve un vector numérico sin ninguna unidad, lo que nos obliga a saber que la unidad de la proyección UTM es el metro.</p>
@@ -1142,7 +1138,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-11-09.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-11-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

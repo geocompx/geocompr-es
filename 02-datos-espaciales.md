@@ -738,14 +738,6 @@ Esta representación matricial evita almacenar explícitamente las coordenadas d
 Esto y el álgebra de mapas (apartado \ref(map-algebra)) hacen que el procesamiento de rásters sea mucho más eficiente y rápido que el de datos vectoriales. 
 Sin embargo, a diferencia de los datos vectoriales, la celda de una capa ráster sólo puede contener un único valor. El valor puede ser numérico o categórico (Figura \@ref(fig:raster-intro-plot):C).
 
-
-```
-#> Registered S3 methods overwritten by 'stars':
-#>   method             from
-#>   st_bbox.SpatRaster sf  
-#>   st_crs.SpatRaster  sf
-```
-
 <div class="figure" style="text-align: center">
 <img src="02-datos-espaciales_files/figure-html/raster-intro-plot-1.png" alt="Tipos de datos ráster: (A) IDs de celdas, (B) valores de celdas, (C) un mapa raster coloreado." width="100%" />
 <p class="caption">(\#fig:raster-intro-plot)Tipos de datos ráster: (A) IDs de celdas, (B) valores de celdas, (C) un mapa raster coloreado.</p>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Prefacio | Geocomputación con R</title>
+<meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
+<meta name="description" content="A quién va dirigido este libro Este libro está dirigido a personas que quieren analizar, visualizar y modelar datos geográficos con software de código abierto. Se basa en R, un lenguaje de...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Prefacio | Geocomputación con R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://geocompr.github.io/es/prefacio.html">
+<meta property="og:image" content="https://geocompr.github.io/es/images/cover.png">
+<meta property="og:description" content="A quién va dirigido este libro Este libro está dirigido a personas que quieren analizar, visualizar y modelar datos geográficos con software de código abierto. Se basa en R, un lenguaje de...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Prefacio | Geocomputación con R">
+<meta name="twitter:description" content="A quién va dirigido este libro Este libro está dirigido a personas que quieren analizar, visualizar y modelar datos geográficos con software de código abierto. Se basa en R, un lenguaje de...">
+<meta name="twitter:image" content="https://geocompr.github.io/es/images/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Lato-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_Roboto%20Mono-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_Montserrat-0.4.0/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-99618359-1', 'auto');
+      ga('send', 'pageview');
+
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Geocomputación con R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Bienvenido</a></li>
+<li><a class="" href="pr%C3%B3logo-1a-edici%C3%B3n.html">Prólogo (1a Edición)</a></li>
+<li><a class="active" href="prefacio.html">Prefacio</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">1</span> Introducción</a></li>
+<li class="book-part">Fundamentos</li>
+<li><a class="" href="spatial-class.html"><span class="header-section-number">2</span> Datos geográficos en R</a></li>
+<li><a class="" href="attr.html"><span class="header-section-number">3</span> Attribute data operations</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/geocompr/es">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="prefacio" class="section level1 unnumbered">
+<h1>Prefacio<a class="anchor" aria-label="anchor" href="#prefacio"><i class="fas fa-link"></i></a>
+</h1>
+<div id="a-quién-va-dirigido-este-libro" class="section level2 unnumbered">
+<h2>A quién va dirigido este libro<a class="anchor" aria-label="anchor" href="#a-qui%C3%A9n-va-dirigido-este-libro"><i class="fas fa-link"></i></a>
+</h2>
+<p>Este libro está dirigido a personas que quieren analizar, visualizar y modelar datos geográficos con software de código abierto.
+Se basa en R, un lenguaje de programación estadístico que tiene potentes capacidades de procesamiento de datos, de visualización y geoespaciales.
+El libro cubre una extensa variedad de temas y puede ser de interés para un amplio abanico de personas de campos muy distintos, especialmente:</p>
+<ul>
+<li>
+<p>Personas que han aprendido a realizar análisis espaciales con un Sistema de Información Geográfica (SIG) de escritorio, como <a href="http://qgis.org/en/site/">QGIS</a>, <a href="http://desktop.arcgis.com/en/arcmap/">ArcGIS</a>, <a href="https://grass.osgeo.org/">GRASS</a> o <a href="http://www.saga-gis.org/en/index.html">SAGA</a>, que quieran acceder a un potente lenguaje de programación de (geo)estadística y de visualización y a las ventajas de un entorno de línea de comandos <span class="citation">(<a href="attr.html#ref-sherman_desktop_2008" role="doc-biblioref">Sherman 2008</a>)</span>:</p>
+<blockquote>
+<p>Con la llegada del software SIG “moderno,” la mayoría de la gente quiere apuntar y hacer clic en su camino por la vida. Eso está bien, pero hay una enorme cantidad de flexibilidad y poder esperándote en las líneas de comandos.</p>
+</blockquote>
+</li>
+<li><p>Estudiantes graduados e investigadores de campos especializados en datos geográficos, como la geografía, la teledetección, la planificación, los SIG y la ciencia de los datos geográficos</p></li>
+<li><p>Académicos y estudiantes que trabajan con datos geográficos — en campos como la Geología, la Ciencia Regional, la Biología y la Ecología, las Ciencias Agrícolas, la Arqueología, la Epidemiología, la Modelización del Transporte, y la Ciencia de los Datos en sentido amplio — los cuales requieren la potencia y la flexibilidad de R para su investigación</p></li>
+<li><p>Investigadores y analistas aplicados en organizaciones públicas, privadas o del tercer sector que necesitan la reproducibilidad, la velocidad y la flexibilidad de un lenguaje de línea de comandos como R en aplicaciones que tratan datos espaciales tan diversos como la planificación urbana y del transporte, la logística, el geomarketing (análisis de localización de tiendas) y la planificación de emergencias</p></li>
+</ul>
+<p>El libro está diseñado para usuarios de R de nivel intermedio-avanzado interesados en la geocomputación y para principiantes en R que tengan experiencia previa con datos geográficos.
+Si eres nuevo tanto en R como trabajando con datos geográficos, no te desanimes: proporcionamos enlaces a materiales adicionales y describimos la naturaleza de los datos espaciales desde una perspectiva de principiante en el capítulo <a href="spatial-class.html#spatial-class">2</a> y en los enlaces que se proporcionan a continuación.</p>
+</div>
+<div id="cómo-leer-este-libro" class="section level2 unnumbered">
+<h2>Cómo leer este libro<a class="anchor" aria-label="anchor" href="#c%C3%B3mo-leer-este-libro"><i class="fas fa-link"></i></a>
+</h2>
+<p>El libro está dividido en tres partes:</p>
+<ol style="list-style-type: decimal">
+<li>Parte I: Fundamentos, destinado a ponerte al día con los datos geográficos en R.</li>
+<li>Parte II: Extensiones, las cuales cubren técnicas avanzadas.</li>
+<li>Parte III: Aplicaciones, para los problemas del mundo real.</li>
+</ol>
+<p>Los capítulos se vuelven progresivamente más difíciles, por lo que recomendamos leer el libro en orden.
+Uno de los principales obstáculos para el análisis geográfico en R es su pronunciada curva de aprendizaje.
+Los capítulos de la primera parte pretenden abordar esta cuestión proporcionando código reproducible en conjuntos de datos sencillos que deberían facilitar el proceso de iniciación.</p>
+<p>Un aspecto importante del libro desde el punto de vista de la enseñanza/aprendizaje son los <strong>ejercicios</strong> al final de cada capítulo.
+Al completarlos, desarrollarás tus habilidades y obtendrás la confianza necesaria para abordar distintos problemas geoespaciales.
+Las soluciones a los ejercicios, así como varios ejemplos ampliados, se encuentran en la web de apoyo del libro, en <a href="https://geocompr.github.io/">geocompr.github.io</a>.</p>
+<p>Los lectores impacientes pueden sumergirse directamente en los ejemplos prácticos, los cuales comienzan en el capítulo <a href="spatial-class.html#spatial-class">2</a>.
+Sin embargo, recomendamos leer primero el amplio contexto de <em>Geocomputación con R</em> en el capítulo <a href="intro.html#intro">1</a>.
+Si eres nuevo en R, también te recomendamos que aprendas más sobre el lenguaje antes de intentar ejecutar los bloques de código proporcionados en cada capítulo (a menos que estés leyendo el libro para entender los conceptos).
+Afortunadamente para los principiantes de R, la comunidad de apoyo ha desarrollado una gran cantidad de recursos que pueden ayudar.
+Nosotros particularmente recomendamos tres tutoriales: <a href="http://r4ds.had.co.nz/">R para Ciencia de Datos</a> <span class="citation">(<a href="attr.html#ref-grolemund_r_2016" role="doc-biblioref">Grolemund and Wickham 2016</a>)</span> y <a href="https://csgillespie.github.io/efficientR/">Programación eficiente con R</a> <span class="citation">(<a href="attr.html#ref-gillespie_efficient_2016" role="doc-biblioref">Gillespie and Lovelace 2016</a>)</span>, especialmente <a href="https://csgillespie.github.io/efficientR/set-up.html#r-version">Capítulo 2</a> (sobre la instalación y configuración de R/RStudio) y <a href="https://csgillespie.github.io/efficientR/learning.html">Capítulo 10</a> (sobre aprender a aprender), y <a href="http://colinfay.me/intro-to-r/">Una introducción a R</a> <span class="citation">(<a href="attr.html#ref-venables_introduction_2017" role="doc-biblioref">Venables, Smith, and Team 2017</a>)</span>.</p>
+</div>
+<div id="por-qué-r" class="section level2 unnumbered">
+<h2>¿Por qué R?<a class="anchor" aria-label="anchor" href="#por-qu%C3%A9-r"><i class="fas fa-link"></i></a>
+</h2>
+<p>Aunque R tiene una curva de aprendizaje pronunciada, el método de línea de comandos que se defiende en este libro puede ser rápidamente rentable.
+Como aprenderás en los capítulos siguientes, R es una herramienta eficaz para abordar una gran variedad de retos relacionados con los datos geográficos.
+Esperamos que, con la práctica, R se convierta en el programa elegido en tu caja de herramientas geoespaciales para muchas aplicaciones.
+Escribir y ejecutar comandos en la línea de comandos es, en muchos casos, más rápido que apuntar y hacer clic en la interfaz gráfica de usuario (GUI) de un SIG de escritorio.
+Para algunas aplicaciones, como la estadística espacial y el modelado, R puede ser la <em>única</em> forma realista de llevar a cabo el trabajo.</p>
+<p>Como se indica en la Sección <a href="#why-use-r-for-geocomputation"><strong>??</strong></a>, hay muchas razones para usar R para la geocomputación:
+R se adapta bien al uso interactivo que requieren muchos flujos de trabajo de análisis de datos geográficos en comparación con otros lenguajes.
+R destaca en los campos de rápido crecimiento de la Ciencia de Datos (que incluye la carpintería de datos, las técnicas de aprendizaje estadístico y la visualización de datos) y el Big Data (a través de interfaces eficientes con bases de datos y sistemas de computación distribuidos).
+Además, R permite un flujo de trabajo reproducible: compartir las secuencias de comandos subyacentes a tu análisis permitirá que otros se basen en tu trabajo.
+Para garantizar la reproducibilidad en este libro, hemos puesto a disposición su código fuente en <a href="https://github.com/Robinlovelace/geocompr#geocomputation-with-r">github.com/Robinlovelace/geocompr</a>.
+Allí encontrarás archivos en la carpeta <code>code/</code> que generan figuras:
+Cuando el código que genera una figura no se proporciona en el texto principal del libro, el nombre del archivo que la generó se proporciona en el pie de foto (véase, por ejemplo, el pie de foto de la figura <a href="#fig:zones"><strong>??</strong></a>).
+Otros lenguajes como Python, Java y C++ pueden utilizarse para la geocomputación y existen excelentes recursos para aprender geocomputación <em>sin R</em>, como se discute en la sección <a href="#software-for-geocomputation"><strong>??</strong></a>.
+Ninguno de ellos proporciona la combinación única de ecosistema de paquetes, capacidades estadísticas, opciones de visualización y potentes IDEs que ofrece la comunidad R.
+Además, al enseñar a utilizar un lenguaje (R) en profundidad, este libro te proporcionará los conceptos y la confianza necesarios para realizar geocomputación en otros lenguajes.</p>
+</div>
+<div id="impacto-en-el-mundo-real" class="section level2 unnumbered">
+<h2>Impacto en el mundo real<a class="anchor" aria-label="anchor" href="#impacto-en-el-mundo-real"><i class="fas fa-link"></i></a>
+</h2>
+<p><em>Geocomputación con R</em> proporcionará los conocimientos y las habilidades necesarias para abordar una amplia variedad de cuestiones, incluidas aquellas con implicaciones científicas, sociales y medioambientales, que se manifiestan en los datos geográficos.
+Como se describe en la sección @ref(qué-es-la-geocomputación), la geocomputación no sólo consiste en utilizar ordenadores para procesar datos geográficos:
+también se trata del impacto en el mundo real.
+Si estás interesado en un contexto más amplio y las motivaciones que hay detrás de este libro, sigue leyendo; se tratan en el capítulo <a href="intro.html#intro">1</a>.</p>
+</div>
+<div id="agradecimientos" class="section level2 unnumbered">
+<h2>Agradecimientos<a class="anchor" aria-label="anchor" href="#agradecimientos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Muchas gracias a todos los que han contribuido directa e indirectamente a través del código de alojamiento y colaboración a través de GitHub, incluyendo las siguientes personas que contribuyeron directamente a través de solicitudes de extracción (pull requests): prosoitos, florisvdh, katygregg, rsbivand, KiranmayiV, zmbc, erstearns, MikeJohnPage, eyesofbambi, nickbearman, tyluRp, marcosci, giocomai, KHwong12, LaurieLBaker, MarHer90, mdsumner, pat-s, gisma, ateucher, annakrystalli, DarrellCarvalho, kant, gavinsimpson, Henrik-P, Himanshuteli, yutannihilation, jbixon13, yvkschaefer, katiejolly, layik, mpaulacaldas, mtennekes, mvl22, ganes1410, richfitz, wdearden, yihui, chihinl, cshancock, gregor-d, jasongrahn, p-kono, pokyah, schuetzingit, sdesabbata, tim-salabim, tszberkowitz.
+Un agradecimiento especial a Marco Sciaini, que no sólo creó la imagen de la portada, sino que también publicó el código que la generó (véase <code>code/frontcover.R</code> en el repositorio de GitHub del libro).
+Docenas de personas más contribuyeron en línea, planteando y comentando cuestiones, y proporcionando comentarios a través de las redes sociales.</p>
+<p>El hashtag <code>#geocompr</code> seguirá vivo!</p>
+<p>Nos gustaría dar las gracias a John Kimmel, de CRC Press, que ha trabajado con nosotros durante dos años para convertir nuestras ideas iniciales de un plan de libro en la producción final a través de cuatro rondas de revisión.
+Los revisores merecen una mención especial: sus detallados comentarios y su experiencia mejoraron sustancialmente la estructura y el contenido del libro.</p>
+<p>Damos las gracias a Patrick Schratz y Alexander Brenning, de la Universidad de Jena, por sus fructíferas discusiones y aportaciones a los capítulos <a href="#spatial-cv"><strong>??</strong></a> y <a href="#eco"><strong>??</strong></a>.
+Damos las gracias a Emmanuel Blondel, de la Organización de las Naciones Unidas para la Agricultura y la Alimentación, por su aportación experta a la sección sobre servicios web;
+Michael Sumner, por su aportación crítica en muchas áreas del libro, especialmente en la discusión de los algoritmos del capítulo 10;
+Tim Appelhans y David Cooley, por sus contribuciones clave al capítulo sobre visualización (capítulo 8);
+y Katy Gregg, que corrigió todos los capítulos y mejoró enormemente la legibilidad del libro.</p>
+<p>Podrían mencionarse innumerables personas que han contribuido de innumerables maneras.
+El último agradecimiento es para todos los desarrolladores de software que hacen posible Geocomputación con R.
+Edzer Pebesma (que creó el paquete <strong>sf</strong>), Robert Hijmans (que creó <strong>raster</strong>) y Roger Bivand (que sentó las bases de gran parte del software espacial de R) han hecho posible la computación geográfica de alto rendimiento en R.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="pr%C3%B3logo-1a-edici%C3%B3n.html">Prólogo (1a Edición)</a></div>
+<div class="next"><a href="intro.html"><span class="header-section-number">1</span> Introducción</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#prefacio">Prefacio</a></li>
+<li><a class="nav-link" href="#a-qui%C3%A9n-va-dirigido-este-libro">A quién va dirigido este libro</a></li>
+<li><a class="nav-link" href="#c%C3%B3mo-leer-este-libro">Cómo leer este libro</a></li>
+<li><a class="nav-link" href="#por-qu%C3%A9-r">¿Por qué R?</a></li>
+<li><a class="nav-link" href="#impacto-en-el-mundo-real">Impacto en el mundo real</a></li>
+<li><a class="nav-link" href="#agradecimientos">Agradecimientos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/geocompr/es/blob/main/index.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/geocompr/es/edit/main/index.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-11-30.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
