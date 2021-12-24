@@ -51,9 +51,9 @@ crs-in-r
 paquete-units
 ex2
 attr
-introduction
-vector-attribute-manipulation
-vector-attribute-subsetting
+introducción
+manipulación-de-atributos-vectoriales
+subconjuntos-de-atributos-vectoriales
 chaining-commands-with-pipes
 vector-attribute-aggregation
 vector-attribute-joining

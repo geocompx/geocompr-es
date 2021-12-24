@@ -38,7 +38,7 @@ Los paquetes necesarios se pueden "cargar" (técnicamente se adjuntan) con la fu
 
 ```r
 library(sf)          # clases y funciones para datos vectoriales
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1; sf_use_s2() is TRUE
 ```
 
 La salida de `library(sf)` informa de las versiones de las bibliotecas geográficas clave (key geographic libraries), como GEOS, la cual ya está utilizando el paquete, como se indica en la Sección \@ref(intro-sf).
@@ -872,9 +872,9 @@ multi_rast
 #> extent      : 301905, 335745, 4111245, 4154085  (xmin, xmax, ymin, ymax)
 #> coord. ref. : WGS 84 / UTM zone 12N (EPSG:32612) 
 #> source      : landsat.tif 
-#> names       : lan_1, lan_2, lan_3, lan_4 
-#> min values  :  7550,  6404,  5678,  5252 
-#> max values  : 19071, 22051, 25780, 31961
+#> names       : landsat_1, landsat_2, landsat_3, landsat_4 
+#> min values  :      7550,      6404,      5678,      5252 
+#> max values  :     19071,     22051,     25780,     31961
 ```
 
 `nlyr()` recupera el número de capas almacenadas en un objeto 'SpatRaster':

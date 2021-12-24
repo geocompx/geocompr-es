@@ -60,7 +60,7 @@
 <li><a class="" href="intro.html"><span class="header-section-number">1</span> Introducción</a></li>
 <li class="book-part">Fundamentos</li>
 <li><a class="active" href="spatial-class.html"><span class="header-section-number">2</span> Datos geográficos en R</a></li>
-<li><a class="" href="attr.html"><span class="header-section-number">3</span> Attribute data operations</a></li>
+<li><a class="" href="attr.html"><span class="header-section-number">3</span> Operaciones de datos de atributos</a></li>
 </ul>
 
         <div class="book-extra">
@@ -100,7 +100,7 @@ Se pueden encontrar varias instrucciones específicas para cada SO en línea, co
 Los paquetes necesarios se pueden “cargar” (técnicamente se adjuntan) con la función <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> de la siguiente manera:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>          <span class="co"># clases y funciones para datos vectoriales</span>
-<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1</span></code></pre></div>
+<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1; sf_use_s2() is TRUE</span></code></pre></div>
 <p>La salida de <code><a href="https://r-spatial.github.io/sf/">library(sf)</a></code> informa de las versiones de las bibliotecas geográficas clave (key geographic libraries), como GEOS, la cual ya está utilizando el paquete, como se indica en la Sección <a href="spatial-class.html#intro-sf">2.2.1</a>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra/">terra</a></span><span class="op">)</span>      <span class="co"># clases y funciones para datos rasterizados</span></code></pre></div>
@@ -227,7 +227,7 @@ La función <code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()
 <span class="co">#&gt;  Max.   :83.6                      </span>
 <span class="co">#&gt;  NA's   :10</span></code></pre></div>
 <p>Aunque sólo hemos seleccionado una variable para el comando <code>summary</code>, éste también emite un informe sobre la geometría.
-Esto demuestra el comportamiento “pegajoso” de las columnas con geometrías de los objetos <strong>sf</strong>, lo que significa que los datos geométricos se mantienen a menos que el usuario las elimine deliberadamente, como veremos en la sección <a href="attr.html#vector-attribute-manipulation">3.2</a>.
+Esto demuestra el comportamiento “pegajoso” de las columnas con geometrías de los objetos <strong>sf</strong>, lo que significa que los datos geométricos se mantienen a menos que el usuario las elimine deliberadamente, como veremos en la sección <a href="#vector-attribute-manipulation"><strong>??</strong></a>.
 El resultado proporciona un rápido resumen de los datos espaciales y no espaciales contenidos en <code>world</code>: la media de la esperanza de vida es de 71 años (oscilando entre menos de 51 y más de 83 años, con una mediana de 73 años) en todos los países.</p>
 
 <div class="rmdnote">
@@ -346,7 +346,7 @@ Nota: Varios argumentos del gráfico son ignorados en los mapas de facetas cuand
 Se puede crear una versión no proyectada de esta figura con los siguientes comandos (véanse los ejercicios al final de este capítulo y el script <a href="https://github.com/Robinlovelace/geocompr/blob/main/code/02-contpop.R"><code>02-contplot.R</code></a> para reproducir la Figura <a href="spatial-class.html#fig:contpop">2.5</a>):</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">world</span><span class="op">[</span><span class="st">"continent"</span><span class="op">]</span>, reset <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">cex</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">world</span><span class="op">$</span><span class="va">pop</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10000</span>
+<span class="va">cex</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/math-generics.html">sqrt</a></span><span class="op">(</span><span class="va">world</span><span class="op">$</span><span class="va">pop</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10000</span>
 <span class="va">world_cents</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html">st_centroid</a></span><span class="op">(</span><span class="va">world</span>, of_largest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_geometry</a></span><span class="op">(</span><span class="va">world_cents</span><span class="op">)</span>, add <span class="op">=</span> <span class="cn">TRUE</span>, cex <span class="op">=</span> <span class="va">cex</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -806,9 +806,9 @@ Recuerda: <code><a href="https://rdrr.io/pkg/terra/man/rast.html">rast()</a></co
 <span class="co">#&gt; extent      : 301905, 335745, 4111245, 4154085  (xmin, xmax, ymin, ymax)</span>
 <span class="co">#&gt; coord. ref. : WGS 84 / UTM zone 12N (EPSG:32612) </span>
 <span class="co">#&gt; source      : landsat.tif </span>
-<span class="co">#&gt; names       : lan_1, lan_2, lan_3, lan_4 </span>
-<span class="co">#&gt; min values  :  7550,  6404,  5678,  5252 </span>
-<span class="co">#&gt; max values  : 19071, 22051, 25780, 31961</span></code></pre></div>
+<span class="co">#&gt; names       : landsat_1, landsat_2, landsat_3, landsat_4 </span>
+<span class="co">#&gt; min values  :      7550,      6404,      5678,      5252 </span>
+<span class="co">#&gt; max values  :     19071,     22051,     25780,     31961</span></code></pre></div>
 <p><code><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nlyr()</a></code> recupera el número de capas almacenadas en un objeto ‘SpatRaster’:</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nlyr</a></span><span class="op">(</span><span class="va">multi_rast</span><span class="op">)</span>
@@ -1085,7 +1085,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 
   <div class="chapter-nav">
 <div class="prev"><a href="intro.html"><span class="header-section-number">1</span> Introducción</a></div>
-<div class="next"><a href="attr.html"><span class="header-section-number">3</span> Attribute data operations</a></div>
+<div class="next"><a href="attr.html"><span class="header-section-number">3</span> Operaciones de datos de atributos</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -1138,7 +1138,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-11-30.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-12-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
