@@ -1,30 +1,31 @@
-# Attribute data operations {#attr}
+# Operaciones de datos de atributos {#attr}
 
-## Prerequisites {-}
+## Prerrequisitos {-}
 
-- This chapter requires the following packages to be installed and attached: 
+- Este capítulo requiere que se instalen y adjunten los siguientes paquetes: 
 
 ```{r 03-attribute-operations-1, message=FALSE}
-library(sf)      # vector data package introduced in Chapter 2
-library(terra)   # raster data package introduced in Chapter 2
-library(dplyr)   # tidyverse package for data frame manipulation
+library(sf)      # paquete de datos vectoriales introducido en el capítulo 2
+library(terra)   # paquete de datos raster introducido en el capítulo 2
+library(dplyr)   # paquete tidyverse para la manipulación de marcos de datos
 ```
 
-- It also relies on **spData**, which loads datasets used in the code examples of this chapter:
+- También depende de **spData**, que carga los conjuntos de datos utilizados en los ejemplos de código de este capítulo:
 
 ```{r 03-attribute-operations-2, results='hide'}
-library(spData)  # spatial data package introduced in Chapter 2
+library(spData)  # paquete de datos espaciales introducido en el capítulo 2
 ```
 
-## Introduction
+## Introducción
 
-Attribute data is non-spatial information associated with geographic (geometry) data.
-A bus stop provides a simple example: its position would typically be represented by latitude and longitude coordinates (geometry data), in addition to its name.
-The [Elephant & Castle / New Kent Road](https://www.openstreetmap.org/relation/6610626) stop in London, for example has coordinates of -0.098 degrees longitude and 51.495 degrees latitude which can be represented as `POINT (-0.098 51.495)` in the `sfc` representation described in Chapter \@ref(spatial-class).
-Attributes such as the name *attribute*\index{attribute} of the POINT feature (to use Simple Features terminology) are the topic of this chapter.
+Los datos de atributos son la información no espacial asociada a los datos geográficos (geométricos).
+Un ejemplo sencillo es el de una parada de autobús: su posición suele estar representada por coordenadas de latitud y longitud (datos geométricos), además de su nombre.
+La parada [Elephant & Castle / New Kent Road](https://www.openstreetmap.org/relation/6610626) de Londres, por ejemplo, tiene unas coordenadas de -0,098 grados de longitud y 51,495 grados de latitud que pueden representarse como `POINT (-0,098 51,495)` en la representación `sfc` descrita en el capítulo \@ref(spatial-class).
+Los atributos, como el nombre *atributo*\index{attribute} de la función POINT (por utilizar la terminología de Simple Features) son el tema de este capítulo.
+
 
 ```{r, eval=FALSE, echo=FALSE}
-# Aim: find a bus stop in central London
+# Objetivo: encontrar una parada de autobús en el centro de Londres
 library(osmdata)
 london_coords = c(-0.1, 51.5)
 london_bb = c(-0.11, 51.49, -0.09, 51.51)
@@ -39,34 +40,36 @@ point_df = data.frame(name = "London bus stop", point_vector)
 point_sf = sf::st_as_sf(point_df, coords = c("X", "Y"))
 ```
 
-Another example is the elevation value (attribute) for a specific grid cell in raster data.
-Unlike the vector data model, the raster data model stores the coordinate of the grid cell indirectly, meaning the distinction between attribute and spatial information is less clear.
-To illustrate the point, think of a pixel in the 3^rd^ row and the 4^th^ column of a raster matrix.
-Its spatial location is defined by its index in the matrix: move from the origin four cells in the x direction (typically east and right on maps) and three cells in the y direction (typically south and down).
-The raster's *resolution* defines the distance for each x- and y-step which is specified in a *header*.
-The header is a vital component of raster datasets which specifies how pixels relate to geographic coordinates (see also Chapter \@ref(spatial-operations)).
+Otro ejemplo es el valor de elevación (atributo) de una celda específica de la cuadrícula en los datos raster.
+A diferencia del modelo de datos vectoriales, el modelo de datos raster almacena la coordenada de la celda de la cuadrícula de forma indirecta, lo cual significa que la distinción entre atributo e información espacial es menos clara.
+Para ilustrar este punto, piensa en un píxel en la 3ª fila y la 4ª columna de una matriz raster.
 
-This teaches how to manipulate geographic objects based on attributes such as the names of bus stops in a vector dataset and elevations of pixels in a raster dataset.
-For vector data, this means techniques such as subsetting and aggregation (see Sections \@ref(vector-attribute-subsetting) and \@ref(vector-attribute-aggregation)).
-Sections \@ref(vector-attribute-joining) and \@ref(vec-attr-creation) demonstrate how to join data onto simple feature objects using a shared ID and how to create new variables, respectively.
-Each of these operations has a spatial equivalent:
-the `[` operator in base R, for example, works equally for subsetting objects based on their attribute and spatial objects; you can also join attributes in two geographic datasets using spatial joins.
-This is good news: skills developed in this chapter are cross-transferable.
-Chapter \@ref(spatial-operations) extends the methods presented here to the spatial world.
+Su ubicación espacial está definida por su índice en la matriz: se mueve desde el origen cuatro celdas en la dirección x (normalmente este y derecha en los mapas) y tres celdas en la dirección y (normalmente sur y abajo).
+La *resolución* del raster define la distancia para cada paso en x e y que se especifica en un *cabezal*.
+La cabecera es un componente vital de los conjuntos de datos raster que especifica cómo se relacionan los píxeles con las coordenadas geográficas (véase también el capítulo \@ref(spatial-operations)).
 
-After a deep dive into various types of *vector* attribute operations in the next section, *raster* attribute data operations are covered in Section \@ref(manipulating-raster-objects), which demonstrates how to create raster layers containing continuous and categorical attributes and extracting cell values from one or more layer (raster subsetting). 
-Section \@ref(summarizing-raster-objects) provides an overview of 'global' raster operations which can be used to summarize entire raster datasets.
+Esto muestra cómo manipular objetos geográficos basados en atributos como los nombres de las paradas de autobús en un conjunto de datos vectoriales y las elevaciones de los píxeles en un conjunto de datos rasterizados.
+En el caso de los datos vectoriales, esto implica técnicas como crear subconjuntos y o agregaciones (véanse las secciones \@ref(subconjunto de atributos vectoriales) y \@ref(agregación de atributos vectoriales)).
 
-## Vector attribute manipulation
+Las secciones \@ref(vector-attribute-joining) y \@ref(vec-attr-creation) demuestran cómo unir datos en objetos de características simples utilizando un ID compartido y cómo crear nuevas variables, respectivamente.
+Cada una de estas operaciones tiene un equivalente espacial:
+el operador `[` en R básico, por ejemplo, funciona igualmente para subconjuntar objetos basados en su atributo y objetos espaciales; también se pueden unir atributos en dos conjuntos de datos geográficos utilizando uniones espaciales.
+Esto es una buena noticia: las habilidades desarrolladas en este capítulo son transferibles.
+El capítulo \@ref(spatial-operations) extiende los métodos presentados aquí al mundo espacial.
 
-Geographic vector datasets are well supported in R thanks to the `sf` class, which extends base R's `data.frame`.
-Like data frames, `sf` objects have one column per attribute variable (such as 'name') and one row per observation or *feature* (e.g., per bus station).
-`sf` objects differ from basic data frames because they have a `geometry` column of class `sfc` which can contain a range of geographic entities (single and 'multi' point, line, and polygon features) per row.
-This was described in Chapter \@ref(spatial-class), which demonstrated how *generic methods* such as `plot()` and `summary()` work with `sf` objects.
-**sf** also provides generics that allow `sf` objects to behave like regular data frames, as shown by printing the class's methods:
+Después de una inmersión profunda en varios tipos de operaciones de atributos *vectoriales* en la siguiente sección, las operaciones de datos de atributos *raster* se cubren en la Sección \ref(manipulando-objetos-raster), que demuestra cómo crear capas raster que contienen atributos continuos y categóricos y cómo extraer valores de celdas de una o más capas (subconjunto raster). 
+La sección \@ref(summarizing-raster-objects) proporciona una visión general de las operaciones ráster "globales" que pueden utilizarse para resumir conjuntos de datos raster completos.
+
+## Manipulación de atributos vectoriales
+
+Los conjuntos de datos vectoriales geográficos están bien soportados en R gracias a la clase `sf`, que extiende la clase `data.frame` de R.
+Al igual que los marcos de datos, los objetos `sf` tienen una columna por variable de atributo (como 'nombre') y una fila por observación o *característica* (por ejemplo, por estación de autobuses).
+Los objetos `sf` se diferencian de los marcos de datos básicos porque tienen una columna de `geometría` de la clase `sfc` que puede contener una serie de entidades geográficas (uno o 'múltiples' puntos, líneas y polígonos) por fila.
+Esto se describió en el capítulo \@ref(spatial-class), donde se demostró cómo *los métodos genéricos* como `plot()` y `summary()` funcionan con los objetos `sf`.
+**sf** también proporciona genéricos que permiten que los objetos `sf` se comporten como marcos de datos normales, como se muestra al imprimir los métodos de la clase:
 
 ```{r 03-attribute-operations-3, eval=FALSE}
-methods(class = "sf") # methods for sf objects, first 12 shown
+methods(class = "sf") # métodos para objetos sf, se muestran los 12 primeros
 ```
 
 ```{r 03-attribute-operations-4}
@@ -77,40 +80,40 @@ methods(class = "sf") # methods for sf objects, first 12 shown
 ```
 
 ```{r 03-attribute-operations-5, eval=FALSE, echo=FALSE}
-# Another way to show sf methods:
+# Otra forma de mostrar los métodos de sf:
 attributes(methods(class = "sf"))$info %>% 
   filter(!visible)
 ```
 
-Many of these (`aggregate()`, `cbind()`, `merge()`, `rbind()` and `[`) are for manipulating data frames.
-`rbind()`, for example, is binds rows two data frames together, one 'on top' of the other.
-`$<-` creates new columns. 
-A key feature of `sf` objects is that they store spatial and non-spatial data in the same way, as columns in a `data.frame`.
+Muchos de ellos (`aggregate()`, `cbind()`, `merge()`, `rbind()` y `[`) sirven para manejar marcos de datos.
+Por ejemplo, `rbind()` une dos marcos de datos, uno "sobre" el otro.
+`$<-` crea nuevas columnas. 
+Una característica clave de los objetos `sf` es que almacenan datos espaciales y no espaciales de la misma manera, como columnas en un `data.frame`.
 
 ```{block2 03-attribute-operations-6, type = 'rmdnote'}
-The geometry column of `sf` objects is typically called `geometry` or `geom` but any name can be used.
-The following command, for example, creates a geometry column named g:
+La columna de geometría de los objetos `sf` suele llamarse `geometría` o `geom`, pero puede utilizarse cualquier nombre.
+El siguiente comando, por ejemplo, crea una columna de geometría llamada `g`:
   
 `st_sf(data.frame(n = world$name_long), g = world$geom)`
 
-This enables geometries imported from spatial databases to have a variety of names such as `wkb_geometry` and `the_geom`.
+Esto permite que las geometrías importadas de las bases de datos espaciales tengan varios nombres, como `wkb_geometry` y `the_geom`.
 ```
 
-`sf` objects can also extend the `tidyverse` classes for data frames, `tibble` and `tbl`.
+Los objetos `sf` también pueden extender las clases `tidyverse` para marcos de datos, `tibble` y `tbl`.
 \index{tidyverse (package)}.
-Thus **sf** enables the full power of R's data analysis capabilities to be unleashed on geographic data, whether you use base R or tidyverse functions for data analysis.
+Por lo tanto, **sf** permite dar rienda suelta a toda la potencia de las capacidades de análisis de datos de R en los datos geográficos, tanto si se utiliza la base de R como las funciones de tidyverse para el análisis de datos.
 \index{tibble}
-(See [`Rdatatable/data.table#2273`](https://github.com/Rdatatable/data.table/issues/2273) for discussion of compatibility between `sf` objects and the fast `data.table` package.)
-Before using these capabilities it is worth re-capping how to discover the basic properties of vector data objects.
-Let's start by using base R functions to learn about the `world` dataset from the **spData* package:
+(Ver [`Rdatatable/data.table#2273`](https://github.com/Rdatatable/data.table/issues/2273) para ver la compatibilidad entre los objetos `sf` y el paquete `data.table`).
+Antes de utilizar estas capacidades, merece la pena repasar cómo descubrir las propiedades básicas de los objetos de datos vectoriales.
+Empecemos por utilizar las funciones básicas de R para conocer el conjunto de datos `world` del paquete **spData**:
 
 ```{r 03-attribute-operations-7}
-class(world) # it's an sf object and a (tidy) data frame
-dim(world)   # it is a 2 dimensional object, with 177 rows and 11 columns
+class(world) # es un objeto sf y un marco de datos (ordenado)
+dim(world)   # es un objeto bidimensional, con 177 filas y 11 columnas
 ```
 
-`world` contains ten non-geographic columns (and one geometry list column) with almost 200 rows representing the world's countries.
-The function `st_drop_geometry()` keeps only the attributes data of an `sf` object, in other words removing its geometry:
+`world` contiene diez columnas no geográficas (y una columna que contiene una lista de geometrías) con casi 200 filas que representan los países del mundo.
+La función `st_drop_geometry()` mantiene sólo los datos de los atributos de un objeto `sf`, es decir, elimina su geometría:
 
 ```{r 03-attribute-operations-8}
 world_df = st_drop_geometry(world)
@@ -118,78 +121,78 @@ class(world_df)
 ncol(world_df)
 ```
 
-Dropping the geometry column before working with attribute data can be useful; data manipulation processes can run faster when they work only on the attribute data and geometry columns are not always needed.
-For most cases, however, it makes sense to keep the geometry column, explaining why the column is 'sticky' (it remains after most attribute operations unless specifically dropped).
-Non-spatial data operations on `sf` objects only change an object's geometry when appropriate (e.g., by dissolving borders between adjacent polygons following aggregation).
-Becoming skilled at geographic attribute data manipulation means becoming skilled at manipulating data frames.
+La eliminación de la columna de geometría antes de trabajar con los datos de atributos puede ser útil; los procesos de manipulación de datos pueden ejecutarse más rápido cuando trabajan sólo con los datos de atributos y las columnas de geometría no siempre son necesarias.
+En la mayoría de los casos, sin embargo, tiene sentido mantener la columna de geometría, lo que explica que la columna sea "pegajosa" (permanece después de la mayoría de las operaciones de atributos a menos que se elimine específicamente).
+Las operaciones de datos no espaciales sobre objetos `sf` sólo cambian la geometría de un objeto cuando es apropiado (por ejemplo, disolviendo los bordes entre polígonos adyacentes tras una agregación).
+Convertirse en un experto en la manipulación de datos de atributos geográficos significa convertirse en un experto en la manipulación de marcos de datos.
 
-For many applications, the tidyverse\index{tidyverse (package)} package **dplyr** offers an effective approach for working with data frames.
-Tidyverse compatibility is an advantage of **sf** over its predecessor **sp**, but there are some pitfalls to avoid (see the supplementary `tidyverse-pitfalls` vignette at [geocompr.github.io](https://geocompr.github.io/geocompkg/articles/tidyverse-pitfalls.html) for details).
+Para muchas aplicaciones, el paquete tidyverse \index{tidyverse (package)} **dplyr** ofrece un enfoque eficaz para trabajar con marcos de datos.
+La compatibilidad con Tidyverse es una ventaja de **sf** frente a su predecesor **sp**, pero hay que evitar algunos inconvenientes (véase la viñeta complementaria `tidyverse-pitfalls` en [geocompr.github.io](https://geocompr.github.io/geocompkg/articles/tidyverse-pitfalls.html) para más detalles).
 
-### Vector attribute subsetting
+### Subconjuntos de atributos vectoriales
 
-Base R subsetting methods include the operator `[` and the function `subset()`.
-The key **dplyr** subsetting functions are  `filter()` and `slice()` for subsetting rows, and `select()` for subsetting columns.
-Both approaches preserve the spatial components of attribute data in `sf` objects, while using the operator `$` or the **dplyr** function `pull()` to return a single attribute column as a vector will lose the attribute data, as we will see.
+Los métodos de subconjunto de R base incluyen el operador `[` y la función `subset()`.
+Las funciones clave para manejar y crear subconjuntos de **dplyr** son `filter()` y `slice()` para crear subconjuntos de filas, y `select()` para crear subconjuntos de columnas.
+Ambos planteamientos conservan los componentes espaciales de los datos de atributos en los objetos `sf`, mientras que si se utiliza el operador `$` o la función **dplyr** `pull()` para devolver una única columna de atributos como vector se perderán los datos de atributos, tal y como veremos.
 \index{attribute!subsetting}
-This section focuses on subsetting `sf` data frames; for further details on subsetting vectors and non-geographic data frames we recommend reading section section [2.7](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Index-vectors) of An Introduction to R [@rcoreteam_introduction_2021] and Chapter [4](https://adv-r.hadley.nz/subsetting.html) of Advanced R Programming [@wickham_advanced_2019], respectively.
+Esta sección se centra en el subconjunto de marcos de datos `sf`; para más detalles sobre el subconjunto de vectores y marcos de datos no geográficos recomendamos leer la sección [2.7](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Index-vectors) de An Introduction to R [@rcoreteam_introduction_2021] y el Capítulo [4](https://adv-r.hadley.nz/subsetting.html) de Advanced R Programming [@wickham_advanced_2019], respectivamente.
 
-The `[` operator can subset both rows and columns. 
-Indices placed inside square brackets placed directly after a data frame object name specify the elements to keep.
-The command `object[i, j]` means 'return the rows represented by `i` and the columns represented by `j`, where `i` and `j` typically contain integers or `TRUE`s and `FALSE`s (indices can also be character strings, indicating row or column names).
-`object[5, 1:3]`, for example, means 'return data containing the 5th row and columns 1 to 3: the result should be a data frame with only 1 row and 3 columns, and a fourth geometry column if it's an `sf` object.
-Leaving `i` or `j` empty returns all rows or columns, so `world[1:5, ]` returns the first five rows and all 11 columns.
-The examples below demonstrate subsetting with base R.
-Guess the number of rows and columns in the `sf` data frames returned by each command and check the results on your own computer (see the end of the chapter for more exercises):
+El operador `[` puede dividir tanto filas como columnas. 
+Los índices colocados dentro de los corchetes situados directamente después del nombre de un objeto de marco de datos especifican los elementos que se quieren conservar.
+El comando `object[i, j]` significa 'devolver las filas representadas por `i` y las columnas representadas por `j`, donde `i` y `j` suelen contener enteros o `TRUE` y `FALSE` (los índices también pueden ser caracteres, indicando los nombres de las filas o las columnas).
+`object[5, 1:3]`, por ejemplo, significa `devolver datos que contengan la 5ª fila y las columnas 1 a 3`: el resultado debería ser un marco de datos con sólo 1 fila y 3 columnas, y una cuarta columna de geometría si es un objeto `sf`.
+Si se deja `i` o `j` vacía se devuelven todas las filas o columnas, por lo que `world[1:5, ]` devuelve las cinco primeras filas y las 11 columnas que componen el marco de datos.
+Los ejemplos que hay a continuación demuestran la creación de subconjunto con R base.
+Adivina el número de filas y columnas de los marcos de datos `sf` devueltos por cada comando y comprueba los resultados en tu propio ordenador (consulta el final del capítulo para ver más ejercicios):
 
 ```{r 03-attribute-operations-9, eval=FALSE}
-world[1:6, ]    # subset rows by position
-world[, 1:3]    # subset columns by position
-world[1:6, 1:3] # subset rows and columns by position
-world[, c("name_long", "pop")] # columns by name
-world[, c(T, T, F, F, F, F, F, T, T, F, F)] # by logical indices
-world[, 888] # an index representing a non-existent column
+world[1:6, ]    # Subconjunto de las filas 1 a 6 
+world[, 1:3]    # Subconjunto de las columnas 1 a 3
+world[1:6, 1:3] # Subconjunto de las filas 1 a 6 y las columnas 1 a 3
+world[, c("name_long", "pop")] # Columnas por nombre
+world[, c(T, T, F, F, F, F, F, T, T, F, F)] # Selección de columnas por índices lógicos
+world[, 888] # Índice representando una columna no existenete
 ```
 
 ```{r, eval=FALSE, echo=FALSE}
-# these fail
+# Estas fallan
 world[c(1, 5), c(T, T)]
 world[c(1, 5), c(T, T, F, F, F, F, F, T, T, F, F, F)]
 ```
 
-A demonstration of the utility of using `logical` vectors for subsetting is shown in the code chunk below.
-This creates a new object, `small_countries`, containing nations whose surface area is smaller than 10,000 km^2^:
+Una demostración de la utilidad de utilizar vectores `lógicos` para el subconjunto se muestra en el fragmento de código siguiente.
+Esto crea un nuevo objeto, `small_countries`, que contiene las naciones cuya superficie es inferior a 10.000 km^2^:
 
 ```{r 03-attribute-operations-10}
 i_small = world$area_km2 < 10000
-summary(i_small) # a logical vector
+summary(i_small) # un vector lógico
 small_countries = world[i_small, ]
 ```
 
-The intermediary `i_small` (short for index representing small countries) is a logical vector that can be used to subset the seven smallest countries in the `world` by surface area.
-A more concise command, which omits the intermediary object, generates the same result:
+El objeto `i_small` (abreviatura de "índice" que representa a los países pequeños) es un vector lógico que se puede utilizar para agrupar los siete países más pequeños del `mundo` por su superficie.
+Un comando más conciso, que omita el objeto intermediario (`i_small`), genera el mismo resultado:
 
 ```{r 03-attribute-operations-11}
 small_countries = world[world$area_km2 < 10000, ]
 ```
 
-The base R function `subset()` provides another way to achieve the same result:
+La función base de R `subset()` proporciona otra forma de conseguir el mismo resultado:
 
 ```{r 03-attribute-operations-12, eval=FALSE}
 small_countries = subset(world, area_km2 < 10000)
 ```
 
-Base R functions are mature, stable and widely used, making them a rock solid choice, especially in contexts where reproducibility and reliability are key.
-**dplyr** functions enable 'tidy' workflows which some people (the authors of this book included) find intuitive and productive for interactive data analysis, especially when combined with code editors such as RStudio that enable [auto-completion](https://support.rstudio.com/hc/en-us/articles/205273297-Code-Completion-in-the-RStudio-IDE) of column names.
-Key functions for subsetting data frames (including `sf` data frames) with **dplyr** functions are demonstrated below.
-<!-- The sentence below seems to be untrue based on the benchmark below. -->
-<!-- `dplyr` is also faster than base R for some operations, due to its C++\index{C++} backend. -->
-<!-- Something on dbplyr? I've never seen anyone use it regularly for spatial data 'in the wild' so leaving out the bit on integration with dbs for now (RL 2021-10) -->
-<!-- The main **dplyr** subsetting functions are `select()`, `slice()`, `filter()` and `pull()`. -->
+Las funciones de R base son maduras, estables y ampliamente utilizadas, lo que las convierte en una opción sólida, especialmente en contextos en los que la reproducibilidad y la fiabilidad son fundamentales.
+Las funciones de **dplyr** permiten flujos de trabajo "ordenados" que algunas personas (incluidos los autores de este libro) encuentran intuitivos y productivos para el análisis interactivo de datos, especialmente cuando se combinan con editores de código como RStudio que permiten [autocompletar](https://support.rstudio.com/hc/en-us/articles/205273297-Code-Completion-in-the-RStudio-IDE) los nombres de las columnas.
+A continuación se muestran las funciones clave para el subconjunto de marcos de datos (incluidos los marcos de datos `sf`) con las funciones **dplyr**.
+<!-- La frase que sigue parece no ser cierta según el punto de referencia que se indica a continuación. -->
+<!-- `dplyr` también es más rápido que R base para algunas operaciones, debido a su backend C++\index{C++}. -->
+<!-- ¿Algo sobre dbplyr? Nunca he visto a nadie usarlo regularmente para datos espaciales 'en el campo' así que omitiremos la parte de la integración con dbs por ahora (RL 2021-10) -->
+<!-- Las principales funciones de **dplyr** para crear subgrupos son `select()`, `slice()`, `filter()` y `pull()`. -->
 
 ```{r, echo=FALSE, eval=FALSE}
-# Aim: benchmark base vs dplyr subsetting
-# Could move elsewhere? 
+# Objetivo: benchmark base vs dplyr subsetting
+# ¿Podría trasladarse a otro lugar? 
 i = sample(nrow(world), size = 10)
 benchmark_subset = bench::mark(
   world[i, ],
@@ -204,43 +207,43 @@ benchmark_subset[c("expression", "itr/sec", "mem_alloc")]
 # 2 world %>% slice(i)      671.    4.45KB
 ```
 
-`select()` selects columns by name or position.
-For example, you could select only two columns, `name_long` and `pop`, with the following command:
+`select()` selecciona las columnas por nombre o posición.
+Por ejemplo, podrías seleccionar sólo dos columnas, `name_long` y `pop`, con el siguiente comando:
 
 ```{r 03-attribute-operations-14}
 world1 = dplyr::select(world, name_long, pop)
 names(world1)
 ```
 
-Note: as with the equivalent command in base R (`world[, c("name_long", "pop")]`), the sticky `geom` column remains.
-`select()` also allows selecting a range of columns with the help of the `:` operator: 
+Nota: al igual que con el comando equivalente en R base (`world[, c("name_long", "pop")]`), la columna `geom` permanece.
+`select()` también permite seleccionar un rango de columnas con la ayuda del operador `:`: 
 
 ```{r 03-attribute-operations-15}
-# all columns between name_long and pop (inclusive)
+# Selecciona todas las columnas entre name_long y pop (incluidas)
 world2 = dplyr::select(world, name_long:pop)
 ```
 
-You can remove specific columns with the `-` operator:
+Puedes eliminar columnas específicas con el operador `-`:
 
 ```{r 03-attribute-operations-16}
-# all columns except subregion and area_km2 (inclusive)
+# Muestra todas las columnas excepto subregion y area_km2 
 world3 = dplyr::select(world, -subregion, -area_km2)
 ```
 
-Subset and rename columns at the same time with the `new_name = old_name` syntax:
+Crear subconjuntos y renombrar columnas al mismo tiempo con la sintaxis `nuevo_nombre = antiguo_nombre`:
 
 ```{r 03-attribute-operations-17}
 world4 = dplyr::select(world, name_long, population = pop)
 ```
 
-It is worth noting that the command above is more concise than base R equivalent, which requires two lines of code:
+Cabe destacar que el comando anterior es más conciso que el equivalente en R base, el cual requiere dos líneas de código:
 
 ```{r 03-attribute-operations-18, eval=FALSE}
-world5 = world[, c("name_long", "pop")] # subset columns by name
-names(world5)[names(world5) == "pop"] = "population" # rename column manually
+world5 = world[, c("name_long", "pop")] # subagrupar las columnas por nombre
+names(world5)[names(world5) == "pop"] = "population" # renombrar la columna manualmente
 ```
 
-`select()` also works with 'helper functions' for more advanced subsetting operations, including `contains()`, `starts_with()` and `num_range()` (see the help page with `?select` for details).
+`select()` también funciona con "funciones de ayuda" para operaciones más avanzadas, como `contains()`, `starts_with()` y `num_range()` (véase la página de ayuda con `?select` para más detalles).
 
 Most **dplyr** verbs return a data frame, but you can extract a single column as a vector with `pull()`.
 <!-- Note: I have commented out the statement below because it is not true for `sf` objects, it's a bit confusing that the behaviour differs between data frames and `sf` objects. -->
