@@ -59,7 +59,7 @@ En este capítulo se explicarán brevemente los modelos de datos geográficos fu
 Introduciremos la teoría detrás de cada modelo de datos y las disciplinas en las que predominan, antes de demostrar su implementación en R.
 
 El *modelo de datos vectoriales* representa el mundo mediante puntos, líneas y polígonos. 
-Estos tienen bordes discretos y bien definidos, lo que significa que los conjuntos de datos vectoriales suelen tener un alto nivel de precisión (pero no necesariamente exactitud, como veremos en el apartado \@ref(units)). 
+Estos tienen bordes discretos y bien definidos, lo que significa que los conjuntos de datos vectoriales suelen tener un alto nivel de precisión (pero no necesariamente exactitud, como veremos en el apartado \@ref(paquete-units)). 
 El *modelo de datos ráster* divide la superficie en celdas de tamaño constante. 
 Los conjuntos de datos ráster son la base de las imágenes de fondo utilizadas en la cartografía web y han sido una fuente vital de datos geográficos desde los orígenes de la fotografía aérea y los dispositivos de teledetección por satélite. 
 Los rásteres agregan características espacialmente específicas a una resolución determinada, lo que significa que son consistentes en el espacio y escalables (existen muchos conjuntos de datos ráster a nivel mundial).
@@ -72,7 +72,7 @@ La respuesta depende probablemente de su ámbito de aplicación:
 
 En algunos campos hay mucho solapamiento y los conjuntos de datos ráster y vectoriales pueden utilizarse conjuntamente:
 los ecologistas y los demógrafos, por ejemplo, suelen utilizar tanto datos vectoriales como rasterizados. 
-Además, es posible la conversión entre ambas formas (véase el apartado \@ref(raster-vector)).
+Además, es posible la conversión entre ambas formas (véase el capítulo \@ref(raster-vector)).
 Independientemente de si tu trabajo implica un mayor uso de los conjuntos de datos vectoriales o rasterizados, merece la pena comprender el modelo de datos subyacente antes de utilizarlos, como se explica en los capítulos siguientes. 
 Este libro utiliza los paquetes **sf** y **raster** para trabajar con datos vectoriales y conjuntos de datos raster, respectivamente.
 
@@ -112,12 +112,12 @@ knitr::include_graphics(c("figures/vector_lonlat.png", "figures/vector_projected
 ```
 
 **sf** es un paquete que proporciona un sistema de clases para datos vectoriales geográficos. 
-**sf** no sólo sustituye a **sp**, sino que también proporciona una interfaz de línea de comandos consistente para GEOS\index{GEOS} y GDAL\index{GDAL}, sustituyendo a **rgeos** y **rgdal** (descritos en la Sección \@ref(the-history-of-r-spatial)). 
-Esta sección presenta las clases **sf** como preparación para los capítulos siguientes (los capítulos \@ref(geometric-operations y \@ref(read-write) cubren la interfaz de GEOS y GDAL, respectivamente).
+**sf** no sólo sustituye a **sp**, sino que también proporciona una interfaz de línea de comandos consistente para GEOS\index{GEOS} y GDAL\index{GDAL}, sustituyendo a **rgeos** y **rgdal** (descritos en la Sección \@ref(La-historia-de-R-spatial)). 
+Esta sección presenta las clases **sf** como preparación para los capítulos siguientes (los capítulos \@ref(geometric-operations) y \@ref(read-write) cubren la interfaz de GEOS y GDAL, respectivamente).
 
 ### Introducción a Simple Features {#intro-sf}
 
-Simple Features (en ocasiones también llamado Simple feature access (SFA)) es un [estándar abierto](http://portal.opengeospatial.org/files/?artifact_id=25355) desarrollado y respaldado por el Open Geospatial Consortium (OGC), una organización sin ánimo de lucro cuyas actividades volveremos a tratar en un capítulo posterior (en la sección \@ref(file-formats). 
+Simple Features (en ocasiones también llamado Simple feature access (SFA)) es un [estándar abierto](http://portal.opengeospatial.org/files/?artifact_id=25355) desarrollado y respaldado por el Open Geospatial Consortium (OGC), una organización sin ánimo de lucro cuyas actividades volveremos a tratar en un capítulo posterior (en la sección \@ref(file-formats)). 
 \index{simple features |see {sf}}
 Simple Features es un modelo de datos jerárquico que representa una amplia gama de tipos de geometría. 
 De los 17 tipos de geometría que soporta la especificación, solo 7 se utilizan en la gran mayoría de las investigaciones geográficas (véase la figura \@ref(fig:sf-ogc)); 
@@ -183,7 +183,7 @@ summary(world["lifeExp"])
 ```
 
 Aunque sólo hemos seleccionado una variable para el comando `summary`, éste también emite un informe sobre la geometría.
-Esto demuestra el comportamiento "pegajoso" de las columnas con geometrías de los objetos **sf**, lo que significa que los datos geométricos se mantienen a menos que el usuario las elimine deliberadamente, como veremos en la sección \@ref(vector-attribute-manipulation). 
+Esto demuestra el comportamiento "pegajoso" de las columnas con geometrías de los objetos **sf**, lo que significa que los datos geométricos se mantienen a menos que el usuario las elimine deliberadamente, como veremos en la sección \@ref(Manipulación-de-atributos-vectoriales). 
 El resultado proporciona un rápido resumen de los datos espaciales y no espaciales contenidos en `world`: la media de la esperanza de vida es de 71 años (oscilando entre menos de 51 y más de 83 años, con una mediana de 73 años) en todos los países.
 
 ```{block2 02-spatial-data-10, type='rmdnote'}
@@ -819,7 +819,7 @@ Los sistemas de coordenadas geográficas identifican cualquier ubicación en la 
 La *longitud* es la ubicación en la dirección Este-Oeste en distancia angular desde el plano del Primer Meridiano (también conocido como Meridiano de Greenwich). 
 La *latitud* es la distancia angular al Norte o al Sur del plano ecuatorial. 
 Por tanto, las distancias en los SRC geográficos no se miden en metros. 
-Esto tiene importantes consecuencias, como se demuestra en la sección \@ref(reproj-geo-data).
+Esto tiene importantes consecuencias, como se demuestra en el capítulo \@ref(reproj-geo-data).
 
 La superficie de la Tierra en los sistemas de coordenadas geográficas se representa mediante una superficie esférica o elipsoidal. 
 Los modelos esféricos suponen que la Tierra es una esfera perfecta de un radio determinado; tienen la ventaja de la simplicidad pero, al mismo tiempo, son inexactos: ¡la Tierra no es una esfera! 
