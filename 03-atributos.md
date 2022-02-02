@@ -228,11 +228,11 @@ names(world5)[names(world5) == "pop"] = "population" # renombrar la columna manu
 
 `select()` también funciona con "funciones de ayuda" para operaciones más avanzadas, como `contains()`, `starts_with()` y `num_range()` (véase la página de ayuda con `?select` para más detalles).
 
-Most **dplyr** verbs return a data frame, but you can extract a single column as a vector with `pull()`.
+La mayoría de los verbos de **dplyr** devuelven un marco de datos, pero se puede extraer una sola columna como vector con `pull()`.
 <!-- Note: I have commented out the statement below because it is not true for `sf` objects, it's a bit confusing that the behaviour differs between data frames and `sf` objects. -->
 <!-- The subsetting operator in base R (see `?[`), by contrast, tries to return objects in the lowest possible dimension. -->
 <!-- This means selecting a single column returns a vector in base R as demonstrated in code chunk below which returns a numeric vector representing the population of countries in the `world`: -->
-You can get the same result in base R with the list subsetting operators `$` and `[[`, the three following commands return the same numeric vector:
+Puede obtener el mismo resultado en R base con los operadores de subconjunto de listas `$` y `[[`, los tres comandos siguientes devuelven el mismo vector numérico:
 
 
 ```r
@@ -248,43 +248,43 @@ world[["pop"]]
 
 
 
-`slice()` is the row-equivalent of `select()`.
-The following code chunk, for example, selects rows 1 to 6:
+`slice()` es el equivalente de fila de `select()`.
+El siguiente fragmento de código, por ejemplo, selecciona las filas 1 a 6:
 
 
 ```r
 slice(world, 1:6)
 ```
 
-`filter()` is **dplyr**'s equivalent of base R's `subset()` function.
-It keeps only rows matching given criteria, e.g., only countries with and area below a certain threshold, or with a high average of life expectancy, as shown in the following examples:
+`filter()` es el equivalente de **dplyr** a la función `subset()` de R base.
+Mantiene sólo las filas que coinciden según los criterios dados, por ejemplo, sólo los países con un área por debajo de un determinado umbral, o con un promedio alto de esperanza de vida, como se muestra en los siguientes ejemplos:
 
 
 ```r
-world7 = filter(world ,area_km2 < 10000) # countries with a small area
-world7 = filter(world, lifeExp > 82)      # with high life expectancy
+world7 = filter(world ,area_km2 < 10000) # países con un área menor a 10.000km2
+world7 = filter(world, lifeExp > 82)      # con una esperanza de vida superior a 82 años
 ```
 
-The standard set of comparison operators can be used in the `filter()` function, as illustrated in Table \@ref(tab:operators): 
+El conjunto estándar de operadores de comparación se puede utilizar en la función `filter()`, como se ilustra en la Tabla \@ref(tab:operators): 
 
 
 
 
-Table: (\#tab:operators)Comparison operators that return Booleans (TRUE/FALSE).
+Table: (\#tab:operators)Operadores de comparación que retornan Booleanos (TRUE/FALSE).
 
-|Symbol                        |Name                            |
-|:-----------------------------|:-------------------------------|
-|`==`                          |Equal to                        |
-|`!=`                          |Not equal to                    |
-|`>`, `<`                      |Greater/Less than               |
-|`>=`, `<=`                    |Greater/Less than or equal      |
-|`&`, <code>&#124;</code>, `!` |Logical operators: And, Or, Not |
+|Symbol                        |Name                                        |
+|:-----------------------------|:-------------------------------------------|
+|`==`                          |Igual a                                     |
+|`!=`                          |Distinto a                                  |
+|`>`, `<`                      |Mayor/menor que                             |
+|`>=`, `<=`                    |Mayor/menor que o igual                     |
+|`&`, <code>&#124;</code>, `!` |Operadores lógicos: Y, O, No (And, Or, Not) |
 
-### Chaining commands with pipes
+### Encadenamiento de comandos con el operador pipe
 
-Key to workflows using **dplyr** functions is the ['pipe'](http://r4ds.had.co.nz/pipes.html) operator `%>%` (and since R `4.1.0` the native pipe `|>`), which takes its name from the Unix pipe `|` [@grolemund_r_2016].
-Pipes enable expressive code: the output of a previous function becomes the first argument of the next function, enabling *chaining*.
-This is illustrated below, in which only countries from Asia are filtered from the `world` dataset, next the object is subset by columns (`name_long` and `continent`) and the first five rows (result not shown).
+Una de las claves para el flujo de trabajo con las funciones de **dplyr** es el operador ['pipe'](http://r4ds.had.co.nz/pipes.html) `%>%` (y desde R `4.1.0` el pipe nativo `|>`), el cual toma su nombre del pipe de Unix `|` [@grolemund_r_2016].
+Los pipes permiten un código expresivo: el resultado de una función anterior se convierte en el primer argumento de la siguiente función, lo que permite *encadenar*.
+Esto se ilustra a continuación, en el que sólo se filtran los países de Asia del conjunto de datos `world`, a continuación se seleccionan dos columnas para crear un subconjunto (`name_long` y `continent`) y las cinco primeras filas (resultado no mostrado).
 
 
 ```r
@@ -294,9 +294,9 @@ world7 = world %>%
   slice(1:5)
 ```
 
-The above chunk shows how the pipe operator allows commands to be written in a clear order:
-the above run from top to bottom (line-by-line) and left to right.
-The alternative to `%>%` is nested function calls, which is harder to read:
+El fragmento anterior muestra cómo el operador pipe permite escribir los comandos en un orden claro:
+los anteriores van de arriba a abajo (línea por línea) y de izquierda a derecha.
+La alternativa a `%>%` son las llamadas a funciones 'anidadas', que son más difíciles de leer:
 
 
 ```r
@@ -307,15 +307,16 @@ world8 = slice(
   1:5)
 ```
 
-### Vector attribute aggregation
+### Agregación de atributos vectoriales
 
 \index{attribute!aggregation}
 \index{aggregation}
-Aggregation involves summarizing data with one or more 'grouping variables', typically from columns in the data frame to be aggregated (geographic aggregation is covered in the next chapter).
-An example of attribute aggregation is calculating the number of people per continent based on country-level data (one row per country).
-The `world` dataset contains the necessary ingredients: the columns `pop` and `continent`, the population and the grouping variable, respectively.
-The aim is to find the `sum()` of country populations for each continent, resulting in a smaller data frame (aggregation is a form of data reduction and can be a useful early step when working with large datasets).
-This can be done with the base R function `aggregate()` as follows:
+
+La agregación implica resumir los datos con una o más "variables de agrupación", normalmente a partir de columnas del marco de datos que se va a agregar (la agregación geográfica se trata en el siguiente capítulo).
+Un ejemplo de agregación de atributos es el cálculo del número de personas por continente a partir de los datos a nivel de país (una fila por país).
+El conjunto de datos `world` contiene los ingredientes necesarios: las columnas `pop` y `continent`, la población y la variable de agrupación, respectivamente.
+El objetivo es encontrar la suma `sum()` de las poblaciones de los países para cada continente, lo que resulta en un marco de datos más pequeño (la agregación es una forma de reducción de datos y puede ser un paso inicial útil cuando se trabaja con grandes conjuntos de datos).
+Esto se puede hacer con la función básica de R `agregate()` de la siguiente manera:
 
 
 ```r
@@ -324,10 +325,10 @@ class(world_agg1)
 #> [1] "data.frame"
 ```
 
-The result is a non-spatial data frame with six rows, one per continent, and two columns reporting the name and population of each continent (see Table \@ref(tab:continents) with results for the top 3 most populous continents).
+El resultado es un marco de datos no espacial con seis filas, una por continente, y dos columnas que informan del nombre y la población de cada continente (véase la tabla \@ref(tab:continents) con los resultados de los 3 continentes más poblados).
 
-`aggregate()` is a [generic function](https://adv-r.hadley.nz/s3.html#s3-methods) which means that it behaves differently depending on its inputs. 
-**sf** provides the method `aggregate.sf()` which is activated automatically when `x` is an `sf` object and a `by` argument is provided:
+`aggregate()` es una [función genérica](https://adv-r.hadley.nz/s3.html#s3-methods) lo que significa que se comporta de forma diferente en función de lo que se le añada. 
+**sf** proporciona el método `aggregate.sf()` que se activa automáticamente cuando `x` es un objeto `sf` al que se le proporciona un argumento `by`:
 
 
 ```r
@@ -338,8 +339,8 @@ nrow(world_agg2)
 #> [1] 8
 ```
 
-The resulting `world_agg2` object is a spatial object containing 8 features representing the continents of the world (and the open ocean).
-`group_by() %>% summarize()` is the **dplyr** equivalent of `aggregate()`, with the variable name provided in the `group_by()` function specifying the grouping variable and information on what is to be summarized passed to the `summarize()` function, as shown below:
+El resultado es un objeto espacial `world_agg2` que contiene 8 características que representan los continentes del mundo (y el océano abierto).
+`group_by() %>% summarize()` es el equivalente en **dplyr** de la función `aggregate()`, con el nombre de la variable proporcionado en la función `group_by()` especificando la variable de agrupación y la información sobre lo que se va a resumir al pasarle la función `summarize()`, como se muestra a continuación:
 
 
 ```r
@@ -348,8 +349,8 @@ world_agg3 = world %>%
   summarize(pop = sum(pop, na.rm = TRUE))
 ```
 
-The approach may seem more complex but it has benefits: flexibility, readability, and control over the new column names.
-This flexibility is illustrated in the command below, which calculates not only the population but also the area and number of countries in each continent:
+El enfoque puede parecer más complejo, pero tiene ventajas: flexibilidad, legibilidad y control sobre los nuevos nombres de las columnas.
+Esta flexibilidad se ilustra en el siguiente comando, que calcula no sólo la población, sino también la superficie y el número de países de cada continente:
 
 
 ```r
@@ -358,22 +359,22 @@ world_agg4  = world %>%
   summarize(pop = sum(pop, na.rm = TRUE), `area (sqkm)` = sum(area_km2), n = n())
 ```
 
-In the previous code chunk `pop`, `area (sqkm)` and `n` are column names in the result, and `sum()` and `n()` were the aggregating functions.
-These aggregating functions return `sf` objects with rows representing continents and geometries containing the multiple polygons representing each land mass and associated islands (this works thanks to the geometric operation 'union', as explained in Section \@ref(geometry-unions)).
+En el fragmento de código anterior `pop`, `area (sqkm)` y `n` son nombres de columnas en el resultado, y `sum()` y `n()` eran las funciones de agregación.
+Estas funciones de agregación devuelven objetos `sf` con filas que representan los continentes y geometrías que contienen múltiples polígonos que representan cada masa de tierra e islas asociadas (esto funciona gracias a la operación geométrica "unión", como se explica en la sección \@ref(geometry-unions)).
 
-Let's combine what we have learned so far about **dplyr** functions, by chaining multiple commands to summarize attribute data about countries worldwide by continent.
-The following command calculates population density (with `mutate()`), arranges continents by the number countries they contain (with `dplyr::arrange()`), and keeps only the 3 most populous continents (with `top_n()`), the result of which is presented in Table \@ref(tab:continents)):
+Combinemos lo que hemos aprendido hasta ahora sobre las funciones de **dplyr**, encadenando varios comandos para resumir datos de atributos sobre todos los países por continente.
+El siguiente comando calcula la densidad de población (con `mutate()`), ordena los continentes por el número de países que contienen (con `dplyr::arrange()`), y mantiene sólo los 3 continentes más poblados (con `top_n()`), cuyo resultado se presenta en la Tabla \@ref(tab:continents)):
 
 
 ```r
 world_agg5 = world %>% 
-  st_drop_geometry() %>%                      # drop the geometry for speed
-  dplyr::select(pop, continent, area_km2) %>% # subset the columns of interest  
-  group_by(continent) %>%                     # group by continent and summarize:
+  st_drop_geometry() %>%                      # aisla la geometría para ganar velocidad
+  dplyr::select(pop, continent, area_km2) %>% # crea un subconjunto con las columnas de interés
+  group_by(continent) %>%                     # agrupa por continente y resume los datos
   summarize(Pop = sum(pop, na.rm = TRUE), Area = sum(area_km2), N = n()) %>%
-  mutate(Density = round(Pop / Area)) %>%     # calculate population density
-  top_n(n = 3, wt = Pop) %>%                  # keep only the top 3
-  arrange(desc(N))                            # arrange in order of n. countries
+  mutate(Density = round(Pop / Area)) %>%     # calcula la densidad de población
+  top_n(n = 3, wt = Pop) %>%                  # muestra sólo las 3 primeras filas
+  arrange(desc(N))                            # ordenar los 3 continentes en orden descendiente
 ```
 
 
@@ -387,23 +388,24 @@ Table: (\#tab:continents)The top 3 most populous continents ordered by populatio
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">More details are provided in the help pages (which can be accessed via `?summarize` and `vignette(package = "dplyr")` and Chapter 5 of [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). </div>\EndKnitrBlock{rmdnote}
 
-###  Vector attribute joining
+###  Unión de atributos vectoriales
 
-Combining data from different sources is a common task in data preparation. 
-Joins do this by combining tables based on a shared 'key' variable.
-**dplyr** has multiple join functions including `left_join()` and `inner_join()` --- see `vignette("two-table")` for a full list.
-These function names follow conventions used in the database language [SQL](http://r4ds.had.co.nz/relational-data.html) [@grolemund_r_2016, Chapter 13]; using them to join non-spatial datasets to `sf` objects is the focus of this section.
-**dplyr** join functions work the same on data frames and `sf` objects, the only important difference being the `geometry` list column.
-The result of data joins can be either an `sf` or `data.frame` object.
-The most common type of attribute join on spatial data takes an `sf` object as the first argument and adds columns to it from a `data.frame` specified as the second argument.
+Combinar datos de diferentes fuentes es una tarea frecuente en la preparación de datos. 
+Las uniones hacen esto combinando tablas basadas en una variable "clave" compartida.
+**dplyr** tiene múltiples funciones de unión incluyendo `left_join()` y `inner_join()` --- véase `vignette("two-table")` para una lista completa.
+Estos nombres de funciones siguen las convenciones utilizadas en el lenguaje de las bases de datos [SQL](http://r4ds.had.co.nz/relational-data.html) [@grolemund_r_2016, Chapter 13]; utilizándolos para unir conjuntos de datos no espaciales a objetos `sf`. 
+El objetivo de esta sección es aprender a realizar este tipo de unión.
+Las funciones de unión de **dplyr** funcionan igual en los marcos de datos y en los objetos `sf`, la única diferencia importante es la columna de la lista `geometría`.
+El resultado de las uniones de datos puede ser tanto un objeto `sf` como un objeto `data.frame`.
+El tipo más común de unión de atributos en datos espaciales toma un objeto `sf` como primer argumento y le añade columnas de un `data.frame` especificado como segundo argumento.
 \index{join}
 \index{attribute!join}
 
-To demonstrate joins, we will combine data on coffee production with the `world` dataset.
-The coffee data is in a data frame called `coffee_data` from the **spData** package (see `?coffee_data` for details).
-It has 3 columns:
-`name_long` names major coffee-producing nations and `coffee_production_2016` and `coffee_production_2017` contain estimated values for coffee production in units of 60-kg bags in each year.
-A 'left join', which preserves the first dataset, merges `world` with `coffee_data`:
+Para demostrar las uniones, combinaremos los datos sobre la producción de café con el conjunto de datos `world`.
+Los datos sobre el café se encuentran en un marco de datos llamado `coffee_data` del paquete **spData** (véase `?coffee_data` para más detalles).
+`coffee_data` tiene 3 columnas:
+`name_long` nombra las principales naciones productoras de café; y `coffee_production_2016` y `coffee_production_2017` contienen valores estimados de la producción de café en unidades de sacos de 60 kg para cada año.
+Un "left join", que conserva el primer conjunto de datos, combina "world" con "coffee_data":
 
 
 ```r
@@ -413,9 +415,9 @@ class(world_coffee)
 #> [1] "sf"         "tbl_df"     "tbl"        "data.frame"
 ```
 
-Because the input datasets share a 'key variable' (`name_long`) the join worked without using the `by` argument (see `?left_join` for details).
-The result is an `sf` object identical to the original `world` object but with two new variables (with column indices 11 and 12) on coffee production.
-This can be plotted as a map, as illustrated in Figure \@ref(fig:coffeemap), generated with the `plot()` function below:
+Dado que los conjuntos de datos de entrada comparten una "variable clave" (`name_long`), la unión ha funcionado sin utilizar el argumento `by` (véase `?left_join` para más detalles).
+El resultado es un objeto `sf` idéntico al objeto original `world` pero con dos nuevas variables sobre la producción de café.
+Esto puede ser representado como un mapa, tal y como se ilustra en la Figura \@ref(fig:coffeemap), generated with the `plot()` function below:
 
 
 ```r
@@ -429,19 +431,19 @@ plot(world_coffee["coffee_production_2017"])
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-atributos_files/figure-html/coffeemap-1.png" alt="World coffee production (thousand 60-kg bags) by country, 2017. Source: International Coffee Organization." width="100%" />
-<p class="caption">(\#fig:coffeemap)World coffee production (thousand 60-kg bags) by country, 2017. Source: International Coffee Organization.</p>
+<img src="03-atributos_files/figure-html/coffeemap-1.png" alt="Producción mundial de café (en miles de sacos de 60 kg) por país, 2017. Fuente: Organización Internacional del Café." width="100%" />
+<p class="caption">(\#fig:coffeemap)Producción mundial de café (en miles de sacos de 60 kg) por país, 2017. Fuente: Organización Internacional del Café.</p>
 </div>
 
-For joining to work, a 'key variable' must be supplied in both datasets.
-By default **dplyr** uses all variables with matching names.
-In this case, both `world_coffee` and `world` objects contained a variable called `name_long`, explaining the message `Joining, by = "name_long"`.
-In the majority of cases where variable names are not the same, you have two options:
+Para que la unión funcione, se debe proporcionar una "variable clave" en ambos conjuntos de datos.
+Por defecto **dplyr** utiliza todas las variables con nombres coincidentes.
+En este caso, ambos objetos `world_coffee` y `world` contenían una variable llamada `name_long`, lo que explica el mensaje `Joining, by = "name_long"`.
+En la mayoría de los casos en que los nombres de las variables no son iguales. En esos casos tienes dos opciones:
 
-1. Rename the key variable in one of the objects so they match.
-2. Use the `by` argument to specify the joining variables.
+1. Cambiar el nombre de la variable clave en uno de los objetos para que coincidan.
+2. Utilizar el argumento `by` para especificar las variables de unión.
 
-The latter approach is demonstrated below on a renamed version of `coffee_data`:
+Este último enfoque se demuestra a continuación en una versión renombrada de `coffee_data`:
 
 
 ```r
@@ -451,12 +453,12 @@ world_coffee2 = left_join(world, coffee_renamed, by = c(name_long = "nm"))
 
 
 
-Note that the name in the original object is kept, meaning that `world_coffee` and the new object `world_coffee2` are identical.
-Another feature of the result is that it has the same number of rows as the original dataset.
-Although there are only 47 rows of data in `coffee_data`, all 177 country records are kept intact in `world_coffee` and `world_coffee2`:
-rows in the original dataset with no match are assigned `NA` values for the new coffee production variables.
-What if we only want to keep countries that have a match in the key variable?
-In that case an inner join can be used:
+Obsérvese que se mantiene el nombre del objeto original, lo que significa que `world_coffee` y el nuevo objeto `world_coffee2` son idénticos.
+Otra característica del resultado es que tiene el mismo número de filas que el conjunto de datos original.
+Aunque sólo hay 47 filas de datos en `coffee_data`, los 177 registros de países se mantienen intactos en `world_coffee` y `world_coffee2`:
+Las filas del conjunto de datos original que no coinciden se les asignan valores "NA" para las nuevas variables de producción de café.
+¿Y si sólo queremos conservar los países que coinciden con la variable clave?
+En ese caso se puede utilizar `inner join()`:
 
 
 ```r
@@ -466,9 +468,9 @@ nrow(world_coffee_inner)
 #> [1] 45
 ```
 
-Note that the result of `inner_join()` has only 45 rows compared with 47 in `coffee_data`.
-What happened to the remaining rows?
-We can identify the rows that did not match using the `setdiff()` function as follows:
+Fíjate en que el resultado de `inner_join()` sólo tiene 45 filas frente a las 47 de `coffee_data`.
+¿Qué ha ocurrido con las filas restantes?
+Podemos identificar las filas que no coinciden utilizando la función `setdiff()` de la siguiente manera:
 
 
 ```r
@@ -476,9 +478,9 @@ setdiff(coffee_data$name_long, world$name_long)
 #> [1] "Congo, Dem. Rep. of" "Others"
 ```
 
-The result shows that `Others` accounts for one row not present in the `world` dataset and that the name of the `Democratic Republic of the Congo` accounts for the other:
-it has been abbreviated, causing the join to miss it.
-The following command uses a string matching (regex) function from the **stringr** package to confirm what `Congo, Dem. Rep. of` should be:
+El resultado muestra que `Others` representa una fila que no está presente en el conjunto de datos `world` y en el caso de la "República Democrática del Congo" el nombre
+ha sido abreviado, lo que hace que la unión no lo tenga en cuenta.
+El siguiente comando utiliza una función de concordancia de palabras (regex) del paquete **stringr** para confirmar qué debería ser `Congo, Dem. Rep. of`:
 
 
 ```r
@@ -490,8 +492,8 @@ The following command uses a string matching (regex) function from the **stringr
 
 
 
-To fix this issue, we will create a new version of `coffee_data` and update the name.
-`inner_join()`ing the updated data frame returns a result with all 46 coffee-producing nations:
+Para solucionar este problema, crearemos una nueva versión de `coffee_data` y actualizaremos el nombre.
+Si se une el marco de datos actualizado con `inner_join()`, se obtiene un resultado con las 46 naciones productoras de café:
 
 
 ```r
@@ -502,10 +504,10 @@ nrow(world_coffee_match)
 #> [1] 46
 ```
 
-It is also possible to join in the other direction: starting with a non-spatial dataset and adding variables from a simple features object.
-This is demonstrated below, which starts with the `coffee_data` object and adds variables from the original `world` dataset.
-In contrast with the previous joins, the result is *not* another simple feature object, but a data frame in the form of a **tidyverse** tibble:
-the output of a join tends to match its first argument:
+También es posible unir en la dirección contraria: empezar con un conjunto de datos no espaciales y añadir variables de un objeto Simple Features (sf).
+Esto se demuestra a continuación, se comienza con el objeto `coffee_data` y se le añaden variables del conjunto de datos original `world`.
+A diferencia de las uniones anteriores, el resultado *no* es otro objeto Simple Feature, sino un marco de datos en forma de tibble de **tidyverse**:
+El resultado de una unión tiende a coincidir con su primer argumento:
 
 
 ```r
@@ -515,32 +517,32 @@ class(coffee_world)
 #> [1] "tbl_df"     "tbl"        "data.frame"
 ```
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">In most cases, the geometry column is only useful in an `sf` object.
-The geometry column can only be used for creating maps and spatial operations if R 'knows' it is a spatial object, defined by a spatial package such as **sf**.
-Fortunately, non-spatial data frames with a geometry list column (like `coffee_world`) can be coerced into an `sf` object as follows: `st_as_sf(coffee_world)`. </div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">En la mayoría de los casos, la columna de geometría sólo es útil en un objeto `sf`.
+La columna de geometría sólo puede utilizarse para crear mapas y operaciones espaciales si R "sabe" que es un objeto espacial, definido por un paquete espacial como **sf**.
+Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como `coffee_world`) pueden ser convertidos en un objeto `sf` de la siguiente manera: `st_as_sf(mundo_café)`.</div>\EndKnitrBlock{rmdnote}
 
-This section covers the majority of joining use cases.
-For more information, we recommend @grolemund_r_2016, the [join vignette](https://geocompr.github.io/geocompkg/articles/join.html) in the **geocompkg** package that accompanies this book, and documentation of the **data.table** package.^[
-**data.table** is a high-performance data processing package.
-Its application to geographic data is covered in a blog post hosted at r-spatial.org/r/2017/11/13/perp-performance.html.
+Esta sección cubre la mayoría de los casos de uso de `join`.
+Para más información, recomendamos @grolemund_r_2016, la ['viñeta' de join](https://geocompr.github.io/geocompkg/articles/join.html) en el paquete **geocompkg** que acompaña este libro, y la documentación del paquete **data.table**.^[
+**data.table** es un paquete de procesamiento de datos de alto rendimiento.
+Su aplicación a los datos geográficos se trata en la siguiente entrada de blog: r-spatial.org/r/2017/11/13/perp-performance.html.
 ]
-Another type of join is a spatial join, covered in the next chapter (Section \@ref(spatial-joining)).
+Otro tipo de unión es la unión espacial, que se trata en el siguiente capítulo (Sección \@ref(spatial-joining)).
 
-### Creating attributes and removing spatial information {#vec-attr-creation}
+### Creando atributos y eliminando información espacial {#vec-attr-creation}
 
-Often, we would like to create a new column based on already existing columns.
-For example, we want to calculate population density for each country.
-For this we need to divide a population column, here `pop`, by an area column, here `area_km2` with unit area in square kilometers.
-Using base R, we can type:
+A menudo, queremos crear una nueva columna basada en columnas ya existentes.
+Por ejemplo, queremos calcular la densidad de población de cada país.
+Para ello necesitamos dividir una columna de población, aquí `pop`, por una columna de área, aquí `area_km2`.
+Usando R base, podemos escribir:
 
 
 ```r
-world_new = world # do not overwrite our original data
+world_new = world # no sobreescribe nuestros datos originales
 world_new$pop_dens = world_new$pop / world_new$area_km2
 ```
 
-Alternatively, we can use one of **dplyr** functions - `mutate()` or `transmute()`.
-`mutate()` adds new columns at the penultimate position in the `sf` object (the last one is reserved for the geometry):
+Alternativamente, podemos utilizar una de las funciones de **dplyr** - `mutate()` o `transmute()`.
+La función `mutate()` añade nuevas columnas en la penúltima posición del objeto `sf` (la última se reserva para la geometría):
 
 
 ```r
@@ -760,7 +762,7 @@ These and other typical raster processing operations are part of the map algebra
 <p>Some function names clash between packages (e.g., a function with the name <code>extract()</code> exist in both <strong>terra</strong> and <strong>tidyr</strong> packages). In addition to not loading packages by referring to functions verbosely (e.g., <code>tidyr::extract()</code>), another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>terra</strong> package (this can also be done in the <em>package</em> tab which resides by default in the right-bottom pane in RStudio): <code>detach("package:terra", unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.</p>
 </div>
 
-## Exercises
+## Ejercicios
 
 
 Para estos ejercicios utilizaremos los conjuntos de datos `us_states` y `us_states_df` del paquete **spData**.

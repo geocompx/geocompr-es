@@ -116,7 +116,7 @@ Los paquetes necesarios se pueden “cargar” (técnicamente se adjuntan) con l
 <p>En este capítulo se explicarán brevemente los modelos de datos geográficos fundamentales: vectorial y rasterizado.
 Introduciremos la teoría detrás de cada modelo de datos y las disciplinas en las que predominan, antes de demostrar su implementación en R.</p>
 <p>El <em>modelo de datos vectoriales</em> representa el mundo mediante puntos, líneas y polígonos.
-Estos tienen bordes discretos y bien definidos, lo que significa que los conjuntos de datos vectoriales suelen tener un alto nivel de precisión (pero no necesariamente exactitud, como veremos en el apartado <a href="#units"><strong>??</strong></a>).
+Estos tienen bordes discretos y bien definidos, lo que significa que los conjuntos de datos vectoriales suelen tener un alto nivel de precisión (pero no necesariamente exactitud, como veremos en el apartado <a href="spatial-class.html#paquete-units">2.5</a>).
 El <em>modelo de datos ráster</em> divide la superficie en celdas de tamaño constante.
 Los conjuntos de datos ráster son la base de las imágenes de fondo utilizadas en la cartografía web y han sido una fuente vital de datos geográficos desde los orígenes de la fotografía aérea y los dispositivos de teledetección por satélite.
 Los rásteres agregan características espacialmente específicas a una resolución determinada, lo que significa que son consistentes en el espacio y escalables (existen muchos conjuntos de datos ráster a nivel mundial).</p>
@@ -128,7 +128,7 @@ La respuesta depende probablemente de su ámbito de aplicación:</p>
 </ul>
 <p>En algunos campos hay mucho solapamiento y los conjuntos de datos ráster y vectoriales pueden utilizarse conjuntamente:
 los ecologistas y los demógrafos, por ejemplo, suelen utilizar tanto datos vectoriales como rasterizados.
-Además, es posible la conversión entre ambas formas (véase el apartado <a href="#raster-vector"><strong>??</strong></a>).
+Además, es posible la conversión entre ambas formas (véase el capítulo <a href="#raster-vector"><strong>??</strong></a>).
 Independientemente de si tu trabajo implica un mayor uso de los conjuntos de datos vectoriales o rasterizados, merece la pena comprender el modelo de datos subyacente antes de utilizarlos, como se explica en los capítulos siguientes.
 Este libro utiliza los paquetes <strong>sf</strong> y <strong>raster</strong> para trabajar con datos vectoriales y conjuntos de datos raster, respectivamente.</p>
 </div>
@@ -163,13 +163,13 @@ FIGURE 2.1: Ilustración de datos vectoriales (puntos) en los que la ubicación 
 </p>
 </div>
 <p><strong>sf</strong> es un paquete que proporciona un sistema de clases para datos vectoriales geográficos.
-<strong>sf</strong> no sólo sustituye a <strong>sp</strong>, sino que también proporciona una interfaz de línea de comandos consistente para GEOS y GDAL, sustituyendo a <strong>rgeos</strong> y <strong>rgdal</strong> (descritos en la Sección <a href="#the-history-of-r-spatial"><strong>??</strong></a>).
-Esta sección presenta las clases <strong>sf</strong> como preparación para los capítulos siguientes (los capítulos @ref(geometric-operations y <a href="#read-write"><strong>??</strong></a> cubren la interfaz de GEOS y GDAL, respectivamente).</p>
+<strong>sf</strong> no sólo sustituye a <strong>sp</strong>, sino que también proporciona una interfaz de línea de comandos consistente para GEOS y GDAL, sustituyendo a <strong>rgeos</strong> y <strong>rgdal</strong> (descritos en la Sección <a href="#La-historia-de-R-spatial"><strong>??</strong></a>).
+Esta sección presenta las clases <strong>sf</strong> como preparación para los capítulos siguientes (los capítulos <a href="#geometric-operations"><strong>??</strong></a> y <a href="#read-write"><strong>??</strong></a> cubren la interfaz de GEOS y GDAL, respectivamente).</p>
 <div id="intro-sf" class="section level3" number="2.2.1">
 <h3>
 <span class="header-section-number">2.2.1</span> Introducción a Simple Features<a class="anchor" aria-label="anchor" href="#intro-sf"><i class="fas fa-link"></i></a>
 </h3>
-<p>Simple Features (en ocasiones también llamado Simple feature access (SFA)) es un <a href="http://portal.opengeospatial.org/files/?artifact_id=25355">estándar abierto</a> desarrollado y respaldado por el Open Geospatial Consortium (OGC), una organización sin ánimo de lucro cuyas actividades volveremos a tratar en un capítulo posterior (en la sección <a href="#file-formats"><strong>??</strong></a>.
+<p>Simple Features (en ocasiones también llamado Simple feature access (SFA)) es un <a href="http://portal.opengeospatial.org/files/?artifact_id=25355">estándar abierto</a> desarrollado y respaldado por el Open Geospatial Consortium (OGC), una organización sin ánimo de lucro cuyas actividades volveremos a tratar en un capítulo posterior (en la sección <a href="#file-formats"><strong>??</strong></a>).
 
 Simple Features es un modelo de datos jerárquico que representa una amplia gama de tipos de geometría.
 De los 17 tipos de geometría que soporta la especificación, solo 7 se utilizan en la gran mayoría de las investigaciones geográficas (véase la figura <a href="spatial-class.html#fig:sf-ogc">2.2</a>);
@@ -227,7 +227,7 @@ La función <code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()
 <span class="co">#&gt;  Max.   :83.6                      </span>
 <span class="co">#&gt;  NA's   :10</span></code></pre></div>
 <p>Aunque sólo hemos seleccionado una variable para el comando <code>summary</code>, éste también emite un informe sobre la geometría.
-Esto demuestra el comportamiento “pegajoso” de las columnas con geometrías de los objetos <strong>sf</strong>, lo que significa que los datos geométricos se mantienen a menos que el usuario las elimine deliberadamente, como veremos en la sección <a href="#vector-attribute-manipulation"><strong>??</strong></a>.
+Esto demuestra el comportamiento “pegajoso” de las columnas con geometrías de los objetos <strong>sf</strong>, lo que significa que los datos geométricos se mantienen a menos que el usuario las elimine deliberadamente, como veremos en la sección @ref(Manipulación-de-atributos-vectoriales).
 El resultado proporciona un rápido resumen de los datos espaciales y no espaciales contenidos en <code>world</code>: la media de la esperanza de vida es de 71 años (oscilando entre menos de 51 y más de 83 años, con una mediana de 73 años) en todos los países.</p>
 
 <div class="rmdnote">
@@ -837,7 +837,7 @@ Los sistemas de coordenadas geográficas identifican cualquier ubicación en la 
 La <em>longitud</em> es la ubicación en la dirección Este-Oeste en distancia angular desde el plano del Primer Meridiano (también conocido como Meridiano de Greenwich).
 La <em>latitud</em> es la distancia angular al Norte o al Sur del plano ecuatorial.
 Por tanto, las distancias en los SRC geográficos no se miden en metros.
-Esto tiene importantes consecuencias, como se demuestra en la sección <a href="#reproj-geo-data"><strong>??</strong></a>.</p>
+Esto tiene importantes consecuencias, como se demuestra en el capítulo <a href="#reproj-geo-data"><strong>??</strong></a>.</p>
 <p>La superficie de la Tierra en los sistemas de coordenadas geográficas se representa mediante una superficie esférica o elipsoidal.
 Los modelos esféricos suponen que la Tierra es una esfera perfecta de un radio determinado; tienen la ventaja de la simplicidad pero, al mismo tiempo, son inexactos: ¡la Tierra no es una esfera!
 Los modelos elipsoidales se definen mediante dos parámetros: el radio ecuatorial y el radio polar.
@@ -1138,7 +1138,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-12-24.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2022-02-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

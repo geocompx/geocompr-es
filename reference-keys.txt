@@ -54,11 +54,11 @@ attr
 introducción
 manipulación-de-atributos-vectoriales
 subconjuntos-de-atributos-vectoriales
-chaining-commands-with-pipes
-vector-attribute-aggregation
-vector-attribute-joining
+encadenamiento-de-comandos-con-el-operador-pipe
+agregación-de-atributos-vectoriales
+unión-de-atributos-vectoriales
 vec-attr-creation
 manipulating-raster-objects
 raster-subsetting
 summarizing-raster-objects
-exercises
+ejercicios-1

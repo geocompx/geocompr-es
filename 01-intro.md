@@ -28,7 +28,7 @@ Table: (\#tab:gdsl)Diferencias de énfasis entre los paquetes software (Interfaz
 Este libro está motivado por la importancia de la reproducibilidad\index{reproducibility} para la investigación científica (véase la nota inferior).
 Su objetivo es hacer más accesibles los flujos de trabajo de los análisis de datos geográficos\index{geographic data analysis} reproducibles, y demostrar el poder del software geoespacial abierto disponible desde la línea de comandos. 
 "Las interfaces para otros software forman parte de R" [@eddelbuettel_extending_2018].
-Esto significa que, además de las destacadas capacidades "internas", R permite el acceso a muchas otras bibliotecas de software espacial, explicadas en la sección \@ref(why-use-r-for-geocomputation) y demostradas en el capítulo \@ref(gis).
+Esto significa que, además de las destacadas capacidades "internas", R permite el acceso a muchas otras bibliotecas de software espacial, explicadas en la sección \@ref(Por-qué-usar-R-para-la-geocomputación) y demostradas en el capítulo \@ref(gis).
 Sin embargo, antes de entrar en los detalles del software, vale la pena dar un paso atrás y pensar en lo que entendemos por geocomputación\index{geocomputation}.
 
 
@@ -112,12 +112,12 @@ Los nuevos entornos de desarrollo integrados (IDE\index{IDE}), como RStudio\inde
 
 En su esencia, R es un [lenguaje de programación funcional](http://adv-r.had.co.nz/Functional-programming.html) orientado a objetos [@wickham_advanced_2014], y fue diseñado específicamente como una interfaz interactiva para otro software [@chambers_extending_2016].
 Este último también incluye muchos "puentes" hacia el hallazgo de un tesoro del software SIG\index{GIS}, "geolibrerías" y funciones (véase el capítulo \@ref(gis)).
-Por tanto, es ideal para crear rápidamente "geoherramientas", sin necesidad de dominar lenguajes de nivel inferior (en comparación con R) como C\index{C}, FORTRAN\index{FORTRAN} o Java\index{Java} (véase la sección \@ref(software-for-geocomputation)).
+Por tanto, es ideal para crear rápidamente "geoherramientas", sin necesidad de dominar lenguajes de nivel inferior (en comparación con R) como C\index{C}, FORTRAN\index{FORTRAN} o Java\index{Java} (véase la sección \@ref(software-para-geocomputación)).
 \index{R}
 Esto puede ser como liberarse del metafórico "techo de cristal" impuesto por los sistemas de información geográfica basados en GUI o patentados (véase la Tabla \@ref(tab:gdsl) para una definición de GUI\index{graphical user interface}).
 Además, R facilita el acceso a otros lenguajes: 
 los paquetes **Rcpp** y **reticulate** permiten acceder a código de C++\index{C++} y Python\index{Python}, por ejemplo.
-Esto significa que R puede utilizarse como "puente" hacia una amplia gama de programas geoespaciales (véase la sección \@ref(software-for-geocomputation)).
+Esto significa que R puede utilizarse como "puente" hacia una amplia gama de programas geoespaciales (véase la sección \@ref(software-para-geocomputación)).
 
 Otro ejemplo que muestra la flexibilidad y la evolución de las capacidades geográficas de R es la elaboración de mapas interactivos\index{map making!interactive}.
 Como veremos en el Capítulo \@ref(adv-map), la afirmación de que R tiene "facilidades interactivas [para elaborar gráficos] limitadas" [@bivand_applied_2013] ya no es cierta.
@@ -286,7 +286,7 @@ Muchas de estas capacidades adicionales fueron desarrolladas por Barry Rowlingso
 Antes de 2005, las coordenadas geográficas se trataban generalmente como cualquier otro número.
 **sp** cambió esto con sus clases y métodos genéricos que soportan puntos, líneas, polígonos y cuadrículas, y datos de atributos.
 
-**sp** almacena información como el cuadro delimitador\index{bounding box}, el sistema de referencia de coordenadas\index{CRS} y los atributos en ranuras de objetos `espaciales` que utilizan el sistema de clases S4\index{S4 class}, lo que permite que las operaciones de datos funcionen con datos geográficos (véase la sección \@ref(why-simple-features)).
+**sp** almacena información como el cuadro delimitador\index{bounding box}, el sistema de referencia de coordenadas\index{CRS} y los atributos en ranuras de objetos `espaciales` que utilizan el sistema de clases S4\index{S4 class}, lo que permite que las operaciones de datos funcionen con datos geográficos (véase la sección \@ref(por-qué-simple-features)).
 Además, **sp** proporciona métodos genéricos como `summary()` y `plot()` para datos geográficos. 
 En la década siguiente, las clases **sp** se popularizaron rápidamente para los datos geográficos en R y el número de paquetes que dependían de él se incrementó de unos 20 en 2008 a más de 100 en 2013 [@bivand_applied_2013].
 
@@ -298,7 +298,7 @@ Colin Rundel abordó este problema desarrollando **rgeos**, una interfaz de R pa
 **rgeos** permitió a GEOS\index{GEOS} manipular objetos **sp**, con funciones como `gIntersection()`.
 
 Otra limitación de **sp** --- su limitado apoyo a los datos raster --- fue superada por **raster**\index{raster}, publicado por primera vez en 2010 [@R-raster].
-Su sistema de clases y sus funciones soportan una serie de operaciones de rasterización, como se indica en la sección \@ref(raster-data). 
+Su sistema de clases y sus funciones soportan una serie de operaciones de rasterización, como se indica en la sección \@ref(datos-rasterizados). 
 Una característica clave de **raster** es su capacidad para trabajar con conjuntos de datos que son demasiado grandes para caber en la memoria RAM (la interfaz de R con PostGIS\index{PostGIS} admite operaciones fuera del disco sobre datos geográficos vectoriales).
 **raster** también admite el álgebra de mapas (véase la sección \@ref(map-algebra)).
 

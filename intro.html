@@ -111,7 +111,7 @@ R, por el contrario, hace énfasis en la interfaz de la línea de comandos (CLI)
 <p>Este libro está motivado por la importancia de la reproducibilidad para la investigación científica (véase la nota inferior).
 Su objetivo es hacer más accesibles los flujos de trabajo de los análisis de datos geográficos reproducibles, y demostrar el poder del software geoespacial abierto disponible desde la línea de comandos.
 “Las interfaces para otros software forman parte de R” <span class="citation">(<a href="attr.html#ref-eddelbuettel_extending_2018" role="doc-biblioref">Eddelbuettel and Balamuta 2018</a>)</span>.
-Esto significa que, además de las destacadas capacidades “internas,” R permite el acceso a muchas otras bibliotecas de software espacial, explicadas en la sección <a href="#why-use-r-for-geocomputation"><strong>??</strong></a> y demostradas en el capítulo <a href="#gis"><strong>??</strong></a>.
+Esto significa que, además de las destacadas capacidades “internas,” R permite el acceso a muchas otras bibliotecas de software espacial, explicadas en la sección @ref(Por-qué-usar-R-para-la-geocomputación) y demostradas en el capítulo <a href="#gis"><strong>??</strong></a>.
 Sin embargo, antes de entrar en los detalles del software, vale la pena dar un paso atrás y pensar en lo que entendemos por geocomputación.</p>
 
 <div class="rmdnote">
@@ -184,12 +184,12 @@ Con una amplia gama de paquetes, R también permite la estadística geoespacial 
 Los nuevos entornos de desarrollo integrados (IDE), como RStudio, han hecho que R sea más fácil de usar para muchos, facilitando la elaboración de mapas con un panel dedicado a la visualización interactiva.</p>
 <p>En su esencia, R es un <a href="http://adv-r.had.co.nz/Functional-programming.html">lenguaje de programación funcional</a> orientado a objetos <span class="citation">(<a href="attr.html#ref-wickham_advanced_2014" role="doc-biblioref">Wickham 2014</a>)</span>, y fue diseñado específicamente como una interfaz interactiva para otro software <span class="citation">(<a href="attr.html#ref-chambers_extending_2016" role="doc-biblioref">Chambers 2016</a>)</span>.
 Este último también incluye muchos “puentes” hacia el hallazgo de un tesoro del software SIG, “geolibrerías” y funciones (véase el capítulo <a href="#gis"><strong>??</strong></a>).
-Por tanto, es ideal para crear rápidamente “geoherramientas,” sin necesidad de dominar lenguajes de nivel inferior (en comparación con R) como C, FORTRAN o Java (véase la sección <a href="#software-for-geocomputation"><strong>??</strong></a>).
+Por tanto, es ideal para crear rápidamente “geoherramientas,” sin necesidad de dominar lenguajes de nivel inferior (en comparación con R) como C, FORTRAN o Java (véase la sección @ref(software-para-geocomputación)).
 
 Esto puede ser como liberarse del metafórico “techo de cristal” impuesto por los sistemas de información geográfica basados en GUI o patentados (véase la Tabla <a href="intro.html#tab:gdsl">1.1</a> para una definición de GUI).
 Además, R facilita el acceso a otros lenguajes:
 los paquetes <strong>Rcpp</strong> y <strong>reticulate</strong> permiten acceder a código de C++ y Python, por ejemplo.
-Esto significa que R puede utilizarse como “puente” hacia una amplia gama de programas geoespaciales (véase la sección <a href="#software-for-geocomputation"><strong>??</strong></a>).</p>
+Esto significa que R puede utilizarse como “puente” hacia una amplia gama de programas geoespaciales (véase la sección @ref(software-para-geocomputación)).</p>
 <p>Otro ejemplo que muestra la flexibilidad y la evolución de las capacidades geográficas de R es la elaboración de mapas interactivos.
 Como veremos en el Capítulo <a href="#adv-map"><strong>??</strong></a>, la afirmación de que R tiene “facilidades interactivas [para elaborar gráficos] limitadas” <span class="citation">(<a href="attr.html#ref-bivand_applied_2013" role="doc-biblioref">R. Bivand, Pebesma, and Gómez-Rubio 2013</a>)</span> ya no es cierta.
 Así lo demuestra el siguiente fragmento de código, que crea la Figura <a href="intro.html#fig:interactive">1.1</a> (las funciones que generan el gráfico se tratan en la Sección <a href="#interactive-maps"><strong>??</strong></a>).</p>
@@ -348,7 +348,7 @@ Muchas de estas capacidades adicionales fueron desarrolladas por Barry Rowlingso
 <!-- five years later) and the [R-sig-geo mailing list](https://stat.ethz.ch/mailman/listinfo/r-sig-geo) was started. -->
 Antes de 2005, las coordenadas geográficas se trataban generalmente como cualquier otro número.
 <strong>sp</strong> cambió esto con sus clases y métodos genéricos que soportan puntos, líneas, polígonos y cuadrículas, y datos de atributos.</p>
-<p><strong>sp</strong> almacena información como el cuadro delimitador, el sistema de referencia de coordenadas y los atributos en ranuras de objetos <code>espaciales</code> que utilizan el sistema de clases S4, lo que permite que las operaciones de datos funcionen con datos geográficos (véase la sección <a href="#why-simple-features"><strong>??</strong></a>).
+<p><strong>sp</strong> almacena información como el cuadro delimitador, el sistema de referencia de coordenadas y los atributos en ranuras de objetos <code>espaciales</code> que utilizan el sistema de clases S4, lo que permite que las operaciones de datos funcionen con datos geográficos (véase la sección @ref(por-qué-simple-features)).
 Además, <strong>sp</strong> proporciona métodos genéricos como <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> y <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> para datos geográficos.
 En la década siguiente, las clases <strong>sp</strong> se popularizaron rápidamente para los datos geográficos en R y el número de paquetes que dependían de él se incrementó de unos 20 en 2008 a más de 100 en 2013 <span class="citation">(<a href="attr.html#ref-bivand_applied_2013" role="doc-biblioref">R. Bivand, Pebesma, and Gómez-Rubio 2013</a>)</span>.</p>
 <p>En 2018, casi 500 paquetes dependen de <strong>sp</strong>, lo que lo convierte en una parte importante del ecosistema de R.
@@ -357,7 +357,7 @@ Entre los paquetes R más destacados que utilizan <strong>sp</strong> se encuent
 Colin Rundel abordó este problema desarrollando <strong>rgeos</strong>, una interfaz de R para la librería de geometría en código abierto (GEOS) durante un proyecto de Google Summer of Code en 2010 <span class="citation">(<a href="attr.html#ref-R-rgeos" role="doc-biblioref">R. Bivand and Rundel 2018</a>)</span>.
 <strong>rgeos</strong> permitió a GEOS manipular objetos <strong>sp</strong>, con funciones como <code>gIntersection()</code>.</p>
 <p>Otra limitación de <strong>sp</strong> — su limitado apoyo a los datos raster — fue superada por <strong>raster</strong>, publicado por primera vez en 2010 <span class="citation">(<a href="attr.html#ref-R-raster" role="doc-biblioref">Hijmans 2017</a>)</span>.
-Su sistema de clases y sus funciones soportan una serie de operaciones de rasterización, como se indica en la sección <a href="#raster-data"><strong>??</strong></a>.
+Su sistema de clases y sus funciones soportan una serie de operaciones de rasterización, como se indica en la sección <a href="spatial-class.html#datos-rasterizados">2.3</a>.
 Una característica clave de <strong>raster</strong> es su capacidad para trabajar con conjuntos de datos que son demasiado grandes para caber en la memoria RAM (la interfaz de R con PostGIS admite operaciones fuera del disco sobre datos geográficos vectoriales).
 <strong>raster</strong> también admite el álgebra de mapas (véase la sección <a href="#map-algebra"><strong>??</strong></a>).</p>
 <p>Paralelamente a estos desarrollos de sistemas de clases y métodos, llegó el apoyo a R como interfaz para el software SIG dedicado.
@@ -412,7 +412,7 @@ A partir de 2018, la creación de mapas en R es un tema candente con paquetes de
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2021-12-24.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2022-02-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
