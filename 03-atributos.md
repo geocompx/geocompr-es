@@ -550,7 +550,7 @@ world %>%
   mutate(pop_dens = pop / area_km2)
 ```
 
-The difference between `mutate()` and `transmute()` is that the latter drops all other existing columns (except for the sticky geometry column):
+La diferencia entre `mutate()` y `transmute()` es que esta última elimina todas las demás columnas existentes (excepto la columna de geometría fijada):
 
 
 ```r
@@ -558,9 +558,9 @@ world %>%
   transmute(pop_dens = pop / area_km2)
 ```
 
-`unite()` from the **tidyr** package (which provides many useful functions for reshaping datasets, including `pivot_longer()`) pastes together existing columns.
-For example, we want to combine the `continent` and `region_un` columns into a new column named `con_reg`.
-Additionally, we can define a separator (here: a colon `:`) which defines how the values of the input columns should be joined, and if the original columns should be removed (here: `TRUE`):
+La función `unite()` del paquete **tidyr** (que proporciona muchas funciones útiles para remodelar conjuntos de datos, como `pivot_longer()`) pega las columnas existentes.
+Por ejemplo, queremos combinar las columnas `continent` y `region_un` en una nueva columna llamada `con_reg`.
+Además, podemos definir un separador (aquí: dos puntos `:`) que define cómo se deben unir los valores de las columnas de entrada, y si se deben eliminar las columnas originales (aquí: `TRUE`):
 
 
 ```r
@@ -568,8 +568,8 @@ world_unite = world %>%
   unite("con_reg", continent:region_un, sep = ":", remove = TRUE)
 ```
 
-The `separate()` function does the opposite of `unite()`: it splits one column into multiple columns using either a regular expression or character positions.
-This function also comes from the **tidyr** package.
+La función `separate()` hace lo contrario de `unite()`: divide una columna en varias columnas utilizando una expresión regular o posiciones de caracteres.
+Esta función también proviene del paquete **tidyr**.
 
 
 ```r
@@ -579,9 +579,9 @@ world_separate = world_unite %>%
 
 
 
-The **dplyr** function `rename()` and the base R function `setNames()` are useful for renaming columns.
-The first replaces an old name with a new one.
-The following command, for example, renames the lengthy `name_long` column to simply `name`:
+La función de **dplyr** `rename()` y la función base de R `setNames()` son útiles para renombrar columnas.
+La primera sustituye un nombre antiguo por uno nuevo.
+El siguiente comando, por ejemplo, renombra la larga columna `nombre_long` a simplemente `name`:
 
 
 ```r
@@ -589,8 +589,8 @@ world %>%
   rename(name = name_long)
 ```
 
-`setNames()` changes all column names at once, and requires a character vector with a name matching each column.
-This is illustrated below, which outputs the same `world` object, but with very short names: 
+`setNames()` cambia todos los nombres de las columnas a la vez, y requiere un vector de caracteres con un nombre que coincida con cada columna.
+Esto se ilustra a continuación, lo cual produce el mismo objeto `world`, pero con nombres mucho más cortos: 
 
 
 
@@ -601,11 +601,10 @@ world %>%
   setNames(new_names)
 ```
 
-It is important to note that attribute data operations preserve the geometry of the simple features.
-As mentioned at the outset of the chapter, it can be useful to remove the geometry.
-To do this, you have to explicitly remove it.
-Hence, an approach such as `select(world, -geom)` will be unsuccessful and you should instead use `st_drop_geometry()`.^[
-`st_geometry(world_st) = NULL` also works to remove the geometry from `world`, but overwrites the original object.
+Es importante señalar que las operaciones de datos de atributos conservan la geometría de simple features.
+Como se ha mencionado al principio del capítulo, puede ser útil eliminar la geometría.
+Para ello, hay que eliminarla explícitamente.
+Por lo tanto, un enfoque como `select(world, -geom)` no tendrá éxito y en su lugar debe utilizar `st_drop_geometry()`.^[`st_geometry(world_st) = NULL` también funciona para eliminar la geometría de `world`, pero sobreescribe el objeto original.
 ]
 
 
@@ -615,16 +614,16 @@ class(world_data)
 #> [1] "tbl_df"     "tbl"        "data.frame"
 ```
 
-## Manipulating raster objects
+## Manipulando objetos raster 
 <!--jn-->
 
-In contrast to the vector data model underlying simple features (which represents points, lines and polygons as discrete entities in space), raster data represent continuous surfaces.
-This section shows how raster objects work by creating them *from scratch*, building on Section \@ref(an-introduction-to-terra).
-Because of their unique structure, subsetting and other operations on raster datasets work in a different way, as demonstrated in Section \@ref(raster-subsetting).
+A diferencia del modelo de datos vectoriales subyacente a simple features (que representa puntos, líneas y polígonos como entidades discretas en el espacio), los datos rasterizados representan superficies continuas.
+Esta sección muestra cómo funcionan los objetos raster, creándolos *desde cero*, basándose en la sección \@ref(an-introduction-to-terra).
+Debido a su estructura única, el subconjunto y otras operaciones con conjuntos de datos raster funcionan de manera diferente, como se demuestra en la sección \@ref(raster-subsetting).
 \index{raster!manipulation}
 
-The following code recreates the raster dataset used in Section \@ref(raster-classes), the result of which is illustrated in Figure \@ref(fig:cont-raster).
-This demonstrates how the `rast()` function works to create an example raster named `elev` (representing elevations).
+El siguiente código recrea el conjunto de datos raster utilizados en la sección \@ref(raster-classes), cuyo resultado se ilustra en la figura \@ref(fig:cont-raster).
+Esto demuestra cómo funciona la función `rast()` para crear un raster de ejemplo llamado `elev` (que representa elevaciones).
 
 
 ```r
@@ -633,10 +632,10 @@ elev = rast(nrows = 6, ncols = 6, resolution = 0.5,
             vals = 1:36)
 ```
 
-The result is a raster object with 6 rows and 6 columns (specified by the `nrow` and `ncol` arguments), and a minimum and maximum spatial extent in x and y direction (`xmin`, `xmax`, `ymin`, `ymax`).
-The `vals` argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case.
-Raster objects can also contain categorical values of class `logical` or `factor` variables in R.
-The following code creates a raster representing grain sizes (Figure \@ref(fig:cont-raster)):
+El resultado es un objeto raster con 6 filas y 6 columnas (especificadas por los argumentos `nrow` y `ncol`), y una extensión espacial mínima y máxima en dirección x e y (`xmin`, `xmax`, `ymin`, `ymax`).
+El argumento `vals` establece los valores que contiene cada celda: datos numéricos que van de 1 a 36 en este caso.
+Los objetos raster también pueden contener valores categóricos de clase `lógica` o variables `factoriales` en R.
+El siguiente código crea un raster que representa el tamaño de los granos de café (Figura \@ref(fig:cont-raster)):
 
 
 ```r
@@ -650,9 +649,9 @@ grain = rast(nrows = 6, ncols = 6, resolution = 0.5,
 
 
 
-The raster object stores the corresponding look-up table or "Raster Attribute Table" (RAT) as a list of data frames, which can be viewed with `cats(grain)` (see `?cats()` for more information).
-Each element of this list is a layer of the raster.
-It is also possible to use the function `levels()` for retrieving and adding new or replacing existing factor levels:
+El objeto raster almacena la correspondiente tabla de búsqueda o "Raster Attribute Table" (RAT) como una lista de marcos de datos, los cuales pueden ser visualizados con `cats(grain)` ( véase `?cats()` para más información).
+Cada elemento de esta lista es una capa del raster.
+También es posible utilizar la función `levels()` para recuperar y añadir nuevos niveles de factores o sustituir los existentes:
 
 
 ```r
@@ -663,46 +662,45 @@ levels(grain)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-atributos_files/figure-html/cont-raster-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="100%" />
-<p class="caption">(\#fig:cont-raster)Raster datasets with numeric (left) and categorical values (right).</p>
+<img src="03-atributos_files/figure-html/cont-raster-1.png" alt="Conjuntos de datos rasterizados con valores numéricos (izquierda) y categóricos (derecha)." width="100%" />
+<p class="caption">(\#fig:cont-raster)Conjuntos de datos rasterizados con valores numéricos (izquierda) y categóricos (derecha).</p>
 </div>
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">Categorical raster objects can also store information about the colors associated with each value using a color table.
-The color table is a data frame with three (red, green, blue) or four (alpha) columns, where each row relates to one value.
-Color tables in **terra** can be viewed or set with the `coltab()` function (see `?coltab`).
-Importantly, saving a raster object with a color table to a file (e.g., GeoTIFF) will also save the color information.</div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Los objetos raster categóricos también pueden almacenar información sobre los colores asociados a cada valor utilizando una tabla de colores.
+La tabla de colores es un marco de datos con tres (rojo, verde, azul) o cuatro (alfa) columnas, donde cada fila se refiere a un valor.
+Las tablas de colores en **terra** se pueden ver o establecer con la función `coltab()` ( véase `?coltab`).
+Es importante señalar que al guardar un objeto rasterizado con una tabla de colores en un archivo (por ejemplo, GeoTIFF) también se guardará la información de color.</div>\EndKnitrBlock{rmdnote}
 
-### Raster subsetting
+### Subconjuntos de rásteres
 
-Raster subsetting is done with the base R operator `[`, which accepts a variety of inputs:
+Los subconjuntos de rásteres se realizan con el operador base de R `[`, que acepta varios tipos de entradas:
 \index{raster!subsetting}
 
-- Row-column indexing
-- Cell IDs
-- Coordinates (see Section \@ref(spatial-raster-subsetting))
-- Another spatial object (see Section \@ref(spatial-raster-subsetting))
+- Indexación de filas y columnas
+- IDs de celdas
+- Coordenadas (Véase la sección \@ref(spatial-raster-subsetting))
+- Otros objetos espaciales (Véase la sección \@ref(spatial-raster-subsetting))
 
-Here, we only show the first two options since these can be considered non-spatial operations.
-If we need a spatial object to subset another or the output is a spatial object, we refer to this as spatial subsetting.
-Therefore, the latter two options will be shown in the next chapter (see Section \@ref(spatial-raster-subsetting)).
+Aquí sólo mostramos las dos primeras opciones, ya que pueden considerarse operaciones no espaciales.
+Si necesitamos un objeto espacial para crear otro subconjunto o la salida es un objeto espacial, nos referimos a esto como subconjunto espacial.
+Por lo tanto, las dos últimas opciones se mostrarán en el próximo capítulo (véase la sección \@ref(spatial-raster-subsetting)).
 
-The first two subsetting options are demonstrated in the commands below ---
-both return the value of the top left pixel in the raster object `elev` (results not shown):
+Las dos primeras opciones de subconjunto se demuestran en los comandos siguientes ---
+ambos devuelven el valor del píxel superior izquierdo en el objeto raster `elev` (los resultados no se muestran):
 
 
 ```r
-# row 1, column 1
+# fila 1, columna 1
 elev[1, 1]
-# cell ID 1
+# ID de la celda 1
 elev[1]
 ```
 
-Subsetting of multi-layered raster objects will return the cell value(s) for each layer.
-For example, `c(elev, grain)[1]` returns a data frame with one row and two columns --- one for each layer.
-To extract all values or complete rows, you can also use `values()`.
-
-Cell values can be modified by overwriting existing values in conjunction with a subsetting operation.
-The following code chunk, for example, sets the upper left cell of `elev` to 0 (results not shown):
+El subconjunto de los objetos raster de varias capas devolverá el valor de la(s) celda(s) de cada capa.
+Por ejemplo, `c(elev, grain)[1]` devuelve un marco de datos con una fila y dos columnas --- una para cada capa.
+Para extraer todos los valores o filas completas, también puedes utilizar `values()`.
+Los valores de las celdas pueden modificarse sobrescribiendo los valores existentes junto con una operación de subconjunto.
+El siguiente fragmento de código, por ejemplo, establece la celda superior izquierda de `elev` a 0 (los resultados no se muestran):
 
 
 ```r
@@ -710,15 +708,15 @@ elev[1, 1] = 0
 elev[]
 ```
 
-Leaving the square brackets empty is a shortcut version of `values()` for retrieving all values of a raster.
-Multiple cells can also be modified in this way:
+Dejar los corchetes vacíos es una versión abreviada de `values()` para recuperar todos los valores de un raster.
+También se pueden modificar múltiples celdas de esta manera:
 
 
 ```r
 elev[1, c(1, 2)] = 0
 ```
 
-Replacing values of multilayered rasters can be done with a matrix with as many columns as layers and rows as replaceable cells (results not shown):
+Reemplazar los valores de rásteres multicapa puede hacerse con una matriz, con tantas columnas como capas queramos y filas como celdas reemplazables (resultados no mostrados):
 
 
 ```r
@@ -727,12 +725,12 @@ two_layers[1] = cbind(c(0), c(4))
 two_layers[]
 ```
 
-### Summarizing raster objects
+### Sintetizando objetos rasterizados
 
-**terra** contains functions for extracting descriptive statistics\index{statistics} for entire rasters.
-Printing a raster object to the console by typing its name returns minimum and maximum values of a raster.
-`summary()` provides common descriptive statistics\index{statistics} -- minimum, maximum, quartiles and number of `NA`s for continuous rasters and a number of cells of each class for categorical rasters.
-Further summary operations such as the standard deviation (see below) or custom summary statistics can be calculated with `global()`. 
+**terra** contiene funciones para extraer estadísticas descriptivas\index{statistics} para rásteres enteros.
+La impresión de un objeto raster en la consola al escribir su nombre devuelve sus valores mínimos y máximos.
+`summary()` proporciona estadísticas descriptivas\index{statistics} comunes. -- mínimo, máximo, cuartiles y número de `NA`s para los rásteres continuos y un número de celdas de cada clase para los rásteres categóricos.
+Otras operaciones de síntesis, como la desviación estándar (véase más adelante) o estadísticas de síntesis personalizadas, pueden calcularse con `global()`.
 \index{raster!summarizing}
 
 
@@ -740,26 +738,26 @@ Further summary operations such as the standard deviation (see below) or custom 
 global(elev, sd)
 ```
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">If you provide the `summary()` and `global()` functions with a multi-layered raster object, they will summarize each layer separately, as can be illustrated by running: `summary(c(elev, grain))`.</div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Si aplicas las funciones `summary()` y `global()` a un objeto raster de varias capas, éstas resumirán cada capa por separado, como se puede ilustrar ejecutando: `summary(c(elev, grain))`.</div>\EndKnitrBlock{rmdnote}
 
-Additionally, the `freq()` function allows to get the frequency table of categorical values.
+Además, la función `freq()` permite obtener la tabla de frecuencias de los valores categóricos.
 
-Raster value statistics can be visualized in a variety of ways.
-Specific functions such as `boxplot()`, `density()`, `hist()` and `pairs()` work also with raster objects, as demonstrated in the histogram created with the command below (not shown):
+Las estadísticas de los valores raster pueden visualizarse de distintas maneras.
+Funciones específicas como `boxplot()`, `density()`, `hist()` y `pairs()` funcionan también con objetos raster, como se demuestra en el histograma creado con el comando siguiente (no mostrado):
 
 
 ```r
 hist(elev)
 ```
 
-In case the desired visualization function does not work with raster objects, one can extract the raster data to be plotted with the help of `values()` (Section \@ref(raster-subsetting)).
+En caso de que la función de visualización deseada no funcione con objetos raster, se pueden extraer los datos raster para representarlos con la ayuda de `values()` (Sección \@ref(raster-subsetting)).
 \index{raster!values}
 
-Descriptive raster statistics belong to the so-called global raster operations.
-These and other typical raster processing operations are part of the map algebra scheme, which are covered in the next chapter (Section \@ref(map-algebra)).
+Las estadísticas raster descriptivas pertenecen a las llamadas operaciones raster globales.
+Estas y otras operaciones típicas del procesamiento raster forman parte del esquema del álgebra de mapas, que se tratan en el siguiente capítulo (Sección \@ref(map-algebra)).
 
 <div class="rmdnote">
-<p>Some function names clash between packages (e.g., a function with the name <code>extract()</code> exist in both <strong>terra</strong> and <strong>tidyr</strong> packages). In addition to not loading packages by referring to functions verbosely (e.g., <code>tidyr::extract()</code>), another way to prevent function names clashes is by unloading the offending package with <code>detach()</code>. The following command, for example, unloads the <strong>terra</strong> package (this can also be done in the <em>package</em> tab which resides by default in the right-bottom pane in RStudio): <code>detach("package:terra", unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.</p>
+<p>Algunos nombres de funciones chocan entre paquetes (por ejemplo, una función con el nombre <code>extract()</code> existe en ambos paquetes <strong>terra</strong> y <strong>tidyr</strong>). Además de no cargar los paquetes haciendo referencia a las funciones de forma verbosa (por ejemplo, <code>tidyr::extract()</code>), otra forma de evitar los choques de nombres de funciones es descargando el paquete que genere este choque de nombres con <code>detach()</code>. El siguiente comando, por ejemplo, descarga el paquete <strong>terra</strong> (esto también puede hacerse en la pestaña <em>paquete</em> (Package) que reside por defecto en el panel inferior derecho de RStudio): <code>detach("paquete:terra", unload = TRUE, force = TRUE)</code>. El argumento <code>force</code> asegura que el paquete se desprenderá incluso si otros paquetes dependen de él. Esto, sin embargo, puede conducir a una usabilidad restringida de los paquetes que dependen del paquete desprendido, y por lo tanto no se recomienda.</p>
 </div>
 
 ## Ejercicios

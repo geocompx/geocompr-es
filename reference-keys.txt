@@ -58,7 +58,7 @@ encadenamiento-de-comandos-con-el-operador-pipe
 agregación-de-atributos-vectoriales
 unión-de-atributos-vectoriales
 vec-attr-creation
-manipulating-raster-objects
-raster-subsetting
-summarizing-raster-objects
+manipulando-objetos-raster
+subconjuntos-de-rásteres
+sintetizando-objetos-rasterizados
 ejercicios-1

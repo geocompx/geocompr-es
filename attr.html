@@ -110,7 +110,7 @@ el operador <code>[</code> en R básico, por ejemplo, funciona igualmente para s
 Esto es una buena noticia: las habilidades desarrolladas en este capítulo son transferibles.
 El capítulo <a href="#spatial-operations"><strong>??</strong></a> extiende los métodos presentados aquí al mundo espacial.</p>
 <p>Después de una inmersión profunda en varios tipos de operaciones de atributos <em>vectoriales</em> en la siguiente sección, las operaciones de datos de atributos <em>raster</em> se cubren en la Sección (manipulando-objetos-raster), que demuestra cómo crear capas raster que contienen atributos continuos y categóricos y cómo extraer valores de celdas de una o más capas (subconjunto raster).
-La sección <a href="attr.html#summarizing-raster-objects">3.3.2</a> proporciona una visión general de las operaciones ráster “globales” que pueden utilizarse para resumir conjuntos de datos raster completos.</p>
+La sección <a href="#summarizing-raster-objects"><strong>??</strong></a> proporciona una visión general de las operaciones ráster “globales” que pueden utilizarse para resumir conjuntos de datos raster completos.</p>
 </div>
 <div id="manipulación-de-atributos-vectoriales" class="section level2" number="3.2">
 <h2>
@@ -521,63 +521,62 @@ La función <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mu
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pop_dens <span class="op">=</span> <span class="va">pop</span> <span class="op">/</span> <span class="va">area_km2</span><span class="op">)</span></code></pre></div>
-<p>The difference between <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> is that the latter drops all other existing columns (except for the sticky geometry column):</p>
+<p>La diferencia entre <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> es que esta última elimina todas las demás columnas existentes (excepto la columna de geometría fijada):</p>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>pop_dens <span class="op">=</span> <span class="va">pop</span> <span class="op">/</span> <span class="va">area_km2</span><span class="op">)</span></code></pre></div>
-<p><code>unite()</code> from the <strong>tidyr</strong> package (which provides many useful functions for reshaping datasets, including <code>pivot_longer()</code>) pastes together existing columns.
-For example, we want to combine the <code>continent</code> and <code>region_un</code> columns into a new column named <code>con_reg</code>.
-Additionally, we can define a separator (here: a colon <code>:</code>) which defines how the values of the input columns should be joined, and if the original columns should be removed (here: <code>TRUE</code>):</p>
+<p>La función <code>unite()</code> del paquete <strong>tidyr</strong> (que proporciona muchas funciones útiles para remodelar conjuntos de datos, como <code>pivot_longer()</code>) pega las columnas existentes.
+Por ejemplo, queremos combinar las columnas <code>continent</code> y <code>region_un</code> en una nueva columna llamada <code>con_reg</code>.
+Además, podemos definir un separador (aquí: dos puntos <code>:</code>) que define cómo se deben unir los valores de las columnas de entrada, y si se deben eliminar las columnas originales (aquí: <code>TRUE</code>):</p>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">world_unite</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu">unite</span><span class="op">(</span><span class="st">"con_reg"</span>, <span class="va">continent</span><span class="op">:</span><span class="va">region_un</span>, sep <span class="op">=</span> <span class="st">":"</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>The <code>separate()</code> function does the opposite of <code>unite()</code>: it splits one column into multiple columns using either a regular expression or character positions.
-This function also comes from the <strong>tidyr</strong> package.</p>
+<p>La función <code>separate()</code> hace lo contrario de <code>unite()</code>: divide una columna en varias columnas utilizando una expresión regular o posiciones de caracteres.
+Esta función también proviene del paquete <strong>tidyr</strong>.</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">world_separate</span> <span class="op">=</span> <span class="va">world_unite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">separate</span><span class="op">(</span><span class="va">con_reg</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"continent"</span>, <span class="st">"region_un"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span></code></pre></div>
-<p>The <strong>dplyr</strong> function <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> and the base R function <code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> are useful for renaming columns.
-The first replaces an old name with a new one.
-The following command, for example, renames the lengthy <code>name_long</code> column to simply <code>name</code>:</p>
+<p>La función de <strong>dplyr</strong> <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> y la función base de R <code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> son útiles para renombrar columnas.
+La primera sustituye un nombre antiguo por uno nuevo.
+El siguiente comando, por ejemplo, renombra la larga columna <code>nombre_long</code> a simplemente <code>name</code>:</p>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">name_long</span><span class="op">)</span></code></pre></div>
-<p><code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> changes all column names at once, and requires a character vector with a name matching each column.
-This is illustrated below, which outputs the same <code>world</code> object, but with very short names:</p>
+<p><code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> cambia todos los nombres de las columnas a la vez, y requiere un vector de caracteres con un nombre que coincida con cada columna.
+Esto se ilustra a continuación, lo cual produce el mismo objeto <code>world</code>, pero con nombres mucho más cortos:</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"i"</span>, <span class="st">"n"</span>, <span class="st">"c"</span>, <span class="st">"r"</span>, <span class="st">"s"</span>, <span class="st">"t"</span>, <span class="st">"a"</span>, <span class="st">"p"</span>, <span class="st">"l"</span>, <span class="st">"gP"</span>, <span class="st">"geom"</span><span class="op">)</span>
 <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">new_names</span><span class="op">)</span></code></pre></div>
-<p>It is important to note that attribute data operations preserve the geometry of the simple features.
-As mentioned at the outset of the chapter, it can be useful to remove the geometry.
-To do this, you have to explicitly remove it.
-Hence, an approach such as <code>select(world, -geom)</code> will be unsuccessful and you should instead use <code><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry()</a></code>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;
-&lt;code&gt;st_geometry(world_st) = NULL&lt;/code&gt; also works to remove the geometry from &lt;code&gt;world&lt;/code&gt;, but overwrites the original object.&lt;/p&gt;"><sup>14</sup></a></p>
+<p>Es importante señalar que las operaciones de datos de atributos conservan la geometría de simple features.
+Como se ha mencionado al principio del capítulo, puede ser útil eliminar la geometría.
+Para ello, hay que eliminarla explícitamente.
+Por lo tanto, un enfoque como <code>select(world, -geom)</code> no tendrá éxito y en su lugar debe utilizar <code><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry()</a></code>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;&lt;code&gt;st_geometry(world_st) = NULL&lt;/code&gt; también funciona para eliminar la geometría de &lt;code&gt;world&lt;/code&gt;, pero sobreescribe el objeto original.&lt;/p&gt;"><sup>14</sup></a></p>
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">world_data</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_data</span><span class="op">)</span>
 <span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></code></pre></div>
 </div>
 </div>
-<div id="manipulating-raster-objects" class="section level2" number="3.3">
+<div id="manipulando-objetos-raster" class="section level2" number="3.3">
 <h2>
-<span class="header-section-number">3.3</span> Manipulating raster objects<a class="anchor" aria-label="anchor" href="#manipulating-raster-objects"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3</span> Manipulando objetos raster<a class="anchor" aria-label="anchor" href="#manipulando-objetos-raster"><i class="fas fa-link"></i></a>
 </h2>
 <!--jn-->
-<p>In contrast to the vector data model underlying simple features (which represents points, lines and polygons as discrete entities in space), raster data represent continuous surfaces.
-This section shows how raster objects work by creating them <em>from scratch</em>, building on Section <a href="#an-introduction-to-terra"><strong>??</strong></a>.
-Because of their unique structure, subsetting and other operations on raster datasets work in a different way, as demonstrated in Section <a href="attr.html#raster-subsetting">3.3.1</a>.
+<p>A diferencia del modelo de datos vectoriales subyacente a simple features (que representa puntos, líneas y polígonos como entidades discretas en el espacio), los datos rasterizados representan superficies continuas.
+Esta sección muestra cómo funcionan los objetos raster, creándolos <em>desde cero</em>, basándose en la sección <a href="#an-introduction-to-terra"><strong>??</strong></a>.
+Debido a su estructura única, el subconjunto y otras operaciones con conjuntos de datos raster funcionan de manera diferente, como se demuestra en la sección <a href="#raster-subsetting"><strong>??</strong></a>.
 </p>
-<p>The following code recreates the raster dataset used in Section <a href="spatial-class.html#raster-classes">2.3.4</a>, the result of which is illustrated in Figure <a href="attr.html#fig:cont-raster">3.2</a>.
-This demonstrates how the <code><a href="https://rdrr.io/pkg/terra/man/rast.html">rast()</a></code> function works to create an example raster named <code>elev</code> (representing elevations).</p>
+<p>El siguiente código recrea el conjunto de datos raster utilizados en la sección <a href="spatial-class.html#raster-classes">2.3.4</a>, cuyo resultado se ilustra en la figura <a href="attr.html#fig:cont-raster">3.2</a>.
+Esto demuestra cómo funciona la función <code><a href="https://rdrr.io/pkg/terra/man/rast.html">rast()</a></code> para crear un raster de ejemplo llamado <code>elev</code> (que representa elevaciones).</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">elev</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span>nrows <span class="op">=</span> <span class="fl">6</span>, ncols <span class="op">=</span> <span class="fl">6</span>, resolution <span class="op">=</span> <span class="fl">0.5</span>, 
             xmin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, xmax <span class="op">=</span> <span class="fl">1.5</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ymax <span class="op">=</span> <span class="fl">1.5</span>,
             vals <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">36</span><span class="op">)</span></code></pre></div>
-<p>The result is a raster object with 6 rows and 6 columns (specified by the <code>nrow</code> and <code>ncol</code> arguments), and a minimum and maximum spatial extent in x and y direction (<code>xmin</code>, <code>xmax</code>, <code>ymin</code>, <code>ymax</code>).
-The <code>vals</code> argument sets the values that each cell contains: numeric data ranging from 1 to 36 in this case.
-Raster objects can also contain categorical values of class <code>logical</code> or <code>factor</code> variables in R.
-The following code creates a raster representing grain sizes (Figure <a href="attr.html#fig:cont-raster">3.2</a>):</p>
+<p>El resultado es un objeto raster con 6 filas y 6 columnas (especificadas por los argumentos <code>nrow</code> y <code>ncol</code>), y una extensión espacial mínima y máxima en dirección x e y (<code>xmin</code>, <code>xmax</code>, <code>ymin</code>, <code>ymax</code>).
+El argumento <code>vals</code> establece los valores que contiene cada celda: datos numéricos que van de 1 a 36 en este caso.
+Los objetos raster también pueden contener valores categóricos de clase <code>lógica</code> o variables <code>factoriales</code> en R.
+El siguiente código crea un raster que representa el tamaño de los granos de café (Figura <a href="attr.html#fig:cont-raster">3.2</a>):</p>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">grain_order</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"clay"</span>, <span class="st">"silt"</span>, <span class="st">"sand"</span><span class="op">)</span>
 <span class="va">grain_char</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">grain_order</span>, <span class="fl">36</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -585,9 +584,9 @@ The following code creates a raster representing grain sizes (Figure <a href="at
 <span class="va">grain</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span>nrows <span class="op">=</span> <span class="fl">6</span>, ncols <span class="op">=</span> <span class="fl">6</span>, resolution <span class="op">=</span> <span class="fl">0.5</span>, 
              xmin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, xmax <span class="op">=</span> <span class="fl">1.5</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ymax <span class="op">=</span> <span class="fl">1.5</span>,
              vals <span class="op">=</span> <span class="va">grain_fact</span><span class="op">)</span></code></pre></div>
-<p>The raster object stores the corresponding look-up table or “Raster Attribute Table” (RAT) as a list of data frames, which can be viewed with <code>cats(grain)</code> (see <code>?cats()</code> for more information).
-Each element of this list is a layer of the raster.
-It is also possible to use the function <code><a href="https://rdrr.io/pkg/terra/man/factors.html">levels()</a></code> for retrieving and adding new or replacing existing factor levels:</p>
+<p>El objeto raster almacena la correspondiente tabla de búsqueda o “Raster Attribute Table” (RAT) como una lista de marcos de datos, los cuales pueden ser visualizados con <code>cats(grain)</code> ( véase <code>?cats()</code> para más información).
+Cada elemento de esta lista es una capa del raster.
+También es posible utilizar la función <code><a href="https://rdrr.io/pkg/terra/man/factors.html">levels()</a></code> para recuperar y añadir nuevos niveles de factores o sustituir los existentes:</p>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, wetness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"wet"</span>, <span class="st">"moist"</span>, <span class="st">"dry"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span>
@@ -595,84 +594,84 @@ It is also possible to use the function <code><a href="https://rdrr.io/pkg/terra
 <span class="co">#&gt; [1] "clay"  "silt"  "sand"  "wet"   "moist" "dry"</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:cont-raster"></span>
-<img src="03-atributos_files/figure-html/cont-raster-1.png" alt="Raster datasets with numeric (left) and categorical values (right)." width="100%"><p class="caption">
-FIGURE 3.2: Raster datasets with numeric (left) and categorical values (right).
+<img src="03-atributos_files/figure-html/cont-raster-1.png" alt="Conjuntos de datos rasterizados con valores numéricos (izquierda) y categóricos (derecha)." width="100%"><p class="caption">
+FIGURE 3.2: Conjuntos de datos rasterizados con valores numéricos (izquierda) y categóricos (derecha).
 </p>
 </div>
 
 <div class="rmdnote">
-Categorical raster objects can also store information about the colors associated with each value using a color table.
-The color table is a data frame with three (red, green, blue) or four (alpha) columns, where each row relates to one value.
-Color tables in <strong>terra</strong> can be viewed or set with the <code><a href="https://rdrr.io/pkg/terra/man/colors.html">coltab()</a></code> function (see <code><a href="https://rdrr.io/pkg/terra/man/colors.html">?coltab</a></code>).
-Importantly, saving a raster object with a color table to a file (e.g., GeoTIFF) will also save the color information.
+Los objetos raster categóricos también pueden almacenar información sobre los colores asociados a cada valor utilizando una tabla de colores.
+La tabla de colores es un marco de datos con tres (rojo, verde, azul) o cuatro (alfa) columnas, donde cada fila se refiere a un valor.
+Las tablas de colores en <strong>terra</strong> se pueden ver o establecer con la función <code><a href="https://rdrr.io/pkg/terra/man/colors.html">coltab()</a></code> ( véase <code><a href="https://rdrr.io/pkg/terra/man/colors.html">?coltab</a></code>).
+Es importante señalar que al guardar un objeto rasterizado con una tabla de colores en un archivo (por ejemplo, GeoTIFF) también se guardará la información de color.
 </div>
-<div id="raster-subsetting" class="section level3" number="3.3.1">
+<div id="subconjuntos-de-rásteres" class="section level3" number="3.3.1">
 <h3>
-<span class="header-section-number">3.3.1</span> Raster subsetting<a class="anchor" aria-label="anchor" href="#raster-subsetting"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3.1</span> Subconjuntos de rásteres<a class="anchor" aria-label="anchor" href="#subconjuntos-de-r%C3%A1steres"><i class="fas fa-link"></i></a>
 </h3>
-<p>Raster subsetting is done with the base R operator <code>[</code>, which accepts a variety of inputs:
+<p>Los subconjuntos de rásteres se realizan con el operador base de R <code>[</code>, que acepta varios tipos de entradas:
 </p>
 <ul>
-<li>Row-column indexing</li>
-<li>Cell IDs</li>
-<li>Coordinates (see Section <a href="#spatial-raster-subsetting"><strong>??</strong></a>)</li>
-<li>Another spatial object (see Section <a href="#spatial-raster-subsetting"><strong>??</strong></a>)</li>
+<li>Indexación de filas y columnas</li>
+<li>IDs de celdas</li>
+<li>Coordenadas (Véase la sección <a href="#spatial-raster-subsetting"><strong>??</strong></a>)</li>
+<li>Otros objetos espaciales (Véase la sección <a href="#spatial-raster-subsetting"><strong>??</strong></a>)</li>
 </ul>
-<p>Here, we only show the first two options since these can be considered non-spatial operations.
-If we need a spatial object to subset another or the output is a spatial object, we refer to this as spatial subsetting.
-Therefore, the latter two options will be shown in the next chapter (see Section <a href="#spatial-raster-subsetting"><strong>??</strong></a>).</p>
-<p>The first two subsetting options are demonstrated in the commands below —
-both return the value of the top left pixel in the raster object <code>elev</code> (results not shown):</p>
+<p>Aquí sólo mostramos las dos primeras opciones, ya que pueden considerarse operaciones no espaciales.
+Si necesitamos un objeto espacial para crear otro subconjunto o la salida es un objeto espacial, nos referimos a esto como subconjunto espacial.
+Por lo tanto, las dos últimas opciones se mostrarán en el próximo capítulo (véase la sección <a href="#spatial-raster-subsetting"><strong>??</strong></a>).</p>
+<p>Las dos primeras opciones de subconjunto se demuestran en los comandos siguientes —
+ambos devuelven el valor del píxel superior izquierdo en el objeto raster <code>elev</code> (los resultados no se muestran):</p>
 <div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># row 1, column 1</span>
+<code class="sourceCode R"><span class="co"># fila 1, columna 1</span>
 <span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span>
-<span class="co"># cell ID 1</span>
+<span class="co"># ID de la celda 1</span>
 <span class="va">elev</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></code></pre></div>
-<p>Subsetting of multi-layered raster objects will return the cell value(s) for each layer.
-For example, <code>c(elev, grain)[1]</code> returns a data frame with one row and two columns — one for each layer.
-To extract all values or complete rows, you can also use <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code>.</p>
-<p>Cell values can be modified by overwriting existing values in conjunction with a subsetting operation.
-The following code chunk, for example, sets the upper left cell of <code>elev</code> to 0 (results not shown):</p>
+<p>El subconjunto de los objetos raster de varias capas devolverá el valor de la(s) celda(s) de cada capa.
+Por ejemplo, <code>c(elev, grain)[1]</code> devuelve un marco de datos con una fila y dos columnas — una para cada capa.
+Para extraer todos los valores o filas completas, también puedes utilizar <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code>.
+Los valores de las celdas pueden modificarse sobrescribiendo los valores existentes junto con una operación de subconjunto.
+El siguiente fragmento de código, por ejemplo, establece la celda superior izquierda de <code>elev</code> a 0 (los resultados no se muestran):</p>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span>
 <span class="va">elev</span><span class="op">[</span><span class="op">]</span></code></pre></div>
-<p>Leaving the square brackets empty is a shortcut version of <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code> for retrieving all values of a raster.
-Multiple cells can also be modified in this way:</p>
+<p>Dejar los corchetes vacíos es una versión abreviada de <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code> para recuperar todos los valores de un raster.
+También se pueden modificar múltiples celdas de esta manera:</p>
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></code></pre></div>
-<p>Replacing values of multilayered rasters can be done with a matrix with as many columns as layers and rows as replaceable cells (results not shown):</p>
+<p>Reemplazar los valores de rásteres multicapa puede hacerse con una matriz, con tantas columnas como capas queramos y filas como celdas reemplazables (resultados no mostrados):</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">two_layers</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="va">grain</span>, <span class="va">elev</span><span class="op">)</span> 
 <span class="va">two_layers</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">two_layers</span><span class="op">[</span><span class="op">]</span></code></pre></div>
 </div>
-<div id="summarizing-raster-objects" class="section level3" number="3.3.2">
+<div id="sintetizando-objetos-rasterizados" class="section level3" number="3.3.2">
 <h3>
-<span class="header-section-number">3.3.2</span> Summarizing raster objects<a class="anchor" aria-label="anchor" href="#summarizing-raster-objects"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3.2</span> Sintetizando objetos rasterizados<a class="anchor" aria-label="anchor" href="#sintetizando-objetos-rasterizados"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>terra</strong> contains functions for extracting descriptive statistics for entire rasters.
-Printing a raster object to the console by typing its name returns minimum and maximum values of a raster.
-<code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()</a></code> provides common descriptive statistics – minimum, maximum, quartiles and number of <code>NA</code>s for continuous rasters and a number of cells of each class for categorical rasters.
-Further summary operations such as the standard deviation (see below) or custom summary statistics can be calculated with <code><a href="https://rdrr.io/pkg/terra/man/global.html">global()</a></code>.
+<p><strong>terra</strong> contiene funciones para extraer estadísticas descriptivas para rásteres enteros.
+La impresión de un objeto raster en la consola al escribir su nombre devuelve sus valores mínimos y máximos.
+<code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()</a></code> proporciona estadísticas descriptivas comunes. – mínimo, máximo, cuartiles y número de <code>NA</code>s para los rásteres continuos y un número de celdas de cada clase para los rásteres categóricos.
+Otras operaciones de síntesis, como la desviación estándar (véase más adelante) o estadísticas de síntesis personalizadas, pueden calcularse con <code><a href="https://rdrr.io/pkg/terra/man/global.html">global()</a></code>.
 </p>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/global.html">global</a></span><span class="op">(</span><span class="va">elev</span>, <span class="va">sd</span><span class="op">)</span></code></pre></div>
 
 <div class="rmdnote">
-If you provide the <code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()</a></code> and <code><a href="https://rdrr.io/pkg/terra/man/global.html">global()</a></code> functions with a multi-layered raster object, they will summarize each layer separately, as can be illustrated by running: <code>summary(c(elev, grain))</code>.
+Si aplicas las funciones <code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()</a></code> y <code><a href="https://rdrr.io/pkg/terra/man/global.html">global()</a></code> a un objeto raster de varias capas, éstas resumirán cada capa por separado, como se puede ilustrar ejecutando: <code>summary(c(elev, grain))</code>.
 </div>
-<p>Additionally, the <code><a href="https://rdrr.io/pkg/terra/man/freq.html">freq()</a></code> function allows to get the frequency table of categorical values.</p>
-<p>Raster value statistics can be visualized in a variety of ways.
-Specific functions such as <code><a href="https://rdrr.io/pkg/terra/man/boxplot.html">boxplot()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/density.html">density()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/hist.html">hist()</a></code> and <code><a href="https://rdrr.io/pkg/terra/man/pairs.html">pairs()</a></code> work also with raster objects, as demonstrated in the histogram created with the command below (not shown):</p>
+<p>Además, la función <code><a href="https://rdrr.io/pkg/terra/man/freq.html">freq()</a></code> permite obtener la tabla de frecuencias de los valores categóricos.</p>
+<p>Las estadísticas de los valores raster pueden visualizarse de distintas maneras.
+Funciones específicas como <code><a href="https://rdrr.io/pkg/terra/man/boxplot.html">boxplot()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/density.html">density()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/hist.html">hist()</a></code> y <code><a href="https://rdrr.io/pkg/terra/man/pairs.html">pairs()</a></code> funcionan también con objetos raster, como se demuestra en el histograma creado con el comando siguiente (no mostrado):</p>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/hist.html">hist</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span></code></pre></div>
-<p>In case the desired visualization function does not work with raster objects, one can extract the raster data to be plotted with the help of <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code> (Section <a href="attr.html#raster-subsetting">3.3.1</a>).
+<p>En caso de que la función de visualización deseada no funcione con objetos raster, se pueden extraer los datos raster para representarlos con la ayuda de <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code> (Sección <a href="#raster-subsetting"><strong>??</strong></a>).
 </p>
-<p>Descriptive raster statistics belong to the so-called global raster operations.
-These and other typical raster processing operations are part of the map algebra scheme, which are covered in the next chapter (Section <a href="#map-algebra"><strong>??</strong></a>).</p>
+<p>Las estadísticas raster descriptivas pertenecen a las llamadas operaciones raster globales.
+Estas y otras operaciones típicas del procesamiento raster forman parte del esquema del álgebra de mapas, que se tratan en el siguiente capítulo (Sección <a href="#map-algebra"><strong>??</strong></a>).</p>
 <div class="rmdnote">
 <p>
-Some function names clash between packages (e.g., a function with the name <code><a href="https://rdrr.io/pkg/terra/man/extract.html">extract()</a></code> exist in both <strong>terra</strong> and <strong>tidyr</strong> packages). In addition to not loading packages by referring to functions verbosely (e.g., <code><a href="https://tidyr.tidyverse.org/reference/extract.html">tidyr::extract()</a></code>), another way to prevent function names clashes is by unloading the offending package with <code><a href="https://rdrr.io/r/base/detach.html">detach()</a></code>. The following command, for example, unloads the <strong>terra</strong> package (this can also be done in the <em>package</em> tab which resides by default in the right-bottom pane in RStudio): <code>detach(“package:terra,” unload = TRUE, force = TRUE)</code>. The <code>force</code> argument makes sure that the package will be detached even if other packages depend on it. This, however, may lead to a restricted usability of packages depending on the detached package, and is therefore not recommended.
+Algunos nombres de funciones chocan entre paquetes (por ejemplo, una función con el nombre <code><a href="https://rdrr.io/pkg/terra/man/extract.html">extract()</a></code> existe en ambos paquetes <strong>terra</strong> y <strong>tidyr</strong>). Además de no cargar los paquetes haciendo referencia a las funciones de forma verbosa (por ejemplo, <code><a href="https://tidyr.tidyverse.org/reference/extract.html">tidyr::extract()</a></code>), otra forma de evitar los choques de nombres de funciones es descargando el paquete que genere este choque de nombres con <code><a href="https://rdrr.io/r/base/detach.html">detach()</a></code>. El siguiente comando, por ejemplo, descarga el paquete <strong>terra</strong> (esto también puede hacerse en la pestaña <em>paquete</em> (Package) que reside por defecto en el panel inferior derecho de RStudio): <code>detach(“paquete:terra,” unload = TRUE, force = TRUE)</code>. El argumento <code>force</code> asegura que el paquete se desprenderá incluso si otros paquetes dependen de él. Esto, sin embargo, puede conducir a una usabilidad restringida de los paquetes que dependen del paquete desprendido, y por lo tanto no se recomienda.
 </p>
 </div>
 </div>
@@ -937,7 +936,6 @@ Wulf, Andrea. 2015. <em>The Invention of Nature: <span>Alexander</span> von <spa
 
 
 
-
   <div class="chapter-nav">
 <div class="prev"><a href="spatial-class.html"><span class="header-section-number">2</span> Datos geográficos en R</a></div>
 <div class="empty"></div>
@@ -957,9 +955,9 @@ Wulf, Andrea. 2015. <em>The Invention of Nature: <span>Alexander</span> von <spa
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#manipulating-raster-objects"><span class="header-section-number">3.3</span> Manipulating raster objects</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#raster-subsetting"><span class="header-section-number">3.3.1</span> Raster subsetting</a></li>
-<li><a class="nav-link" href="#summarizing-raster-objects"><span class="header-section-number">3.3.2</span> Summarizing raster objects</a></li>
+<a class="nav-link" href="#manipulando-objetos-raster"><span class="header-section-number">3.3</span> Manipulando objetos raster</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#subconjuntos-de-r%C3%A1steres"><span class="header-section-number">3.3.1</span> Subconjuntos de rásteres</a></li>
+<li><a class="nav-link" href="#sintetizando-objetos-rasterizados"><span class="header-section-number">3.3.2</span> Sintetizando objetos rasterizados</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#ejercicios-1"><span class="header-section-number">3.4</span> Ejercicios</a></li>
@@ -980,7 +978,7 @@ Wulf, Andrea. 2015. <em>The Invention of Nature: <span>Alexander</span> von <spa
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2022-02-02.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2022-02-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
