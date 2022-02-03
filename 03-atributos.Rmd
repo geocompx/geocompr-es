@@ -404,14 +404,14 @@ world_agg5 = world %>%
 options(scipen = 999)
 knitr::kable(
   world_agg5,
-  caption = "The top 3 most populous continents ordered by population density (people per square km).",
-  caption.short = "Top 3 most populous continents.",
+  caption = "Los 3 continentes más poblados ordenados por densidad de población (personas por km2).",
+  caption.short = "Los 3 continentes más poblados.",
   booktabs = TRUE
 )
 ```
 
 ```{block2 03-attribute-operations-31, type='rmdnote'}
-More details are provided in the help pages (which can be accessed via `?summarize` and `vignette(package = "dplyr")` and Chapter 5 of [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). 
+Se puede encontrar más información en las páginas de ayuda (a las que se puede acceder a través de `?summarize` y `vignette(package = "dplyr")` y en el capítulo 5 de [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). 
 ```
 
 ###  Unión de atributos vectoriales
@@ -528,7 +528,7 @@ class(coffee_world)
 ```{block2 03-attribute-operations-41, type='rmdnote'}
 En la mayoría de los casos, la columna de geometría sólo es útil en un objeto `sf`.
 La columna de geometría sólo puede utilizarse para crear mapas y operaciones espaciales si R "sabe" que es un objeto espacial, definido por un paquete espacial como **sf**.
-Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como `coffee_world`) pueden ser convertidos en un objeto `sf` de la siguiente manera: `st_as_sf(mundo_café)`.
+Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como `coffee_world`) pueden ser convertidos en un objeto `sf` de la siguiente manera: `st_as_sf(coffee_world)`.
 ```
 
 Esta sección cubre la mayoría de los casos de uso de `join`.
