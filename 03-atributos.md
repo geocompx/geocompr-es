@@ -378,7 +378,7 @@ world_agg5 = world %>%
 ```
 
 
-Table: (\#tab:continents)The top 3 most populous continents ordered by population density (people per square km).
+Table: (\#tab:continents)Los 3 continentes más poblados ordenados por densidad de población (personas por km2).
 
 |continent |        Pop|     Area|  N| Density|
 |:---------|----------:|--------:|--:|-------:|
@@ -386,7 +386,7 @@ Table: (\#tab:continents)The top 3 most populous continents ordered by populatio
 |Asia      | 4311408059| 31252459| 47|     138|
 |Europe    |  669036256| 23065219| 39|      29|
 
-\BeginKnitrBlock{rmdnote}<div class="rmdnote">More details are provided in the help pages (which can be accessed via `?summarize` and `vignette(package = "dplyr")` and Chapter 5 of [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). </div>\EndKnitrBlock{rmdnote}
+\BeginKnitrBlock{rmdnote}<div class="rmdnote">Se puede encontrar más información en las páginas de ayuda (a las que se puede acceder a través de `?summarize` y `vignette(package = "dplyr")` y en el capítulo 5 de [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). </div>\EndKnitrBlock{rmdnote}
 
 ###  Unión de atributos vectoriales
 
@@ -519,7 +519,7 @@ class(coffee_world)
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">En la mayoría de los casos, la columna de geometría sólo es útil en un objeto `sf`.
 La columna de geometría sólo puede utilizarse para crear mapas y operaciones espaciales si R "sabe" que es un objeto espacial, definido por un paquete espacial como **sf**.
-Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como `coffee_world`) pueden ser convertidos en un objeto `sf` de la siguiente manera: `st_as_sf(mundo_café)`.</div>\EndKnitrBlock{rmdnote}
+Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como `coffee_world`) pueden ser convertidos en un objeto `sf` de la siguiente manera: `st_as_sf(coffee_world)`.</div>\EndKnitrBlock{rmdnote}
 
 Esta sección cubre la mayoría de los casos de uso de `join`.
 Para más información, recomendamos @grolemund_r_2016, la ['viñeta' de join](https://geocompr.github.io/geocompkg/articles/join.html) en el paquete **geocompkg** que acompaña este libro, y la documentación del paquete **data.table**.^[

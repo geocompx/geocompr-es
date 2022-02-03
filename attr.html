@@ -364,7 +364,7 @@ El siguiente comando calcula la densidad de población (con <code><a href="https
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">)</span>                            <span class="co"># ordenar los 3 continentes en orden descendiente</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:continents">TABLE 3.2: </span>The top 3 most populous continents ordered by population density (people per square km).</caption>
+<span id="tab:continents">TABLE 3.2: </span>Los 3 continentes más poblados ordenados por densidad de población (personas por km2).</caption>
 <thead><tr class="header">
 <th align="left">continent</th>
 <th align="right">Pop</th>
@@ -397,7 +397,7 @@ El siguiente comando calcula la densidad de población (con <code><a href="https
 </tbody>
 </table></div>
 <div class="rmdnote">
-More details are provided in the help pages (which can be accessed via <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">?summarize</a></code> and <code>vignette(package = "dplyr")</code> and Chapter 5 of <a href="http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize">R for Data Science</a>.
+Se puede encontrar más información en las páginas de ayuda (a las que se puede acceder a través de <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">?summarize</a></code> y <code>vignette(package = "dplyr")</code> y en el capítulo 5 de <a href="http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize">R for Data Science</a>.
 </div>
 </div>
 <div id="unión-de-atributos-vectoriales" class="section level3" number="3.2.4">
@@ -497,7 +497,7 @@ El resultado de una unión tiende a coincidir con su primer argumento:</p>
 <div class="rmdnote">
 En la mayoría de los casos, la columna de geometría sólo es útil en un objeto <code>sf</code>.
 La columna de geometría sólo puede utilizarse para crear mapas y operaciones espaciales si R “sabe” que es un objeto espacial, definido por un paquete espacial como <strong>sf</strong>.
-Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como <code>coffee_world</code>) pueden ser convertidos en un objeto <code>sf</code> de la siguiente manera: <code>st_as_sf(mundo_café)</code>.
+Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como <code>coffee_world</code>) pueden ser convertidos en un objeto <code>sf</code> de la siguiente manera: <code>st_as_sf(coffee_world)</code>.
 </div>
 <p>Esta sección cubre la mayoría de los casos de uso de <code>join</code>.
 Para más información, recomendamos <span class="citation"><a href="attr.html#ref-grolemund_r_2016" role="doc-biblioref">Grolemund and Wickham</a> (<a href="attr.html#ref-grolemund_r_2016" role="doc-biblioref">2016</a>)</span>, la <a href="https://geocompr.github.io/geocompkg/articles/join.html">‘viñeta’ de join</a> en el paquete <strong>geocompkg</strong> que acompaña este libro, y la documentación del paquete <strong>data.table</strong>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;
