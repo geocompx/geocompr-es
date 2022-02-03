@@ -417,7 +417,7 @@ class(world_coffee)
 
 Dado que los conjuntos de datos de entrada comparten una "variable clave" (`name_long`), la unión ha funcionado sin utilizar el argumento `by` (véase `?left_join` para más detalles).
 El resultado es un objeto `sf` idéntico al objeto original `world` pero con dos nuevas variables sobre la producción de café.
-Esto puede ser representado como un mapa, tal y como se ilustra en la Figura \@ref(fig:coffeemap), generated with the `plot()` function below:
+Esto puede ser representado como un mapa, tal y como se ilustra en la Figura \@ref(fig:coffeemap), generada con la función `plot()` a continuación:
 
 
 ```r

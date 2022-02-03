@@ -426,7 +426,7 @@ Un “left join,” que conserva el primer conjunto de datos, combina “world�
 <span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span></code></pre></div>
 <p>Dado que los conjuntos de datos de entrada comparten una “variable clave” (<code>name_long</code>), la unión ha funcionado sin utilizar el argumento <code>by</code> (véase <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">?left_join</a></code> para más detalles).
 El resultado es un objeto <code>sf</code> idéntico al objeto original <code>world</code> pero con dos nuevas variables sobre la producción de café.
-Esto puede ser representado como un mapa, tal y como se ilustra en la Figura <a href="attr.html#fig:coffeemap">3.1</a>, generated with the <code><a href="https://r-spatial.github.io/sf/reference/plot.html">plot()</a></code> function below:</p>
+Esto puede ser representado como un mapa, tal y como se ilustra en la Figura <a href="attr.html#fig:coffeemap">3.1</a>, generada con la función <code><a href="https://r-spatial.github.io/sf/reference/plot.html">plot()</a></code> a continuación:</p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">world_coffee</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "iso_a2"                 "name_long"              "continent"             </span>
