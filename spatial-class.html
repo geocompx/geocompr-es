@@ -729,7 +729,7 @@ Aparte de la manipulación general de datos ráster, <strong>terra</strong> prop
 En este caso, <strong>terra</strong> ofrece la posibilidad de dividir el raster en fragmentos más pequeños, y los procesa iterativamente en lugar de cargar todo el archivo raster en la RAM.</p>
 <p>Para ilustrar los conceptos de <strong>terra</strong>, utilizaremos los conjuntos de datos de <strong>spDataLarge</strong>.
 Se trata de unos cuantos objetos ráster y un objeto vectorial que cubren una zona del Parque Nacional de Zion (Utah, EE.UU.).
-Por ejemplo, <code>srtm.tif</code> es un modelo digital de elevación de esta zona (para más detalles, véase su documentación con <code><a href="https://rdrr.io/pkg/spDataLarge/man/srtm.html">?srtm</a></code>).
+Por ejemplo, <code>srtm.tif</code> es un modelo digital de elevación de esta zona (para más detalles, véase su documentación con <code>?srtm</code>).
 En primer lugar, vamos a crear un objeto <code>SpatRaster</code> llamado <code>my_rast</code>:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raster_filepath</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"raster/srtm.tif"</span>, package <span class="op">=</span> <span class="st">"spDataLarge"</span><span class="op">)</span>
@@ -934,7 +934,7 @@ Para ello, necesitamos leer un conjunto de datos vectoriales:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">vector_filepath</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"vector/zion.gpkg"</span>, package <span class="op">=</span> <span class="st">"spDataLarge"</span><span class="op">)</span>
 <span class="va">new_vector</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html">st_read</a></span><span class="op">(</span><span class="va">vector_filepath</span><span class="op">)</span></code></pre></div>
-<p>Nuestro nuevo objeto, <code>new_vector</code>, es un polígono que representa los límites del Parque Nacional de Zion (<code><a href="https://rdrr.io/pkg/spDataLarge/man/zion.html">?zion</a></code>).</p>
+<p>Nuestro nuevo objeto, <code>new_vector</code>, es un polígono que representa los límites del Parque Nacional de Zion (<code>?zion</code>).</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html">st_crs</a></span><span class="op">(</span><span class="va">new_vector</span><span class="op">)</span> <span class="co"># get CRS</span>
 <span class="co">#&gt; Coordinate Reference System:</span>

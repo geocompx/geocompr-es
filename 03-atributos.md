@@ -37,7 +37,7 @@ La *resolución* del raster define la distancia para cada paso en x e y que se e
 La cabecera es un componente vital de los conjuntos de datos raster que especifica cómo se relacionan los píxeles con las coordenadas geográficas (véase también el capítulo \@ref(spatial-operations)).
 
 Esto muestra cómo manipular objetos geográficos basados en atributos como los nombres de las paradas de autobús en un conjunto de datos vectoriales y las elevaciones de los píxeles en un conjunto de datos rasterizados.
-En el caso de los datos vectoriales, esto implica técnicas como crear subconjuntos y o agregaciones (véanse las secciones \@ref(subconjunto de atributos vectoriales) y \@ref(agregación de atributos vectoriales)).
+En el caso de los datos vectoriales, esto implica técnicas como crear subconjuntos y o agregaciones (véanse las secciones \@ref(vector-attribute-subsetting) y \@ref(vector-attribute-aggregation)).
 
 Las secciones \@ref(vector-attribute-joining) y \@ref(vec-attr-creation) demuestran cómo unir datos en objetos de características simples utilizando un ID compartido y cómo crear nuevas variables, respectivamente.
 Cada una de estas operaciones tiene un equivalente espacial:
@@ -119,7 +119,7 @@ Convertirse en un experto en la manipulación de datos de atributos geográficos
 Para muchas aplicaciones, el paquete tidyverse \index{tidyverse (package)} **dplyr** ofrece un enfoque eficaz para trabajar con marcos de datos.
 La compatibilidad con Tidyverse es una ventaja de **sf** frente a su predecesor **sp**, pero hay que evitar algunos inconvenientes (véase la viñeta complementaria `tidyverse-pitfalls` en [geocompr.github.io](https://geocompr.github.io/geocompkg/articles/tidyverse-pitfalls.html) para más detalles).
 
-### Subconjuntos de atributos vectoriales
+### Subconjuntos de atributos vectoriales {#vector-attribute-subsetting}
 
 Los métodos de subconjunto de R base incluyen el operador `[` y la función `subset()`.
 Las funciones clave para manejar y crear subconjuntos de **dplyr** son `filter()` y `slice()` para crear subconjuntos de filas, y `select()` para crear subconjuntos de columnas.
@@ -307,7 +307,7 @@ world8 = slice(
   1:5)
 ```
 
-### Agregación de atributos vectoriales
+### Agregación de atributos vectoriales {#vector-attribute-aggregation}
 
 \index{attribute!aggregation}
 \index{aggregation}
@@ -388,7 +388,7 @@ Table: (\#tab:continents)Los 3 continentes más poblados ordenados por densidad 
 
 \BeginKnitrBlock{rmdnote}<div class="rmdnote">Se puede encontrar más información en las páginas de ayuda (a las que se puede acceder a través de `?summarize` y `vignette(package = "dplyr")` y en el capítulo 5 de [R for Data Science](http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize). </div>\EndKnitrBlock{rmdnote}
 
-###  Unión de atributos vectoriales
+###  Unión de atributos vectoriales {#vector-attribute-joining}
 
 Combinar datos de diferentes fuentes es una tarea frecuente en la preparación de datos. 
 Las uniones hacen esto combinando tablas basadas en una variable "clave" compartida.
@@ -725,7 +725,7 @@ two_layers[1] = cbind(c(0), c(4))
 two_layers[]
 ```
 
-### Sintetizando objetos rasterizados
+### Sintetizando objetos rasterizados {#summarizing-raster-objects}
 
 **terra** contiene funciones para extraer estadísticas descriptivas\index{statistics} para rásteres enteros.
 La impresión de un objeto raster en la consola al escribir su nombre devuelve sus valores mínimos y máximos.

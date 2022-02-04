@@ -103,14 +103,14 @@ Para ilustrar este punto, piensa en un píxel en la 3ª fila y la 4ª columna de
 La <em>resolución</em> del raster define la distancia para cada paso en x e y que se especifica en un <em>cabezal</em>.
 La cabecera es un componente vital de los conjuntos de datos raster que especifica cómo se relacionan los píxeles con las coordenadas geográficas (véase también el capítulo <a href="#spatial-operations"><strong>??</strong></a>).</p>
 <p>Esto muestra cómo manipular objetos geográficos basados en atributos como los nombres de las paradas de autobús en un conjunto de datos vectoriales y las elevaciones de los píxeles en un conjunto de datos rasterizados.
-En el caso de los datos vectoriales, esto implica técnicas como crear subconjuntos y o agregaciones (véanse las secciones @ref(subconjunto de atributos vectoriales) y @ref(agregación de atributos vectoriales)).</p>
-<p>Las secciones <a href="#vector-attribute-joining"><strong>??</strong></a> y <a href="attr.html#vec-attr-creation">3.2.5</a> demuestran cómo unir datos en objetos de características simples utilizando un ID compartido y cómo crear nuevas variables, respectivamente.
+En el caso de los datos vectoriales, esto implica técnicas como crear subconjuntos y o agregaciones (véanse las secciones <a href="attr.html#vector-attribute-subsetting">3.2.1</a> y <a href="attr.html#vector-attribute-aggregation">3.2.3</a>).</p>
+<p>Las secciones <a href="attr.html#vector-attribute-joining">3.2.4</a> y <a href="attr.html#vec-attr-creation">3.2.5</a> demuestran cómo unir datos en objetos de características simples utilizando un ID compartido y cómo crear nuevas variables, respectivamente.
 Cada una de estas operaciones tiene un equivalente espacial:
 el operador <code>[</code> en R básico, por ejemplo, funciona igualmente para subconjuntar objetos basados en su atributo y objetos espaciales; también se pueden unir atributos en dos conjuntos de datos geográficos utilizando uniones espaciales.
 Esto es una buena noticia: las habilidades desarrolladas en este capítulo son transferibles.
 El capítulo <a href="#spatial-operations"><strong>??</strong></a> extiende los métodos presentados aquí al mundo espacial.</p>
 <p>Después de una inmersión profunda en varios tipos de operaciones de atributos <em>vectoriales</em> en la siguiente sección, las operaciones de datos de atributos <em>raster</em> se cubren en la Sección (manipulando-objetos-raster), que demuestra cómo crear capas raster que contienen atributos continuos y categóricos y cómo extraer valores de celdas de una o más capas (subconjunto raster).
-La sección <a href="#summarizing-raster-objects"><strong>??</strong></a> proporciona una visión general de las operaciones ráster “globales” que pueden utilizarse para resumir conjuntos de datos raster completos.</p>
+La sección <a href="attr.html#summarizing-raster-objects">3.3.2</a> proporciona una visión general de las operaciones ráster “globales” que pueden utilizarse para resumir conjuntos de datos raster completos.</p>
 </div>
 <div id="manipulación-de-atributos-vectoriales" class="section level2" number="3.2">
 <h2>
@@ -165,9 +165,9 @@ Las operaciones de datos no espaciales sobre objetos <code>sf</code> sólo cambi
 Convertirse en un experto en la manipulación de datos de atributos geográficos significa convertirse en un experto en la manipulación de marcos de datos.</p>
 <p>Para muchas aplicaciones, el paquete tidyverse  <strong>dplyr</strong> ofrece un enfoque eficaz para trabajar con marcos de datos.
 La compatibilidad con Tidyverse es una ventaja de <strong>sf</strong> frente a su predecesor <strong>sp</strong>, pero hay que evitar algunos inconvenientes (véase la viñeta complementaria <code>tidyverse-pitfalls</code> en <a href="https://geocompr.github.io/geocompkg/articles/tidyverse-pitfalls.html">geocompr.github.io</a> para más detalles).</p>
-<div id="subconjuntos-de-atributos-vectoriales" class="section level3" number="3.2.1">
+<div id="vector-attribute-subsetting" class="section level3" number="3.2.1">
 <h3>
-<span class="header-section-number">3.2.1</span> Subconjuntos de atributos vectoriales<a class="anchor" aria-label="anchor" href="#subconjuntos-de-atributos-vectoriales"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.1</span> Subconjuntos de atributos vectoriales<a class="anchor" aria-label="anchor" href="#vector-attribute-subsetting"><i class="fas fa-link"></i></a>
 </h3>
 <p>Los métodos de subconjunto de R base incluyen el operador <code>[</code> y la función <code><a href="https://rdrr.io/pkg/terra/man/subset.html">subset()</a></code>.
 Las funciones clave para manejar y crear subconjuntos de <strong>dplyr</strong> son <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> para crear subconjuntos de filas, y <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> para crear subconjuntos de columnas.
@@ -313,9 +313,9 @@ La alternativa a <code>%&gt;%</code> son las llamadas a funciones ‘anidadas,�
     <span class="va">name_long</span>, <span class="va">continent</span><span class="op">)</span>,
   <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="agregación-de-atributos-vectoriales" class="section level3" number="3.2.3">
+<div id="vector-attribute-aggregation" class="section level3" number="3.2.3">
 <h3>
-<span class="header-section-number">3.2.3</span> Agregación de atributos vectoriales<a class="anchor" aria-label="anchor" href="#agregaci%C3%B3n-de-atributos-vectoriales"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.3</span> Agregación de atributos vectoriales<a class="anchor" aria-label="anchor" href="#vector-attribute-aggregation"><i class="fas fa-link"></i></a>
 </h3>
 <p>
 </p>
@@ -400,9 +400,9 @@ El siguiente comando calcula la densidad de población (con <code><a href="https
 Se puede encontrar más información en las páginas de ayuda (a las que se puede acceder a través de <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">?summarize</a></code> y <code>vignette(package = "dplyr")</code> y en el capítulo 5 de <a href="http://r4ds.had.co.nz/transform.html#grouped-summaries-with-summarize">R for Data Science</a>.
 </div>
 </div>
-<div id="unión-de-atributos-vectoriales" class="section level3" number="3.2.4">
+<div id="vector-attribute-joining" class="section level3" number="3.2.4">
 <h3>
-<span class="header-section-number">3.2.4</span> Unión de atributos vectoriales<a class="anchor" aria-label="anchor" href="#uni%C3%B3n-de-atributos-vectoriales"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.4</span> Unión de atributos vectoriales<a class="anchor" aria-label="anchor" href="#vector-attribute-joining"><i class="fas fa-link"></i></a>
 </h3>
 <p>Combinar datos de diferentes fuentes es una tarea frecuente en la preparación de datos.
 Las uniones hacen esto combinando tablas basadas en una variable “clave” compartida.
@@ -645,9 +645,9 @@ También se pueden modificar múltiples celdas de esta manera:</p>
 <span class="va">two_layers</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">two_layers</span><span class="op">[</span><span class="op">]</span></code></pre></div>
 </div>
-<div id="sintetizando-objetos-rasterizados" class="section level3" number="3.3.2">
+<div id="summarizing-raster-objects" class="section level3" number="3.3.2">
 <h3>
-<span class="header-section-number">3.3.2</span> Sintetizando objetos rasterizados<a class="anchor" aria-label="anchor" href="#sintetizando-objetos-rasterizados"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3.2</span> Sintetizando objetos rasterizados<a class="anchor" aria-label="anchor" href="#summarizing-raster-objects"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>terra</strong> contiene funciones para extraer estadísticas descriptivas para rásteres enteros.
 La impresión de un objeto raster en la consola al escribir su nombre devuelve sus valores mínimos y máximos.
@@ -947,17 +947,17 @@ Wulf, Andrea. 2015. <em>The Invention of Nature: <span>Alexander</span> von <spa
 <li><a class="nav-link" href="#introducci%C3%B3n"><span class="header-section-number">3.1</span> Introducción</a></li>
 <li>
 <a class="nav-link" href="#manipulaci%C3%B3n-de-atributos-vectoriales"><span class="header-section-number">3.2</span> Manipulación de atributos vectoriales</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#subconjuntos-de-atributos-vectoriales"><span class="header-section-number">3.2.1</span> Subconjuntos de atributos vectoriales</a></li>
+<li><a class="nav-link" href="#vector-attribute-subsetting"><span class="header-section-number">3.2.1</span> Subconjuntos de atributos vectoriales</a></li>
 <li><a class="nav-link" href="#encadenamiento-de-comandos-con-el-operador-pipe"><span class="header-section-number">3.2.2</span> Encadenamiento de comandos con el operador pipe</a></li>
-<li><a class="nav-link" href="#agregaci%C3%B3n-de-atributos-vectoriales"><span class="header-section-number">3.2.3</span> Agregación de atributos vectoriales</a></li>
-<li><a class="nav-link" href="#uni%C3%B3n-de-atributos-vectoriales"><span class="header-section-number">3.2.4</span> Unión de atributos vectoriales</a></li>
+<li><a class="nav-link" href="#vector-attribute-aggregation"><span class="header-section-number">3.2.3</span> Agregación de atributos vectoriales</a></li>
+<li><a class="nav-link" href="#vector-attribute-joining"><span class="header-section-number">3.2.4</span> Unión de atributos vectoriales</a></li>
 <li><a class="nav-link" href="#vec-attr-creation"><span class="header-section-number">3.2.5</span> Creando atributos y eliminando información espacial</a></li>
 </ul>
 </li>
 <li>
 <a class="nav-link" href="#manipulando-objetos-raster"><span class="header-section-number">3.3</span> Manipulando objetos raster</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#subconjuntos-de-r%C3%A1steres"><span class="header-section-number">3.3.1</span> Subconjuntos de rásteres</a></li>
-<li><a class="nav-link" href="#sintetizando-objetos-rasterizados"><span class="header-section-number">3.3.2</span> Sintetizando objetos rasterizados</a></li>
+<li><a class="nav-link" href="#summarizing-raster-objects"><span class="header-section-number">3.3.2</span> Sintetizando objetos rasterizados</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#ejercicios-1"><span class="header-section-number">3.4</span> Ejercicios</a></li>

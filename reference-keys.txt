@@ -53,12 +53,12 @@ ex2
 attr
 introducción
 manipulación-de-atributos-vectoriales
-subconjuntos-de-atributos-vectoriales
+vector-attribute-subsetting
 encadenamiento-de-comandos-con-el-operador-pipe
-agregación-de-atributos-vectoriales
-unión-de-atributos-vectoriales
+vector-attribute-aggregation
+vector-attribute-joining
 vec-attr-creation
 manipulando-objetos-raster
 subconjuntos-de-rásteres
-sintetizando-objetos-rasterizados
+summarizing-raster-objects
 ejercicios-1
