@@ -173,7 +173,7 @@ Esta sección presenta las clases <strong>sf</strong> como preparación para los
 
 Simple Features es un modelo de datos jerárquico que representa una amplia gama de tipos de geometría.
 De los 17 tipos de geometría que soporta la especificación, solo 7 se utilizan en la gran mayoría de las investigaciones geográficas (véase la figura <a href="spatial-class.html#fig:sf-ogc">2.2</a>);
-estos tipos de geometría básicos son totalmente compatibles con el paquete de R <strong>sf</strong> <span class="citation">(<a href="attr.html#ref-pebesma_simple_2018" role="doc-biblioref">E. Pebesma 2018</a>)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;
+estos tipos de geometría básicos son totalmente compatibles con el paquete de R <strong>sf</strong> <span class="citation">(<a href="attr.html#ref-pebesma_simple_2018" role="doc-biblioref">Pebesma 2018</a>)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;
 El estándar OGC completo incluye tipos de geometría bastante exóticos, como los tipos “superficie” y “curva,” los cuales actualmente tienen una aplicación limitada en las aplicaciones del mundo real.
 Los 17 tipos pueden representarse con el paquete &lt;strong&gt;sf&lt;/strong&gt;, aunque (a partir del verano de 2018) el trazado solo funciona para el “núcleo 7.”&lt;/p&gt;"><sup>7</sup></a></p>
 <div class="figure" style="text-align: center">
@@ -186,7 +186,7 @@ FIGURE 2.2: Tipos de Simple Features compatibles con sf.
 
 
 <strong>sf</strong> también soporta colecciones geométricas, las cuales pueden contener múltiples tipos de geometrías en un solo objeto.
-<strong>sf</strong> proporciona la misma funcionalidad (y más) que previamente se ofrecía en tres paquetes: <strong>sp</strong> para las clases de datos <span class="citation">(<a href="attr.html#ref-R-sp" role="doc-biblioref">E. Pebesma and Bivand 2018</a>)</span>, <strong>rgdal</strong> para la lectura/escritura de datos a través de una interfaz para GDAL y PROJ <span class="citation">(<a href="attr.html#ref-R-rgdal" role="doc-biblioref">R. Bivand, Keitt, and Rowlingson 2018</a>)</span> y <strong>rgeos</strong> para las operaciones espaciales a través de una interfaz para GEOS <span class="citation">(<a href="attr.html#ref-R-rgeos" role="doc-biblioref">R. Bivand and Rundel 2018</a>)</span>.
+<strong>sf</strong> proporciona la misma funcionalidad (y más) que previamente se ofrecía en tres paquetes: <strong>sp</strong> para las clases de datos <span class="citation">(<a href="attr.html#ref-R-sp" role="doc-biblioref">Pebesma and Bivand 2018</a>)</span>, <strong>rgdal</strong> para la lectura/escritura de datos a través de una interfaz para GDAL y PROJ <span class="citation">(<a href="attr.html#ref-R-rgdal" role="doc-biblioref">Bivand, Keitt, and Rowlingson 2018</a>)</span> y <strong>rgeos</strong> para las operaciones espaciales a través de una interfaz para GEOS <span class="citation">(<a href="attr.html#ref-R-rgeos" role="doc-biblioref">Bivand and Rundel 2018</a>)</span>.
 Para reiterar el mensaje del capítulo 1, los paquetes geográficos de R tienen una larga historia de interfaces con librerías de bajo nivel, y <strong>sf</strong> mantiene esta tradición con una interfaz unificada con versiones recientes de la librería GEOS para operaciones geométricas, la librería GDAL para leer y escribir archivos de datos geográficos, y la librería PROJ para representar y transformar sistemas de referencia de coordenadas proyectadas.
 Este es un logro notable que reduce el espacio necesario para ‘cambiar de contexto’ entre diferentes paquetes y permite el acceso a librerías geográficas de alto rendimiento.
 La documentación sobre <strong>sf</strong> puede encontrarse en su sitio web y en 6 ‘viñetas,’ que pueden cargarse de la siguiente manera:</p>
@@ -680,7 +680,7 @@ Simple features son, en esencia, marcos de datos con una extensión espacial.</p
 </h2>
 <p>El modelo de datos espaciales rasterizados representa el mundo con la cuadrícula continua de celdas (a menudo también llamadas píxeles; <a href="spatial-class.html#fig:raster-intro-plot">2.10</a>:A).
 Este modelo de datos suele referirse a las llamadas cuadrículas regulares, en las que cada celda tiene el mismo tamaño constante, y en este libro nos centraremos únicamente en las cuadrículas regulares.
-Sin embargo, existen otros tipos de cuadrículas, como las cuadrículas rotadas, cizalladas, rectilíneas y curvilíneas (véase el capítulo 1 de <span class="citation"><a href="attr.html#ref-pebesma_spatial_2022" role="doc-biblioref">E. Pebesma and Bivand</a> (<a href="attr.html#ref-pebesma_spatial_2022" role="doc-biblioref">2022</a>)</span> o el capítulo 2 de <span class="citation"><a href="attr.html#ref-tennekes_elegant_2022" role="doc-biblioref">Tennekes and Nowosad</a> (<a href="attr.html#ref-tennekes_elegant_2022" role="doc-biblioref">2022</a>)</span>)).</p>
+Sin embargo, existen otros tipos de cuadrículas, como las cuadrículas rotadas, cizalladas, rectilíneas y curvilíneas (véase el capítulo 1 de <span class="citation"><a href="attr.html#ref-pebesma_spatial_2022" role="doc-biblioref">Pebesma and Bivand</a> (<a href="attr.html#ref-pebesma_spatial_2022" role="doc-biblioref">2022</a>)</span> o el capítulo 2 de <span class="citation"><a href="attr.html#ref-tennekes_elegant_2022" role="doc-biblioref">Tennekes and Nowosad</a> (<a href="attr.html#ref-tennekes_elegant_2022" role="doc-biblioref">2022</a>)</span>)).</p>
 <p>El modelo de datos ráster suele consistir en una cabecera ráster
 y una matriz (con filas y columnas) que representa celdas igualmente espaciadas (a menudo también llamadas píxeles; Figura <a href="spatial-class.html#fig:raster-intro-plot">2.10</a>:A).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;
 Dependiendo del formato de archivo, la cabecera forma parte del propio archivo de datos de la imagen, por ejemplo, GeoTIFF, o se almacena en una cabecera adicional o en un archivo mundial, por ejemplo, los formatos de cuadrícula ASCII.
@@ -1037,7 +1037,7 @@ Está claro que es vital saber si las medidas de una casa están en pies o en me
 Es una buena práctica cartográfica añadir una <em>barra de escala</em> o algún otro indicador de distancia en los mapas para demostrar la relación entre las distancias en la página o la pantalla y las distancias sobre el terreno.
 Del mismo modo, es importante especificar formalmente las unidades en las que se miden los datos geométricos o las celdas para proporcionar un contexto, y garantizar que los cálculos posteriores se realicen en contexto.</p>
 <p>Una característica novedosa de los datos geométricos en los objetos <code>sf</code> es que tienen <em>soporte nativo</em> para las unidades.
-Esto significa que la distancia, el área y otros cálculos geométricos en <strong>sf</strong> devuelven valores que vienen con un atributo de <code>unidades</code>, definido por el paquete <strong>Units</strong> <span class="citation">(<a href="attr.html#ref-pebesma_measurement_2016" role="doc-biblioref">E. Pebesma, Mailund, and Hiebert 2016</a>)</span>.
+Esto significa que la distancia, el área y otros cálculos geométricos en <strong>sf</strong> devuelven valores que vienen con un atributo de <code>unidades</code>, definido por el paquete <strong>Units</strong> <span class="citation">(<a href="attr.html#ref-pebesma_measurement_2016" role="doc-biblioref">Pebesma, Mailund, and Hiebert 2016</a>)</span>.
 Esto es ventajoso, ya que evita la confusión causada por las diferentes unidades (la mayoría de los SRC utilizan metros, algunos utilizan pies) y proporciona información sobre la dimensionalidad.
 Esto se demuestra en el siguiente fragmento de código, que calcula la superficie de Luxemburgo:
 
@@ -1138,7 +1138,7 @@ En consecuencia, su resolución también se da en grados decimales, pero hay que
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2022-02-03.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. It was last built on 2022-02-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
