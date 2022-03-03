@@ -18,24 +18,5 @@ bookdown::bs4_book:
     branch: main
   includes:
     in_header: style/ga.html
-bookdown::gitbook:
+  template: style/bs4_book.html
   css: style/style.css
-  config:
-    toc:
-      collapse: section
-      before: |
-        <li><a href="./">Geocomputación con R</a></li>
-      after: |
-        <li><a href="https://robinlovelace.net/">Robin Lovelace</a></li>
-        <li><a href="https://nowosad.github.io/">Jakub Nowosad</a></li>
-        <li><a href="https://github.com/jannes-m/">Jannes Muenchow</a></li>
-        <li><a href="https://github.com/DataMirai">Traducción: Mireia Camacho</a></li>
-    edit:
-      link: https://github.com/geocompr/es/edit/main/%s
-      text: "Edit"
-    sharing: null
-  includes:
-    in_header: style/ga.html
-    after_body: style/after-body.html
-bookdown::html_chapters:
-  css: [style/style.css, style/toc.css]
