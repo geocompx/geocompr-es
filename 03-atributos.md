@@ -757,7 +757,21 @@ Las estadísticas raster descriptivas pertenecen a las llamadas operaciones rast
 Estas y otras operaciones típicas del procesamiento raster forman parte del esquema del álgebra de mapas, que se tratan en el siguiente capítulo (Sección \@ref(map-algebra)).
 
 <div class="rmdnote">
-<p>Algunos nombres de funciones chocan entre paquetes (por ejemplo, una función con el nombre <code>extract()</code> existe en ambos paquetes <strong>terra</strong> y <strong>tidyr</strong>). Además de no cargar los paquetes haciendo referencia a las funciones de forma verbosa (por ejemplo, <code>tidyr::extract()</code>), otra forma de evitar los choques de nombres de funciones es descargando el paquete que genere este choque de nombres con <code>detach()</code>. El siguiente comando, por ejemplo, descarga el paquete <strong>terra</strong> (esto también puede hacerse en la pestaña <em>paquete</em> (Package) que reside por defecto en el panel inferior derecho de RStudio): <code>detach("paquete:terra", unload = TRUE, force = TRUE)</code>. El argumento <code>force</code> asegura que el paquete se desprenderá incluso si otros paquetes dependen de él. Esto, sin embargo, puede conducir a una usabilidad restringida de los paquetes que dependen del paquete desprendido, y por lo tanto no se recomienda.</p>
+<p>Algunos nombres de funciones chocan entre paquetes (por ejemplo, una
+función con el nombre <code>extract()</code> existe en ambos paquetes
+<strong>terra</strong> y <strong>tidyr</strong>). Además de no cargar
+los paquetes haciendo referencia a las funciones de forma verbosa (por
+ejemplo, <code>tidyr::extract()</code>), otra forma de evitar los
+choques de nombres de funciones es descargando el paquete que genere
+este choque de nombres con <code>detach()</code>. El siguiente comando,
+por ejemplo, descarga el paquete <strong>terra</strong> (esto también
+puede hacerse en la pestaña <em>paquete</em> (Package) que reside por
+defecto en el panel inferior derecho de RStudio):
+<code>detach("paquete:terra", unload = TRUE, force = TRUE)</code>. El
+argumento <code>force</code> asegura que el paquete se desprenderá
+incluso si otros paquetes dependen de él. Esto, sin embargo, puede
+conducir a una usabilidad restringida de los paquetes que dependen del
+paquete desprendido, y por lo tanto no se recomienda.</p>
 </div>
 
 ## Ejercicios
