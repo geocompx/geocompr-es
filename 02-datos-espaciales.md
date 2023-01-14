@@ -38,7 +38,7 @@ Los paquetes necesarios se pueden "cargar" (técnicamente se adjuntan) con la fu
 
 ```r
 library(sf)          # clases y funciones para datos vectoriales
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1; sf_use_s2() is TRUE
+#> Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE
 ```
 
 La salida de `library(sf)` informa de las versiones de las bibliotecas geográficas clave (key geographic libraries), como GEOS, la cual ya está utilizando el paquete, como se indica en la Sección \@ref(intro-sf).
@@ -633,9 +633,17 @@ st_crs(points_sfc_wgs)
 #>   User input: EPSG:4326 
 #>   wkt:
 #> GEOGCRS["WGS 84",
-#>     DATUM["World Geodetic System 1984",
+#>     ENSEMBLE["World Geodetic System 1984 ensemble",
+#>         MEMBER["World Geodetic System 1984 (Transit)"],
+#>         MEMBER["World Geodetic System 1984 (G730)"],
+#>         MEMBER["World Geodetic System 1984 (G873)"],
+#>         MEMBER["World Geodetic System 1984 (G1150)"],
+#>         MEMBER["World Geodetic System 1984 (G1674)"],
+#>         MEMBER["World Geodetic System 1984 (G1762)"],
+#>         MEMBER["World Geodetic System 1984 (G2139)"],
 #>         ELLIPSOID["WGS 84",6378137,298.257223563,
-#>             LENGTHUNIT["metre",1]]],
+#>             LENGTHUNIT["metre",1]],
+#>         ENSEMBLEACCURACY[2.0]],
 #>     PRIMEM["Greenwich",0,
 #>         ANGLEUNIT["degree",0.0174532925199433]],
 #>     CS[ellipsoidal,2],
@@ -646,8 +654,8 @@ st_crs(points_sfc_wgs)
 #>             ORDER[2],
 #>             ANGLEUNIT["degree",0.0174532925199433]],
 #>     USAGE[
-#>         SCOPE["unknown"],
-#>         AREA["World"],
+#>         SCOPE["Horizontal component of 3D system."],
+#>         AREA["World."],
 #>         BBOX[-90,-180,90,180]],
 #>     ID["EPSG",4326]]
 ```

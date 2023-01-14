@@ -4,10 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<base href="https://r.geocompx.org/es/">
 <title>Chapter 3 Operaciones de datos de atributos | Geocomputación con R</title>
 <meta name="author" content="Robin Lovelace, Jakub Nowosad, Jannes Muenchow">
 <meta name="description" content="Prerrequisitos Este capítulo requiere que se instalen y adjunten los siguientes paquetes: library(sf)   # paquete de datos vectoriales introducido en el capítulo 2 library(terra)  # paquete de...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.31 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Operaciones de datos de atributos | Geocomputación con R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://geocompr.github.io/es/attr.html">
@@ -17,12 +18,12 @@
 <meta name="twitter:title" content="Chapter 3 Operaciones de datos de atributos | Geocomputación con R">
 <meta name="twitter:description" content="Prerrequisitos Este capítulo requiere que se instalen y adjunten los siguientes paquetes: library(sf)   # paquete de datos vectoriales introducido en el capítulo 2 library(terra)  # paquete de...">
 <meta name="twitter:image" content="https://geocompr.github.io/es/images/cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Lato-0.4.0/font.css" rel="stylesheet">
-<link href="libs/_Roboto%20Mono-0.4.0/font.css" rel="stylesheet">
-<link href="libs/_Montserrat-0.4.0/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lato-0.4.4/font.css" rel="stylesheet">
+<link href="libs/Roboto_Mono-0.4.4/font.css" rel="stylesheet">
+<link href="libs/Montserrat-0.4.4/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -79,14 +80,14 @@
 <li>Este capítulo requiere que se instalen y adjunten los siguientes paquetes:</li>
 </ul>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>      <span class="co"># paquete de datos vectoriales introducido en el capítulo 2</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra/">terra</a></span><span class="op">)</span>   <span class="co"># paquete de datos raster introducido en el capítulo 2</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>   <span class="co"># paquete tidyverse para la manipulación de marcos de datos</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>      <span class="co"># paquete de datos vectoriales introducido en el capítulo 2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra/">terra</a></span><span class="op">)</span>   <span class="co"># paquete de datos raster introducido en el capítulo 2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>   <span class="co"># paquete tidyverse para la manipulación de marcos de datos</span></span></code></pre></div>
 <ul>
 <li>También depende de <strong>spData</strong>, que carga los conjuntos de datos utilizados en los ejemplos de código de este capítulo:</li>
 </ul>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://nowosad.github.io/spData/">spData</a></span><span class="op">)</span>  <span class="co"># paquete de datos espaciales introducido en el capítulo 2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jakubnowosad.com/spData/">spData</a></span><span class="op">)</span>  <span class="co"># paquete de datos espaciales introducido en el capítulo 2</span></span></code></pre></div>
 </div>
 <div id="introducción" class="section level2" number="3.1">
 <h2>
@@ -119,16 +120,16 @@ La sección <a href="attr.html#summarizing-raster-objects">3.3.2</a> proporciona
 <p>Los conjuntos de datos vectoriales geográficos están bien soportados en R gracias a la clase <code>sf</code>, que extiende la clase <code>data.frame</code> de R.
 Al igual que los marcos de datos, los objetos <code>sf</code> tienen una columna por variable de atributo (como ‘nombre’) y una fila por observación o <em>característica</em> (por ejemplo, por estación de autobuses).
 Los objetos <code>sf</code> se diferencian de los marcos de datos básicos porque tienen una columna de <code>geometría</code> de la clase <code>sfc</code> que puede contener una serie de entidades geográficas (uno o ‘múltiples’ puntos, líneas y polígonos) por fila.
-Esto se describió en el capítulo <a href="spatial-class.html#spatial-class">2</a>, donde se demostró cómo <em>los métodos genéricos</em> como <code><a href="https://r-spatial.github.io/sf/reference/plot.html">plot()</a></code> y <code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()</a></code> funcionan con los objetos <code>sf</code>.
+Esto se describió en el capítulo <a href="spatial-class.html#spatial-class">2</a>, donde se demostró cómo <em>los métodos genéricos</em> como <code><a href="https://rdrr.io/pkg/terra/man/plot.html">plot()</a></code> y <code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()</a></code> funcionan con los objetos <code>sf</code>.
 <strong>sf</strong> también proporciona genéricos que permiten que los objetos <code>sf</code> se comporten como marcos de datos normales, como se muestra al imprimir los métodos de la clase:</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/methods.html">methods</a></span><span class="op">(</span>class <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span> <span class="co"># métodos para objetos sf, se muestran los 12 primeros</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/methods.html">methods</a></span><span class="op">(</span>class <span class="op">=</span> <span class="st">"sf"</span><span class="op">)</span> <span class="co"># métodos para objetos sf, se muestran los 12 primeros</span></span></code></pre></div>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#&gt;  [1] aggregate             cbind                 coerce               </span>
-<span class="co">#&gt;  [4] initialize            merge                 plot                 </span>
-<span class="co">#&gt;  [7] print                 rbind                 [                    </span>
-<span class="co">#&gt; [10] [[&lt;-                  $&lt;-                   show                 </span></code></pre></div>
-<p>Muchos de ellos (<code><a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">aggregate()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/merge.html">merge()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> y <code>[</code>) sirven para manejar marcos de datos.
+<code class="sourceCode R"><span><span class="co">#&gt;  [1] aggregate             cbind                 coerce               </span></span>
+<span><span class="co">#&gt;  [4] initialize            merge                 plot                 </span></span>
+<span><span class="co">#&gt;  [7] print                 rbind                 [                    </span></span>
+<span><span class="co">#&gt; [10] [[&lt;-                  $&lt;-                   show                 </span></span></code></pre></div>
+<p>Muchos de ellos (<code><a href="https://rdrr.io/pkg/terra/man/aggregate.html">aggregate()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/merge.html">merge()</a></code>, <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> y <code>[</code>) sirven para manejar marcos de datos.
 Por ejemplo, <code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code> une dos marcos de datos, uno “sobre” el otro.
 <code>$&lt;-</code> crea nuevas columnas.
 Una característica clave de los objetos <code>sf</code> es que almacenan datos espaciales y no espaciales de la misma manera, como columnas en un <code>data.frame</code>.</p>
@@ -142,23 +143,22 @@ Esto permite que las geometrías importadas de las bases de datos espaciales ten
 <p>Los objetos <code>sf</code> también pueden extender las clases <code>tidyverse</code> para marcos de datos, <code>tibble</code> y <code>tbl</code>.
 .
 Por lo tanto, <strong>sf</strong> permite dar rienda suelta a toda la potencia de las capacidades de análisis de datos de R en los datos geográficos, tanto si se utiliza la base de R como las funciones de tidyverse para el análisis de datos.
-
 (Ver <a href="https://github.com/Rdatatable/data.table/issues/2273"><code>Rdatatable/data.table#2273</code></a> para ver la compatibilidad entre los objetos <code>sf</code> y el paquete <code>data.table</code>).
 Antes de utilizar estas capacidades, merece la pena repasar cómo descubrir las propiedades básicas de los objetos de datos vectoriales.
 Empecemos por utilizar las funciones básicas de R para conocer el conjunto de datos <code>world</code> del paquete <strong>spData</strong>:</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span> <span class="co"># es un objeto sf y un marco de datos (ordenado)</span>
-<span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">dim</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span>   <span class="co"># es un objeto bidimensional, con 177 filas y 11 columnas</span>
-<span class="co">#&gt; [1] 177  11</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span> <span class="co"># es un objeto sf y un marco de datos (ordenado)</span></span>
+<span><span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span>   <span class="co"># es un objeto bidimensional, con 177 filas y 11 columnas</span></span>
+<span><span class="co">#&gt; [1] 177  11</span></span></code></pre></div>
 <p><code>world</code> contiene diez columnas no geográficas (y una columna que contiene una lista de geometrías) con casi 200 filas que representan los países del mundo.
 La función <code><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry()</a></code> mantiene sólo los datos de los atributos de un objeto <code>sf</code>, es decir, elimina su geometría:</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_df</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_df</span><span class="op">)</span>
-<span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">ncol</a></span><span class="op">(</span><span class="va">world_df</span><span class="op">)</span>
-<span class="co">#&gt; [1] 10</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_df</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="va">world</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">ncol</a></span><span class="op">(</span><span class="va">world_df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
 <p>La eliminación de la columna de geometría antes de trabajar con los datos de atributos puede ser útil; los procesos de manipulación de datos pueden ejecutarse más rápido cuando trabajan sólo con los datos de atributos y las columnas de geometría no siempre son necesarias.
 En la mayoría de los casos, sin embargo, tiene sentido mantener la columna de geometría, lo que explica que la columna sea “pegajosa” (permanece después de la mayoría de las operaciones de atributos a menos que se elimine específicamente).
 Las operaciones de datos no espaciales sobre objetos <code>sf</code> sólo cambian la geometría de un objeto cuando es apropiado (por ejemplo, disolviendo los bordes entre polígonos adyacentes tras una agregación).
@@ -172,7 +172,6 @@ La compatibilidad con Tidyverse es una ventaja de <strong>sf</strong> frente a s
 <p>Los métodos de subconjunto de R base incluyen el operador <code>[</code> y la función <code><a href="https://rdrr.io/pkg/terra/man/subset.html">subset()</a></code>.
 Las funciones clave para manejar y crear subconjuntos de <strong>dplyr</strong> son <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> para crear subconjuntos de filas, y <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> para crear subconjuntos de columnas.
 Ambos planteamientos conservan los componentes espaciales de los datos de atributos en los objetos <code>sf</code>, mientras que si se utiliza el operador <code>$</code> o la función <strong>dplyr</strong> <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> para devolver una única columna de atributos como vector se perderán los datos de atributos, tal y como veremos.
-
 Esta sección se centra en el subconjunto de marcos de datos <code>sf</code>; para más detalles sobre el subconjunto de vectores y marcos de datos no geográficos recomendamos leer la sección <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Index-vectors">2.7</a> de An Introduction to R <span class="citation">(<a href="attr.html#ref-rcoreteam_introduction_2021" role="doc-biblioref">R Core Team, Smith, and Team 2021</a>)</span> y el Capítulo <a href="https://adv-r.hadley.nz/subsetting.html">4</a> de Advanced R Programming <span class="citation">(<a href="attr.html#ref-wickham_advanced_2019" role="doc-biblioref">Wickham 2019</a>)</span>, respectivamente.</p>
 <p>El operador <code>[</code> puede dividir tanto filas como columnas.
 Los índices colocados dentro de los corchetes situados directamente después del nombre de un objeto de marco de datos especifican los elementos que se quieren conservar.
@@ -182,27 +181,27 @@ Si se deja <code>i</code> o <code>j</code> vacía se devuelven todas las filas o
 Los ejemplos que hay a continuación demuestran la creación de subconjunto con R base.
 Adivina el número de filas y columnas de los marcos de datos <code>sf</code> devueltos por cada comando y comprueba los resultados en tu propio ordenador (consulta el final del capítulo para ver más ejercicios):</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span>    <span class="co"># Subconjunto de las filas 1 a 6 </span>
-<span class="va">world</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>    <span class="co"># Subconjunto de las columnas 1 a 3</span>
-<span class="va">world</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="co"># Subconjunto de las filas 1 a 6 y las columnas 1 a 3</span>
-<span class="va">world</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"name_long"</span>, <span class="st">"pop"</span><span class="op">)</span><span class="op">]</span> <span class="co"># Columnas por nombre</span>
-<span class="va">world</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">T</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">T</span>, <span class="cn">T</span>, <span class="cn">F</span>, <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="co"># Selección de columnas por índices lógicos</span>
-<span class="va">world</span><span class="op">[</span>, <span class="fl">888</span><span class="op">]</span> <span class="co"># Índice representando una columna no existenete</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="op">]</span>    <span class="co"># Subconjunto de las filas 1 a 6 </span></span>
+<span><span class="va">world</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>    <span class="co"># Subconjunto de las columnas 1 a 3</span></span>
+<span><span class="va">world</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="co"># Subconjunto de las filas 1 a 6 y las columnas 1 a 3</span></span>
+<span><span class="va">world</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name_long"</span>, <span class="st">"pop"</span><span class="op">)</span><span class="op">]</span> <span class="co"># Columnas por nombre</span></span>
+<span><span class="va">world</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">T</span>, <span class="cn">T</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">T</span>, <span class="cn">T</span>, <span class="cn">F</span>, <span class="cn">F</span><span class="op">)</span><span class="op">]</span> <span class="co"># Selección de columnas por índices lógicos</span></span>
+<span><span class="va">world</span><span class="op">[</span>, <span class="fl">888</span><span class="op">]</span> <span class="co"># Índice representando una columna no existenete</span></span></code></pre></div>
 <p>Una demostración de la utilidad de utilizar vectores <code>lógicos</code> para el subconjunto se muestra en el fragmento de código siguiente.
 Esto crea un nuevo objeto, <code>small_countries</code>, que contiene las naciones cuya superficie es inferior a 10.000 km<sup>2</sup>:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">i_small</span> <span class="op">=</span> <span class="va">world</span><span class="op">$</span><span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/summary.html">summary</a></span><span class="op">(</span><span class="va">i_small</span><span class="op">)</span> <span class="co"># un vector lógico</span>
-<span class="co">#&gt;    Mode   FALSE    TRUE </span>
-<span class="co">#&gt; logical     170       7</span>
-<span class="va">small_countries</span> <span class="op">=</span> <span class="va">world</span><span class="op">[</span><span class="va">i_small</span>, <span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">i_small</span> <span class="op">=</span> <span class="va">world</span><span class="op">$</span><span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/summary.html">summary</a></span><span class="op">(</span><span class="va">i_small</span><span class="op">)</span> <span class="co"># un vector lógico</span></span>
+<span><span class="co">#&gt;    Mode   FALSE    TRUE </span></span>
+<span><span class="co">#&gt; logical     170       7</span></span>
+<span><span class="va">small_countries</span> <span class="op">=</span> <span class="va">world</span><span class="op">[</span><span class="va">i_small</span>, <span class="op">]</span></span></code></pre></div>
 <p>El objeto <code>i_small</code> (abreviatura de “índice” que representa a los países pequeños) es un vector lógico que se puede utilizar para agrupar los siete países más pequeños del <code>mundo</code> por su superficie.
 Un comando más conciso, que omita el objeto intermediario (<code>i_small</code>), genera el mismo resultado:</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_countries</span> <span class="op">=</span> <span class="va">world</span><span class="op">[</span><span class="va">world</span><span class="op">$</span><span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span>, <span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">small_countries</span> <span class="op">=</span> <span class="va">world</span><span class="op">[</span><span class="va">world</span><span class="op">$</span><span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span>, <span class="op">]</span></span></code></pre></div>
 <p>La función base de R <code><a href="https://rdrr.io/pkg/terra/man/subset.html">subset()</a></code> proporciona otra forma de conseguir el mismo resultado:</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">small_countries</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/subset.html">subset</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">small_countries</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/subset.html">subset</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span><span class="op">)</span></span></code></pre></div>
 <p>Las funciones de R base son maduras, estables y ampliamente utilizadas, lo que las convierte en una opción sólida, especialmente en contextos en los que la reproducibilidad y la fiabilidad son fundamentales.
 Las funciones de <strong>dplyr</strong> permiten flujos de trabajo “ordenados” que algunas personas (incluidos los autores de este libro) encuentran intuitivos y productivos para el análisis interactivo de datos, especialmente cuando se combinan con editores de código como RStudio que permiten <a href="https://support.rstudio.com/hc/en-us/articles/205273297-Code-Completion-in-the-RStudio-IDE">autocompletar</a> los nombres de las columnas.
 A continuación se muestran las funciones clave para el subconjunto de marcos de datos (incluidos los marcos de datos <code>sf</code>) con las funciones <strong>dplyr</strong>.
@@ -213,25 +212,25 @@ A continuación se muestran las funciones clave para el subconjunto de marcos de
 <p><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> selecciona las columnas por nombre o posición.
 Por ejemplo, podrías seleccionar sólo dos columnas, <code>name_long</code> y <code>pop</code>, con el siguiente comando:</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world1</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">name_long</span>, <span class="va">pop</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">world1</span><span class="op">)</span>
-<span class="co">#&gt; [1] "name_long" "pop"       "geom"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world1</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">name_long</span>, <span class="va">pop</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">world1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "name_long" "pop"       "geom"</span></span></code></pre></div>
 <p>Nota: al igual que con el comando equivalente en R base (<code>world[, c("name_long", "pop")]</code>), la columna <code>geom</code> permanece.
 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> también permite seleccionar un rango de columnas con la ayuda del operador <code>:</code>:</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Selecciona todas las columnas entre name_long y pop (incluidas)</span>
-<span class="va">world2</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">name_long</span><span class="op">:</span><span class="va">pop</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Selecciona todas las columnas entre name_long y pop (incluidas)</span></span>
+<span><span class="va">world2</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">name_long</span><span class="op">:</span><span class="va">pop</span><span class="op">)</span></span></code></pre></div>
 <p>Puedes eliminar columnas específicas con el operador <code>-</code>:</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Muestra todas las columnas excepto subregion y area_km2 </span>
-<span class="va">world3</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="op">-</span><span class="va">subregion</span>, <span class="op">-</span><span class="va">area_km2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Muestra todas las columnas excepto subregion y area_km2 </span></span>
+<span><span class="va">world3</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="op">-</span><span class="va">subregion</span>, <span class="op">-</span><span class="va">area_km2</span><span class="op">)</span></span></code></pre></div>
 <p>Crear subconjuntos y renombrar columnas al mismo tiempo con la sintaxis <code>nuevo_nombre = antiguo_nombre</code>:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world4</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">name_long</span>, population <span class="op">=</span> <span class="va">pop</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world4</span> <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">name_long</span>, population <span class="op">=</span> <span class="va">pop</span><span class="op">)</span></span></code></pre></div>
 <p>Cabe destacar que el comando anterior es más conciso que el equivalente en R base, el cual requiere dos líneas de código:</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world5</span> <span class="op">=</span> <span class="va">world</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"name_long"</span>, <span class="st">"pop"</span><span class="op">)</span><span class="op">]</span> <span class="co"># subagrupar las columnas por nombre</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">world5</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">world5</span><span class="op">)</span> <span class="op">==</span> <span class="st">"pop"</span><span class="op">]</span> <span class="op">=</span> <span class="st">"population"</span> <span class="co"># renombrar la columna manualmente</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world5</span> <span class="op">=</span> <span class="va">world</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name_long"</span>, <span class="st">"pop"</span><span class="op">)</span><span class="op">]</span> <span class="co"># subagrupar las columnas por nombre</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">world5</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">world5</span><span class="op">)</span> <span class="op">==</span> <span class="st">"pop"</span><span class="op">]</span> <span class="op">=</span> <span class="st">"population"</span> <span class="co"># renombrar la columna manualmente</span></span></code></pre></div>
 <p><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> también funciona con “funciones de ayuda” para operaciones más avanzadas, como <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with()</a></code> y <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">num_range()</a></code> (véase la página de ayuda con <code><a href="https://dplyr.tidyverse.org/reference/select.html">?select</a></code> para más detalles).</p>
 <p>La mayoría de los verbos de <strong>dplyr</strong> devuelven un marco de datos, pero se puede extraer una sola columna como vector con <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code>.
 <!-- Note: I have commented out the statement below because it is not true for `sf` objects, it's a bit confusing that the behaviour differs between data frames and `sf` objects. -->
@@ -239,20 +238,20 @@ Por ejemplo, podrías seleccionar sólo dos columnas, <code>name_long</code> y <
 <!-- This means selecting a single column returns a vector in base R as demonstrated in code chunk below which returns a numeric vector representing the population of countries in the `world`: -->
 Puede obtener el mismo resultado en R base con los operadores de subconjunto de listas <code>$</code> y <code>[[</code>, los tres comandos siguientes devuelven el mismo vector numérico:</p>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">pop</span><span class="op">)</span>
-<span class="va">world</span><span class="op">$</span><span class="va">pop</span>
-<span class="va">world</span><span class="op">[[</span><span class="st">"pop"</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">pop</span><span class="op">)</span></span>
+<span><span class="va">world</span><span class="op">$</span><span class="va">pop</span></span>
+<span><span class="va">world</span><span class="op">[[</span><span class="st">"pop"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <!-- Commenting out the following because it's confusing and covered better in other places (RL, 2021-10) -->
 <!-- To turn off this behavior, set the `drop` argument to `FALSE`,  -->
 <p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> es el equivalente de fila de <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>.
 El siguiente fragmento de código, por ejemplo, selecciona las filas 1 a 6:</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="va">world</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="va">world</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> es el equivalente de <strong>dplyr</strong> a la función <code><a href="https://rdrr.io/pkg/terra/man/subset.html">subset()</a></code> de R base.
 Mantiene sólo las filas que coinciden según los criterios dados, por ejemplo, sólo los países con un área por debajo de un determinado umbral, o con un promedio alto de esperanza de vida, como se muestra en los siguientes ejemplos:</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world7</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">world</span> ,<span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span><span class="op">)</span> <span class="co"># países con un área menor a 10.000km2</span>
-<span class="va">world7</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">lifeExp</span> <span class="op">&gt;</span> <span class="fl">82</span><span class="op">)</span>      <span class="co"># con una esperanza de vida superior a 82 años</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world7</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">world</span> ,<span class="va">area_km2</span> <span class="op">&lt;</span> <span class="fl">10000</span><span class="op">)</span> <span class="co"># países con un área menor a 10.000km2</span></span>
+<span><span class="va">world7</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">lifeExp</span> <span class="op">&gt;</span> <span class="fl">82</span><span class="op">)</span>      <span class="co"># con una esperanza de vida superior a 82 años</span></span></code></pre></div>
 <p>El conjunto estándar de operadores de comparación se puede utilizar en la función <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, como se ilustra en la Tabla <a href="attr.html#tab:operators">3.1</a>:</p>
 <div class="inline-table"><table class="table table-sm">
 <caption>
@@ -303,19 +302,19 @@ Mantiene sólo las filas que coinciden según los criterios dados, por ejemplo, 
 Los pipes permiten un código expresivo: el resultado de una función anterior se convierte en el primer argumento de la siguiente función, lo que permite <em>encadenar</em>.
 Esto se ilustra a continuación, en el que sólo se filtran los países de Asia del conjunto de datos <code>world</code>, a continuación se seleccionan dos columnas para crear un subconjunto (<code>name_long</code> y <code>continent</code>) y las cinco primeras filas (resultado no mostrado).</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world7</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">continent</span> <span class="op">==</span> <span class="st">"Asia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name_long</span>, <span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world7</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">continent</span> <span class="op">==</span> <span class="st">"Asia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name_long</span>, <span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p>El fragmento anterior muestra cómo el operador pipe permite escribir los comandos en un orden claro:
 los anteriores van de arriba a abajo (línea por línea) y de izquierda a derecha.
 La alternativa a <code>%&gt;%</code> son las llamadas a funciones ‘anidadas’, que son más difíciles de leer:</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world8</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">continent</span> <span class="op">==</span> <span class="st">"Asia"</span><span class="op">)</span>,
-    <span class="va">name_long</span>, <span class="va">continent</span><span class="op">)</span>,
-  <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world8</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">continent</span> <span class="op">==</span> <span class="st">"Asia"</span><span class="op">)</span>,</span>
+<span>    <span class="va">name_long</span>, <span class="va">continent</span><span class="op">)</span>,</span>
+<span>  <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="vector-attribute-aggregation" class="section level3" number="3.2.3">
 <h3>
@@ -326,46 +325,46 @@ La alternativa a <code>%&gt;%</code> son las llamadas a funciones ‘anidadas’
 <p>La agregación implica resumir los datos con una o más “variables de agrupación”, normalmente a partir de columnas del marco de datos que se va a agregar (la agregación geográfica se trata en el siguiente capítulo).
 Un ejemplo de agregación de atributos es el cálculo del número de personas por continente a partir de los datos a nivel de país (una fila por país).
 El conjunto de datos <code>world</code> contiene los ingredientes necesarios: las columnas <code>pop</code> y <code>continent</code>, la población y la variable de agrupación, respectivamente.
-El objetivo es encontrar la suma <code><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">sum()</a></code> de las poblaciones de los países para cada continente, lo que resulta en un marco de datos más pequeño (la agregación es una forma de reducción de datos y puede ser un paso inicial útil cuando se trabaja con grandes conjuntos de datos).
+El objetivo es encontrar la suma <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> de las poblaciones de los países para cada continente, lo que resulta en un marco de datos más pequeño (la agregación es una forma de reducción de datos y puede ser un paso inicial útil cuando se trabaja con grandes conjuntos de datos).
 Esto se puede hacer con la función básica de R <code>agregate()</code> de la siguiente manera:</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_agg1</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">aggregate</a></span><span class="op">(</span><span class="va">pop</span> <span class="op">~</span> <span class="va">continent</span>, FUN <span class="op">=</span> <span class="va">sum</span>, data <span class="op">=</span> <span class="va">world</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_agg1</span><span class="op">)</span>
-<span class="co">#&gt; [1] "data.frame"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_agg1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/aggregate.html">aggregate</a></span><span class="op">(</span><span class="va">pop</span> <span class="op">~</span> <span class="va">continent</span>, FUN <span class="op">=</span> <span class="va">sum</span>, data <span class="op">=</span> <span class="va">world</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_agg1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "data.frame"</span></span></code></pre></div>
 <p>El resultado es un marco de datos no espacial con seis filas, una por continente, y dos columnas que informan del nombre y la población de cada continente (véase la tabla <a href="attr.html#tab:continents">3.2</a> con los resultados de los 3 continentes más poblados).</p>
-<p><code><a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">aggregate()</a></code> es una <a href="https://adv-r.hadley.nz/s3.html#s3-methods">función genérica</a> lo que significa que se comporta de forma diferente en función de lo que se le añada.
-<strong>sf</strong> proporciona el método <code><a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">aggregate.sf()</a></code> que se activa automáticamente cuando <code>x</code> es un objeto <code>sf</code> al que se le proporciona un argumento <code>by</code>:</p>
+<p><code><a href="https://rdrr.io/pkg/terra/man/aggregate.html">aggregate()</a></code> es una <a href="https://adv-r.hadley.nz/s3.html#s3-methods">función genérica</a> lo que significa que se comporta de forma diferente en función de lo que se le añada.
+<strong>sf</strong> proporciona el método <code>aggregate.sf()</code> que se activa automáticamente cuando <code>x</code> es un objeto <code>sf</code> al que se le proporciona un argumento <code>by</code>:</p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_agg2</span> <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">aggregate</a></span><span class="op">(</span><span class="va">world</span><span class="op">[</span><span class="st">"pop"</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">world</span><span class="op">$</span><span class="va">continent</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="va">sum</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_agg2</span><span class="op">)</span>
-<span class="co">#&gt; [1] "sf"         "data.frame"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nrow</a></span><span class="op">(</span><span class="va">world_agg2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 8</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_agg2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/aggregate.html">aggregate</a></span><span class="op">(</span><span class="va">world</span><span class="op">[</span><span class="st">"pop"</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">world</span><span class="op">$</span><span class="va">continent</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="va">sum</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_agg2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "sf"         "data.frame"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nrow</a></span><span class="op">(</span><span class="va">world_agg2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 8</span></span></code></pre></div>
 <p>El resultado es un objeto espacial <code>world_agg2</code> que contiene 8 características que representan los continentes del mundo (y el océano abierto).
-<code>group_by() %&gt;% summarize()</code> es el equivalente en <strong>dplyr</strong> de la función <code><a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">aggregate()</a></code>, con el nombre de la variable proporcionado en la función <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> especificando la variable de agrupación y la información sobre lo que se va a resumir al pasarle la función <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, como se muestra a continuación:</p>
+<code>group_by() %&gt;% summarize()</code> es el equivalente en <strong>dplyr</strong> de la función <code><a href="https://rdrr.io/pkg/terra/man/aggregate.html">aggregate()</a></code>, con el nombre de la variable proporcionado en la función <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> especificando la variable de agrupación y la información sobre lo que se va a resumir al pasarle la función <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, como se muestra a continuación:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_agg3</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">sum</a></span><span class="op">(</span><span class="va">pop</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_agg3</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>El enfoque puede parecer más complejo, pero tiene ventajas: flexibilidad, legibilidad y control sobre los nuevos nombres de las columnas.
 Esta flexibilidad se ilustra en el siguiente comando, que calcula no sólo la población, sino también la superficie y el número de países de cada continente:</p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_agg4</span>  <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">sum</a></span><span class="op">(</span><span class="va">pop</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, `area (sqkm)` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">sum</a></span><span class="op">(</span><span class="va">area_km2</span><span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>En el fragmento de código anterior <code>pop</code>, <code>area (sqkm)</code> y <code>n</code> son nombres de columnas en el resultado, y <code><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">sum()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code> eran las funciones de agregación.
+<code class="sourceCode R"><span><span class="va">world_agg4</span>  <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, `area (sqkm)` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">area_km2</span><span class="op">)</span>, n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>En el fragmento de código anterior <code>pop</code>, <code>area (sqkm)</code> y <code>n</code> son nombres de columnas en el resultado, y <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code> eran las funciones de agregación.
 Estas funciones de agregación devuelven objetos <code>sf</code> con filas que representan los continentes y geometrías que contienen múltiples polígonos que representan cada masa de tierra e islas asociadas (esto funciona gracias a la operación geométrica “unión”, como se explica en la sección <a href="#geometry-unions"><strong>??</strong></a>).</p>
 <p>Combinemos lo que hemos aprendido hasta ahora sobre las funciones de <strong>dplyr</strong>, encadenando varios comandos para resumir datos de atributos sobre todos los países por continente.
 El siguiente comando calcula la densidad de población (con <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>), ordena los continentes por el número de países que contienen (con <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a></code>), y mantiene sólo los 3 continentes más poblados (con <code><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n()</a></code>), cuyo resultado se presenta en la Tabla <a href="attr.html#tab:continents">3.2</a>):</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_agg5</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                      <span class="co"># aisla la geometría para ganar velocidad</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pop</span>, <span class="va">continent</span>, <span class="va">area_km2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># crea un subconjunto con las columnas de interés</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                     <span class="co"># agrupa por continente y resume los datos</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>Pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">sum</a></span><span class="op">(</span><span class="va">pop</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, Area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">sum</a></span><span class="op">(</span><span class="va">area_km2</span><span class="op">)</span>, N <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/math-generics.html">round</a></span><span class="op">(</span><span class="va">Pop</span> <span class="op">/</span> <span class="va">Area</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>     <span class="co"># calcula la densidad de población</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span>, wt <span class="op">=</span> <span class="va">Pop</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                  <span class="co"># muestra sólo las 3 primeras filas</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">)</span>                            <span class="co"># ordenar los 3 continentes en orden descendiente</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_agg5</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                      <span class="co"># aisla la geometría para ganar velocidad</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pop</span>, <span class="va">continent</span>, <span class="va">area_km2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># crea un subconjunto con las columnas de interés</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                     <span class="co"># agrupa por continente y resume los datos</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>Pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, Area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">area_km2</span><span class="op">)</span>, N <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">Pop</span> <span class="op">/</span> <span class="va">Area</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>     <span class="co"># calcula la densidad de población</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span>, wt <span class="op">=</span> <span class="va">Pop</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                  <span class="co"># muestra sólo las 3 primeras filas</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">)</span>                            <span class="co"># ordenar los 3 continentes en orden descendiente</span></span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
 <span id="tab:continents">TABLE 3.2: </span>Los 3 continentes más poblados ordenados por densidad de población (personas por km2).</caption>
@@ -416,29 +415,28 @@ El objetivo de esta sección es aprender a realizar este tipo de unión.
 Las funciones de unión de <strong>dplyr</strong> funcionan igual en los marcos de datos y en los objetos <code>sf</code>, la única diferencia importante es la columna de la lista <code>geometría</code>.
 El resultado de las uniones de datos puede ser tanto un objeto <code>sf</code> como un objeto <code>data.frame</code>.
 El tipo más común de unión de atributos en datos espaciales toma un objeto <code>sf</code> como primer argumento y le añade columnas de un <code>data.frame</code> especificado como segundo argumento.
-
 </p>
 <p>Para demostrar las uniones, combinaremos los datos sobre la producción de café con el conjunto de datos <code>world</code>.
-Los datos sobre el café se encuentran en un marco de datos llamado <code>coffee_data</code> del paquete <strong>spData</strong> (véase <code><a href="https://nowosad.github.io/spData/reference/coffee_data.html">?coffee_data</a></code> para más detalles).
+Los datos sobre el café se encuentran en un marco de datos llamado <code>coffee_data</code> del paquete <strong>spData</strong> (véase <code><a href="https://jakubnowosad.com/spData/reference/coffee_data.html">?coffee_data</a></code> para más detalles).
 <code>coffee_data</code> tiene 3 columnas:
 <code>name_long</code> nombra las principales naciones productoras de café; y <code>coffee_production_2016</code> y <code>coffee_production_2017</code> contienen valores estimados de la producción de café en unidades de sacos de 60 kg para cada año.
 Un “left join”, que conserva el primer conjunto de datos, combina “world” con “coffee_data”:</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_coffee</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_data</span><span class="op">)</span>
-<span class="co">#&gt; Joining, by = "name_long"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_coffee</span><span class="op">)</span>
-<span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_coffee</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining, by = "name_long"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_coffee</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span></span></code></pre></div>
 <p>Dado que los conjuntos de datos de entrada comparten una “variable clave” (<code>name_long</code>), la unión ha funcionado sin utilizar el argumento <code>by</code> (véase <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">?left_join</a></code> para más detalles).
 El resultado es un objeto <code>sf</code> idéntico al objeto original <code>world</code> pero con dos nuevas variables sobre la producción de café.
-Esto puede ser representado como un mapa, tal y como se ilustra en la Figura <a href="attr.html#fig:coffeemap">3.1</a>, generada con la función <code><a href="https://r-spatial.github.io/sf/reference/plot.html">plot()</a></code> a continuación:</p>
+Esto puede ser representado como un mapa, tal y como se ilustra en la Figura <a href="attr.html#fig:coffeemap">3.1</a>, generada con la función <code><a href="https://rdrr.io/pkg/terra/man/plot.html">plot()</a></code> a continuación:</p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/names.html">names</a></span><span class="op">(</span><span class="va">world_coffee</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "iso_a2"                 "name_long"              "continent"             </span>
-<span class="co">#&gt;  [4] "region_un"              "subregion"              "type"                  </span>
-<span class="co">#&gt;  [7] "area_km2"               "pop"                    "lifeExp"               </span>
-<span class="co">#&gt; [10] "gdpPercap"              "geom"                   "coffee_production_2016"</span>
-<span class="co">#&gt; [13] "coffee_production_2017"</span>
-<span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">world_coffee</span><span class="op">[</span><span class="st">"coffee_production_2017"</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">world_coffee</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "iso_a2"                 "name_long"              "continent"             </span></span>
+<span><span class="co">#&gt;  [4] "region_un"              "subregion"              "type"                  </span></span>
+<span><span class="co">#&gt;  [7] "area_km2"               "pop"                    "lifeExp"               </span></span>
+<span><span class="co">#&gt; [10] "gdpPercap"              "geom"                   "coffee_production_2016"</span></span>
+<span><span class="co">#&gt; [13] "coffee_production_2017"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">world_coffee</span><span class="op">[</span><span class="st">"coffee_production_2017"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:coffeemap"></span>
 <img src="03-atributos_files/figure-html/coffeemap-1.png" alt="Producción mundial de café (en miles de sacos de 60 kg) por país, 2017. Fuente: Organización Internacional del Café." width="100%"><p class="caption">
@@ -455,8 +453,8 @@ En la mayoría de los casos en que los nombres de las variables no son iguales. 
 </ol>
 <p>Este último enfoque se demuestra a continuación en una versión renombrada de <code>coffee_data</code>:</p>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">coffee_renamed</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">coffee_data</span>, nm <span class="op">=</span> <span class="va">name_long</span><span class="op">)</span>
-<span class="va">world_coffee2</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_renamed</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span>name_long <span class="op">=</span> <span class="st">"nm"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">coffee_renamed</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="va">coffee_data</span>, nm <span class="op">=</span> <span class="va">name_long</span><span class="op">)</span></span>
+<span><span class="va">world_coffee2</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_renamed</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>name_long <span class="op">=</span> <span class="st">"nm"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Obsérvese que se mantiene el nombre del objeto original, lo que significa que <code>world_coffee</code> y el nuevo objeto <code>world_coffee2</code> son idénticos.
 Otra característica del resultado es que tiene el mismo número de filas que el conjunto de datos original.
 Aunque sólo hay 47 filas de datos en <code>coffee_data</code>, los 177 registros de países se mantienen intactos en <code>world_coffee</code> y <code>world_coffee2</code>:
@@ -464,39 +462,39 @@ Las filas del conjunto de datos original que no coinciden se les asignan valores
 ¿Y si sólo queremos conservar los países que coinciden con la variable clave?
 En ese caso se puede utilizar <code>inner join()</code>:</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_coffee_inner</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_data</span><span class="op">)</span>
-<span class="co">#&gt; Joining, by = "name_long"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nrow</a></span><span class="op">(</span><span class="va">world_coffee_inner</span><span class="op">)</span>
-<span class="co">#&gt; [1] 45</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_coffee_inner</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining, by = "name_long"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nrow</a></span><span class="op">(</span><span class="va">world_coffee_inner</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 45</span></span></code></pre></div>
 <p>Fíjate en que el resultado de <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> sólo tiene 45 filas frente a las 47 de <code>coffee_data</code>.
 ¿Qué ha ocurrido con las filas restantes?
 Podemos identificar las filas que no coinciden utilizando la función <code><a href="https://generics.r-lib.org/reference/setops.html">setdiff()</a></code> de la siguiente manera:</p>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">coffee_data</span><span class="op">$</span><span class="va">name_long</span>, <span class="va">world</span><span class="op">$</span><span class="va">name_long</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Congo, Dem. Rep. of" "Others"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">coffee_data</span><span class="op">$</span><span class="va">name_long</span>, <span class="va">world</span><span class="op">$</span><span class="va">name_long</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Congo, Dem. Rep. of" "Others"</span></span></code></pre></div>
 <p>El resultado muestra que <code>Others</code> representa una fila que no está presente en el conjunto de datos <code>world</code> y en el caso de la “República Democrática del Congo” el nombre
 ha sido abreviado, lo que hace que la unión no lo tenga en cuenta.
 El siguiente comando utiliza una función de concordancia de palabras (regex) del paquete <strong>stringr</strong> para confirmar qué debería ser <code>Congo, Dem. Rep. of</code>:</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">drc</span> <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset</a></span><span class="op">(</span><span class="va">world</span><span class="op">$</span><span class="va">name_long</span>, <span class="st">"Dem*.+Congo"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Democratic Republic of the Congo"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">drc</span> <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset</a></span><span class="op">(</span><span class="va">world</span><span class="op">$</span><span class="va">name_long</span>, <span class="st">"Dem*.+Congo"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Democratic Republic of the Congo"</span></span></code></pre></div>
 <p>Para solucionar este problema, crearemos una nueva versión de <code>coffee_data</code> y actualizaremos el nombre.
 Si se une el marco de datos actualizado con <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>, se obtiene un resultado con las 46 naciones productoras de café:</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">coffee_data</span><span class="op">$</span><span class="va">name_long</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Congo,"</span>, <span class="va">coffee_data</span><span class="op">$</span><span class="va">name_long</span><span class="op">)</span><span class="op">]</span> <span class="op">=</span> <span class="va">drc</span>
-<span class="va">world_coffee_match</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_data</span><span class="op">)</span>
-<span class="co">#&gt; Joining, by = "name_long"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nrow</a></span><span class="op">(</span><span class="va">world_coffee_match</span><span class="op">)</span>
-<span class="co">#&gt; [1] 46</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">coffee_data</span><span class="op">$</span><span class="va">name_long</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Congo,"</span>, <span class="va">coffee_data</span><span class="op">$</span><span class="va">name_long</span><span class="op">)</span><span class="op">]</span> <span class="op">=</span> <span class="va">drc</span></span>
+<span><span class="va">world_coffee_match</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">world</span>, <span class="va">coffee_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining, by = "name_long"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/dimensions.html">nrow</a></span><span class="op">(</span><span class="va">world_coffee_match</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 46</span></span></code></pre></div>
 <p>También es posible unir en la dirección contraria: empezar con un conjunto de datos no espaciales y añadir variables de un objeto Simple Features (sf).
 Esto se demuestra a continuación, se comienza con el objeto <code>coffee_data</code> y se le añaden variables del conjunto de datos original <code>world</code>.
 A diferencia de las uniones anteriores, el resultado <em>no</em> es otro objeto Simple Feature, sino un marco de datos en forma de tibble de <strong>tidyverse</strong>:
 El resultado de una unión tiende a coincidir con su primer argumento:</p>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">coffee_world</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">coffee_data</span>, <span class="va">world</span><span class="op">)</span>
-<span class="co">#&gt; Joining, by = "name_long"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">coffee_world</span><span class="op">)</span>
-<span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">coffee_world</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">coffee_data</span>, <span class="va">world</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Joining, by = "name_long"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">coffee_world</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span></code></pre></div>
 
 <div class="rmdnote">
 En la mayoría de los casos, la columna de geometría sólo es útil en un objeto <code>sf</code>.
@@ -504,7 +502,9 @@ La columna de geometría sólo puede utilizarse para crear mapas y operaciones e
 Afortunadamente, los marcos de datos no espaciales con una columna de lista de geometría (como <code>coffee_world</code>) pueden ser convertidos en un objeto <code>sf</code> de la siguiente manera: <code>st_as_sf(coffee_world)</code>.
 </div>
 <p>Esta sección cubre la mayoría de los casos de uso de <code>join</code>.
-Para más información, recomendamos <span class="citation">Grolemund and Wickham (<a href="attr.html#ref-grolemund_r_2016" role="doc-biblioref">2016</a>)</span>, la <a href="https://geocompr.github.io/geocompkg/articles/join.html">‘viñeta’ de join</a> en el paquete <strong>geocompkg</strong> que acompaña este libro, y la documentación del paquete <strong>data.table</strong>.<a href="attr.html#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>
+Para más información, recomendamos <span class="citation">Grolemund and Wickham (<a href="attr.html#ref-grolemund_r_2016" role="doc-biblioref">2016</a>)</span>, la <a href="https://geocompr.github.io/geocompkg/articles/join.html">‘viñeta’ de join</a> en el paquete <strong>geocompkg</strong> que acompaña este libro, y la documentación del paquete <strong>data.table</strong>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;
+&lt;strong&gt;data.table&lt;/strong&gt; es un paquete de procesamiento de datos de alto rendimiento.
+Su aplicación a los datos geográficos se trata en la siguiente entrada de blog: r-spatial.org/r/2017/11/13/perp-performance.html.&lt;/p&gt;"><sup>11</sup></a>
 Otro tipo de unión es la unión espacial, que se trata en el siguiente capítulo (Sección <a href="#spatial-joining"><strong>??</strong></a>).</p>
 </div>
 <div id="vec-attr-creation" class="section level3" number="3.2.5">
@@ -516,48 +516,48 @@ Por ejemplo, queremos calcular la densidad de población de cada país.
 Para ello necesitamos dividir una columna de población, aquí <code>pop</code>, por una columna de área, aquí <code>area_km2</code>.
 Usando R base, podemos escribir:</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_new</span> <span class="op">=</span> <span class="va">world</span> <span class="co"># no sobreescribe nuestros datos originales</span>
-<span class="va">world_new</span><span class="op">$</span><span class="va">pop_dens</span> <span class="op">=</span> <span class="va">world_new</span><span class="op">$</span><span class="va">pop</span> <span class="op">/</span> <span class="va">world_new</span><span class="op">$</span><span class="va">area_km2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_new</span> <span class="op">=</span> <span class="va">world</span> <span class="co"># no sobreescribe nuestros datos originales</span></span>
+<span><span class="va">world_new</span><span class="op">$</span><span class="va">pop_dens</span> <span class="op">=</span> <span class="va">world_new</span><span class="op">$</span><span class="va">pop</span> <span class="op">/</span> <span class="va">world_new</span><span class="op">$</span><span class="va">area_km2</span></span></code></pre></div>
 <p>Alternativamente, podemos utilizar una de las funciones de <strong>dplyr</strong> - <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> o <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code>.
 La función <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> añade nuevas columnas en la penúltima posición del objeto <code>sf</code> (la última se reserva para la geometría):</p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pop_dens <span class="op">=</span> <span class="va">pop</span> <span class="op">/</span> <span class="va">area_km2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pop_dens <span class="op">=</span> <span class="va">pop</span> <span class="op">/</span> <span class="va">area_km2</span><span class="op">)</span></span></code></pre></div>
 <p>La diferencia entre <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute()</a></code> es que esta última elimina todas las demás columnas existentes (excepto la columna de geometría fijada):</p>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>pop_dens <span class="op">=</span> <span class="va">pop</span> <span class="op">/</span> <span class="va">area_km2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>pop_dens <span class="op">=</span> <span class="va">pop</span> <span class="op">/</span> <span class="va">area_km2</span><span class="op">)</span></span></code></pre></div>
 <p>La función <code>unite()</code> del paquete <strong>tidyr</strong> (que proporciona muchas funciones útiles para remodelar conjuntos de datos, como <code>pivot_longer()</code>) pega las columnas existentes.
 Por ejemplo, queremos combinar las columnas <code>continent</code> y <code>region_un</code> en una nueva columna llamada <code>con_reg</code>.
 Además, podemos definir un separador (aquí: dos puntos <code>:</code>) que define cómo se deben unir los valores de las columnas de entrada, y si se deben eliminar las columnas originales (aquí: <code>TRUE</code>):</p>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_unite</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">unite</span><span class="op">(</span><span class="st">"con_reg"</span>, <span class="va">continent</span><span class="op">:</span><span class="va">region_un</span>, sep <span class="op">=</span> <span class="st">":"</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_unite</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">unite</span><span class="op">(</span><span class="st">"con_reg"</span>, <span class="va">continent</span><span class="op">:</span><span class="va">region_un</span>, sep <span class="op">=</span> <span class="st">":"</span>, remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>La función <code>separate()</code> hace lo contrario de <code>unite()</code>: divide una columna en varias columnas utilizando una expresión regular o posiciones de caracteres.
 Esta función también proviene del paquete <strong>tidyr</strong>.</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_separate</span> <span class="op">=</span> <span class="va">world_unite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">separate</span><span class="op">(</span><span class="va">con_reg</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"continent"</span>, <span class="st">"region_un"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_separate</span> <span class="op">=</span> <span class="va">world_unite</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">separate</span><span class="op">(</span><span class="va">con_reg</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"continent"</span>, <span class="st">"region_un"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span></span></code></pre></div>
 <p>La función de <strong>dplyr</strong> <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> y la función base de R <code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> son útiles para renombrar columnas.
 La primera sustituye un nombre antiguo por uno nuevo.
 El siguiente comando, por ejemplo, renombra la larga columna <code>nombre_long</code> a simplemente <code>name</code>:</p>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">name_long</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">name_long</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="https://rdrr.io/r/stats/setNames.html">setNames()</a></code> cambia todos los nombres de las columnas a la vez, y requiere un vector de caracteres con un nombre que coincida con cada columna.
 Esto se ilustra a continuación, lo cual produce el mismo objeto <code>world</code>, pero con nombres mucho más cortos:</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"i"</span>, <span class="st">"n"</span>, <span class="st">"c"</span>, <span class="st">"r"</span>, <span class="st">"s"</span>, <span class="st">"t"</span>, <span class="st">"a"</span>, <span class="st">"p"</span>, <span class="st">"l"</span>, <span class="st">"gP"</span>, <span class="st">"geom"</span><span class="op">)</span>
-<span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">new_names</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">new_names</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"i"</span>, <span class="st">"n"</span>, <span class="st">"c"</span>, <span class="st">"r"</span>, <span class="st">"s"</span>, <span class="st">"t"</span>, <span class="st">"a"</span>, <span class="st">"p"</span>, <span class="st">"l"</span>, <span class="st">"gP"</span>, <span class="st">"geom"</span><span class="op">)</span></span>
+<span><span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">new_names</span><span class="op">)</span></span></code></pre></div>
 <p>Es importante señalar que las operaciones de datos de atributos conservan la geometría de simple features.
 Como se ha mencionado al principio del capítulo, puede ser útil eliminar la geometría.
 Para ello, hay que eliminarla explícitamente.
-Por lo tanto, un enfoque como <code>select(world, -geom)</code> no tendrá éxito y en su lugar debe utilizar <code><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry()</a></code>.<a href="attr.html#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></p>
+Por lo tanto, un enfoque como <code>select(world, -geom)</code> no tendrá éxito y en su lugar debe utilizar <code><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry()</a></code>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;&lt;code&gt;st_geometry(world_st) = NULL&lt;/code&gt; también funciona para eliminar la geometría de &lt;code&gt;world&lt;/code&gt;, pero sobreescribe el objeto original.&lt;/p&gt;"><sup>12</sup></a></p>
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">world_data</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_data</span><span class="op">)</span>
-<span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">world_data</span> <span class="op">=</span> <span class="va">world</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">world_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "tbl_df"     "tbl"        "data.frame"</span></span></code></pre></div>
 </div>
 </div>
 <div id="manipulando-objetos-raster" class="section level2" number="3.3">
@@ -572,28 +572,33 @@ Debido a su estructura única, el subconjunto y otras operaciones con conjuntos 
 <p>El siguiente código recrea el conjunto de datos raster utilizados en la sección <a href="spatial-class.html#raster-classes">2.3.4</a>, cuyo resultado se ilustra en la figura <a href="attr.html#fig:cont-raster">3.2</a>.
 Esto demuestra cómo funciona la función <code><a href="https://rdrr.io/pkg/terra/man/rast.html">rast()</a></code> para crear un raster de ejemplo llamado <code>elev</code> (que representa elevaciones).</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elev</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span>nrows <span class="op">=</span> <span class="fl">6</span>, ncols <span class="op">=</span> <span class="fl">6</span>, resolution <span class="op">=</span> <span class="fl">0.5</span>, 
-            xmin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, xmax <span class="op">=</span> <span class="fl">1.5</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ymax <span class="op">=</span> <span class="fl">1.5</span>,
-            vals <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">36</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">elev</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span>nrows <span class="op">=</span> <span class="fl">6</span>, ncols <span class="op">=</span> <span class="fl">6</span>, resolution <span class="op">=</span> <span class="fl">0.5</span>, </span>
+<span>            xmin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, xmax <span class="op">=</span> <span class="fl">1.5</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ymax <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>            vals <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">36</span><span class="op">)</span></span></code></pre></div>
 <p>El resultado es un objeto raster con 6 filas y 6 columnas (especificadas por los argumentos <code>nrow</code> y <code>ncol</code>), y una extensión espacial mínima y máxima en dirección x e y (<code>xmin</code>, <code>xmax</code>, <code>ymin</code>, <code>ymax</code>).
 El argumento <code>vals</code> establece los valores que contiene cada celda: datos numéricos que van de 1 a 36 en este caso.
 Los objetos raster también pueden contener valores categóricos de clase <code>lógica</code> o variables <code>factoriales</code> en R.
 El siguiente código crea un raster que representa el tamaño de los granos de café (Figura <a href="attr.html#fig:cont-raster">3.2</a>):</p>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">grain_order</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"clay"</span>, <span class="st">"silt"</span>, <span class="st">"sand"</span><span class="op">)</span>
-<span class="va">grain_char</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">grain_order</span>, <span class="fl">36</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">grain_fact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">grain_char</span>, levels <span class="op">=</span> <span class="va">grain_order</span><span class="op">)</span>
-<span class="va">grain</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span>nrows <span class="op">=</span> <span class="fl">6</span>, ncols <span class="op">=</span> <span class="fl">6</span>, resolution <span class="op">=</span> <span class="fl">0.5</span>, 
-             xmin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, xmax <span class="op">=</span> <span class="fl">1.5</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ymax <span class="op">=</span> <span class="fl">1.5</span>,
-             vals <span class="op">=</span> <span class="va">grain_fact</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">grain_order</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clay"</span>, <span class="st">"silt"</span>, <span class="st">"sand"</span><span class="op">)</span></span>
+<span><span class="va">grain_char</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">grain_order</span>, <span class="fl">36</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">grain_fact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">grain_char</span>, levels <span class="op">=</span> <span class="va">grain_order</span><span class="op">)</span></span>
+<span><span class="va">grain</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html">rast</a></span><span class="op">(</span>nrows <span class="op">=</span> <span class="fl">6</span>, ncols <span class="op">=</span> <span class="fl">6</span>, resolution <span class="op">=</span> <span class="fl">0.5</span>, </span>
+<span>             xmin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, xmax <span class="op">=</span> <span class="fl">1.5</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, ymax <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>             vals <span class="op">=</span> <span class="va">grain_fact</span><span class="op">)</span></span></code></pre></div>
 <p>El objeto raster almacena la correspondiente tabla de búsqueda o “Raster Attribute Table” (RAT) como una lista de marcos de datos, los cuales pueden ser visualizados con <code>cats(grain)</code> ( véase <code>?cats()</code> para más información).
 Cada elemento de esta lista es una capa del raster.
 También es posible utilizar la función <code><a href="https://rdrr.io/pkg/terra/man/factors.html">levels()</a></code> para recuperar y añadir nuevos niveles de factores o sustituir los existentes:</p>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, wetness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"wet"</span>, <span class="st">"moist"</span>, <span class="st">"dry"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span>
-<span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; [1] "clay"  "silt"  "sand"  "wet"   "moist" "dry"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, wetness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"wet"</span>, <span class="st">"moist"</span>, <span class="st">"dry"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: [set.cats] setting categories like this is deprecated; use a two-column</span></span>
+<span><span class="co">#&gt; data.frame instead</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/factors.html">levels</a></span><span class="op">(</span><span class="va">grain</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt;   value category</span></span>
+<span><span class="co">#&gt; 1     0        0</span></span>
+<span><span class="co">#&gt; 2     1        1</span></span>
+<span><span class="co">#&gt; 3     2        2</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:cont-raster"></span>
 <img src="03-atributos_files/figure-html/cont-raster-1.png" alt="Conjuntos de datos rasterizados con valores numéricos (izquierda) y categóricos (derecha)." width="100%"><p class="caption">
@@ -625,27 +630,27 @@ Por lo tanto, las dos últimas opciones se mostrarán en el próximo capítulo (
 <p>Las dos primeras opciones de subconjunto se demuestran en los comandos siguientes —
 ambos devuelven el valor del píxel superior izquierdo en el objeto raster <code>elev</code> (los resultados no se muestran):</p>
 <div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># fila 1, columna 1</span>
-<span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span>
-<span class="co"># ID de la celda 1</span>
-<span class="va">elev</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># fila 1, columna 1</span></span>
+<span><span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span></span>
+<span><span class="co"># ID de la celda 1</span></span>
+<span><span class="va">elev</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></code></pre></div>
 <p>El subconjunto de los objetos raster de varias capas devolverá el valor de la(s) celda(s) de cada capa.
 Por ejemplo, <code>c(elev, grain)[1]</code> devuelve un marco de datos con una fila y dos columnas — una para cada capa.
 Para extraer todos los valores o filas completas, también puedes utilizar <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code>.
 Los valores de las celdas pueden modificarse sobrescribiendo los valores existentes junto con una operación de subconjunto.
 El siguiente fragmento de código, por ejemplo, establece la celda superior izquierda de <code>elev</code> a 0 (los resultados no se muestran):</p>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span>
-<span class="va">elev</span><span class="op">[</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="va">elev</span><span class="op">[</span><span class="op">]</span></span></code></pre></div>
 <p>Dejar los corchetes vacíos es una versión abreviada de <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code> para recuperar todos los valores de un raster.
 También se pueden modificar múltiples celdas de esta manera:</p>
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">elev</span><span class="op">[</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">]</span> <span class="op">=</span> <span class="fl">0</span></span></code></pre></div>
 <p>Reemplazar los valores de rásteres multicapa puede hacerse con una matriz, con tantas columnas como capas queramos y filas como celdas reemplazables (resultados no mostrados):</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">two_layers</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="va">grain</span>, <span class="va">elev</span><span class="op">)</span> 
-<span class="va">two_layers</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-<span class="va">two_layers</span><span class="op">[</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">two_layers</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">grain</span>, <span class="va">elev</span><span class="op">)</span> </span>
+<span><span class="va">two_layers</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">two_layers</span><span class="op">[</span><span class="op">]</span></span></code></pre></div>
 </div>
 <div id="summarizing-raster-objects" class="section level3" number="3.3.2">
 <h3>
@@ -657,7 +662,7 @@ La impresión de un objeto raster en la consola al escribir su nombre devuelve s
 Otras operaciones de síntesis, como la desviación estándar (véase más adelante) o estadísticas de síntesis personalizadas, pueden calcularse con <code><a href="https://rdrr.io/pkg/terra/man/global.html">global()</a></code>.
 </p>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/global.html">global</a></span><span class="op">(</span><span class="va">elev</span>, <span class="va">sd</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/global.html">global</a></span><span class="op">(</span><span class="va">elev</span>, <span class="va">sd</span><span class="op">)</span></span></code></pre></div>
 
 <div class="rmdnote">
 Si aplicas las funciones <code><a href="https://rdrr.io/pkg/terra/man/summary.html">summary()</a></code> y <code><a href="https://rdrr.io/pkg/terra/man/global.html">global()</a></code> a un objeto raster de varias capas, éstas resumirán cada capa por separado, como se puede ilustrar ejecutando: <code>summary(c(elev, grain))</code>.
@@ -666,7 +671,7 @@ Si aplicas las funciones <code><a href="https://rdrr.io/pkg/terra/man/summary.ht
 <p>Las estadísticas de los valores raster pueden visualizarse de distintas maneras.
 Funciones específicas como <code><a href="https://rdrr.io/pkg/terra/man/boxplot.html">boxplot()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/density.html">density()</a></code>, <code><a href="https://rdrr.io/pkg/terra/man/hist.html">hist()</a></code> y <code><a href="https://rdrr.io/pkg/terra/man/pairs.html">pairs()</a></code> funcionan también con objetos raster, como se demuestra en el histograma creado con el comando siguiente (no mostrado):</p>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/terra/man/hist.html">hist</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/hist.html">hist</a></span><span class="op">(</span><span class="va">elev</span><span class="op">)</span></span></code></pre></div>
 <p>En caso de que la función de visualización deseada no funcione con objetos raster, se pueden extraer los datos raster para representarlos con la ayuda de <code><a href="https://rdrr.io/pkg/terra/man/values.html">values()</a></code> (Sección <a href="#raster-subsetting"><strong>??</strong></a>).
 </p>
 <p>Las estadísticas raster descriptivas pertenecen a las llamadas operaciones raster globales.
@@ -697,7 +702,7 @@ paquete desprendido, y por lo tanto no se recomienda.
 <span class="header-section-number">3.4</span> Ejercicios<a class="anchor" aria-label="anchor" href="#ejercicios-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>Para estos ejercicios utilizaremos los conjuntos de datos <code>us_states</code> y <code>us_states_df</code> del paquete <strong>spData</strong>.
-Antes de realizar estos ejercicios, deberás haber añadido este paquete y los otros utilizados en el capítulo de operaciones con atributos (<strong>sf</strong>, <strong>dplyr</strong>, <strong>terra</strong>) con comandos como <code><a href="https://nowosad.github.io/spData/">library(spData)</a></code>.</p>
+Antes de realizar estos ejercicios, deberás haber añadido este paquete y los otros utilizados en el capítulo de operaciones con atributos (<strong>sf</strong>, <strong>dplyr</strong>, <strong>terra</strong>) con comandos como <code><a href="https://jakubnowosad.com/spData/">library(spData)</a></code>.</p>
 <p><code>us_states</code> es un objeto espacial (de clase <code>sf</code>), que contiene la geometría y algunos atributos (incluyendo el nombre, la región, el área y la población) de los estados contiguos de Estados Unidos.
 El objeto <code>us_states_df</code> es un marco de datos (de la clase <code>data.frame</code>) que contiene el nombre y variables adicionales (incluyendo la renta media y el nivel de pobreza, para los años 2010 y 2015) de los estados de EE.UU., incluyendo Alaska, Hawaii y Puerto Rico.
 Los datos proceden de la Oficina del Censo de los Estados Unidos, y están documentados en “us_states” y “us_states_df”.</p>
@@ -709,7 +714,7 @@ Sugerencia: intenta utilizar funciones de ayuda, como <code>contains</code> o <c
 <p>E3. Encuentra todos los estados con las siguientes características (bonus: encuéntralos <em>y</em> grafícalos):</p>
 <ul>
 <li>Pertenecen a la región del Medio Oeste.</li>
-<li>Pertenecen a la región Oeste, tienen una superficie inferior a 250.000 km<sup>2</sup><em>y</em> en 2015 una población superior a 5.000.000 de habitantes (pista: puede que tengas que utilizar la función <code><a href="https://rdrr.io/pkg/units/man/units.html">units::set_units()</a></code> o <code><a href="https://rdrr.io/pkg/terra/man/catalyze.html">as.numeric()</a></code>).</li>
+<li>Pertenecen a la región Oeste, tienen una superficie inferior a 250.000 km<sup>2</sup><em>y</em> en 2015 una población superior a 5.000.000 de habitantes (pista: puede que tengas que utilizar la función <code><a href="https://rdrr.io/pkg/units/man/units.html">units::set_units()</a></code> o <code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code>).</li>
 <li>Pertenecen a la región Sur, tienen una superficie superior a 150.000 km<sup>2</sup> o una población total en 2015 superior a 7.000.000 de residentes.</li>
 </ul>
 <p>E4. ¿Cuál fue la población total en 2015 en el conjunto de datos <code>us_states</code>?
@@ -913,44 +918,43 @@ Wulf, Andrea. 2015. <em>The Invention of Nature: <span>Alexander</span> von <spa
 </div>
 </div>
 </div>
-<div class="footnotes footnotes-end-of-document">
-<hr>
-<ol>
-<li id="fn1"><p>
-La conferencia se celebró en la Universidad de Leeds, donde actualmente se encuentra uno de los autores (Robin).
-También se celebró en la Universidad de Leeds la 21ª conferencia sobre GeoComputación, durante la cual Robin y Jakub presentaron y dirigieron un taller sobre análisis de datos espaciales “ordenados” y dónde también comenzaron a colaborar en el libro (véase www.geocomputation.org para más información sobre la serie de conferencias, y las ponencias/presentaciones que abarcan dos décadas).<a href="intro.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>
-Un portátil con 4 GB que ejecute un sistema operativo moderno, como Ubuntu 16.04 en adelante, también debería poder reproducir el contenido de este libro.
-Hoy en día, un ordenador portátil con esta especificación o superior puede adquirirse de segunda mano por unos 100 dólares en muchos países, lo que reduce la barrera financiera y de hardware para la geocomputación muy por debajo de los niveles vigentes a principios de la década de 2000, cuando los ordenadores de alto rendimiento no eran asequibles para la mayoría de la población.<a href="intro.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p><a href="intro.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>
-Se puede encontrar una visión general del ecosistema espacial de R en la vista de tareas de CRAN sobre el análisis de datos espaciales (véase <a href="https://cran.r-project.org/web/views/Spatial.html" class="uri">https://cran.r-project.org/web/views/Spatial.html</a>).<a href="intro.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>
-<strong>spDataLarge</strong> no se encuentra en CRAN, con lo cual deberá instalarse via <em>r-universe</em> o mediante el comando siguiente:<code>remotes::install_github("Nowosad/spDataLarge")</code>.<a href="spatial-class.html#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p>
-El origen al que nos referimos, representado en azul en la figura (fig:vectorplots), es en realidad el origen “falso”.
-El origen “verdadero”, el lugar en el que las distorsiones son mínimas, está situado en 2° O y 49° N.
-El Ordnance Survey seleccionó este punto para situarlo aproximadamente en el centro de la masa terrestre británica en sentido longitudinal.<a href="spatial-class.html#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p>
-El estándar OGC completo incluye tipos de geometría bastante exóticos, como los tipos “superficie” y “curva”, los cuales actualmente tienen una aplicación limitada en las aplicaciones del mundo real.
-Los 17 tipos pueden representarse con el paquete <strong>sf</strong>, aunque (a partir del verano de 2018) el trazado solo funciona para el “núcleo 7”.<a href="spatial-class.html#fnref7" class="footnote-back">↩︎</a></p></li>
-<li id="fn8"><p>
-<code><a href="https://r-spatial.github.io/sf/reference/plot.html">plot()</a></code> aplicado a los objetos <strong>sf</strong> usa <code>sf:::plot.sf()</code> en segundo plano.
-<code><a href="https://r-spatial.github.io/sf/reference/plot.html">plot()</a></code> es un método genérico que se comporta de manera diferente dependiendo de la clase de objeto que se está representando. <a href="spatial-class.html#fnref8" class="footnote-back">↩︎</a></p></li>
-<li id="fn9"><p>
-Nota: Varios argumentos del gráfico son ignorados en los mapas de facetas cuando se representa más de una columna <code>sf</code>.<a href="spatial-class.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>
-Otros atributos pueden incluir una categoría de localidad (ciudad o pueblo), o una observación si la medición se realizó con una estación automática.<a href="spatial-class.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>
-Dependiendo del formato de archivo, la cabecera forma parte del propio archivo de datos de la imagen, por ejemplo, GeoTIFF, o se almacena en una cabecera adicional o en un archivo mundial, por ejemplo, los formatos de cuadrícula ASCII.
-También existe el formato ráster binario sin cabecera (plano) que debería facilitar la importación en varios programas de software.<a href="spatial-class.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p><a href="spatial-class.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p>
-<strong>data.table</strong> es un paquete de procesamiento de datos de alto rendimiento.
-Su aplicación a los datos geográficos se trata en la siguiente entrada de blog: r-spatial.org/r/2017/11/13/perp-performance.html.<a href="attr.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p><code>st_geometry(world_st) = NULL</code> también funciona para eliminar la geometría de <code>world</code>, pero sobreescribe el objeto original.<a href="attr.html#fnref14" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div class="chapter-nav">
 <div class="prev"><a href="spatial-class.html"><span class="header-section-number">2</span> Datos geográficos en R</a></div>
 <div class="empty"></div>
@@ -1003,7 +1007,7 @@ Su aplicación a los datos geográficos se trata en la siguiente entrada de blog
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. Translation: Mireia Camacho. It was last built on 2022-03-03.</p>
+    <p>"<strong>Geocomputación con R</strong>" was written by Robin Lovelace, Jakub Nowosad, Jannes Muenchow. Translation: Mireia Camacho. It was last built on 2023-01-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
